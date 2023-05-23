@@ -8,4 +8,8 @@ https://github.com/lynndylanhurley/devise_token_auth/issues/1540
 
 ・Homeでサインアウトボタンを付けました。
 
-・
+・api部分だけgitへプッシュできない問題について参考サイト
+https://teratail.com/questions/272990
+
+・Sourcetreeの使い方
+https://qiita.com/evitch/items/5d87b8aab5cd72695d2b
