@@ -1,8 +1,8 @@
 import React from 'react'
 import { signOut } from "../api/auth";
-import { useHistory } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 
-export const Home = () => {
+export const Home = ({currentUser}) => {
 
     const history = useHistory();
 
@@ -18,12 +18,12 @@ export const Home = () => {
 
     return (
         <div>
-            <p>Home</p>
             <div>
-
+                ログインユーザー : {{currentUser}.currentUser.email}
             </div>
+            <Link to={`/users/${{currentUser}.currentUser.id}`}>マイページへ</Link>
             <button type="submit" onClick={(e) => handleSignOut(e)}>
-                SignOut
+                サインアウト
             </button>
         </div>
     )

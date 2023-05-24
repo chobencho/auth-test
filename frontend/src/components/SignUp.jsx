@@ -12,16 +12,23 @@ export const SignUp = () => {
   const [passwordConfirmation, setPasswordConfirmation] = useState("");
   const confirmSuccessUrl = "http://localhost:3000";
 
+  // サインアップ時に登録するアカウント情報をパラメータとして設定
   const generateParams = () => {
     const signUpParams = {
       email: email,
       password: password,
       passwordConfirmation: passwordConfirmation,
+      name: "noName",
+      nickname: "noNickname",
+      image: "sample.jpg",
       confirmSuccessUrl: confirmSuccessUrl,
     };
     return signUpParams;
   };
 
+  // サインアップ時の処理
+  // paramsに登録情報をぶち込む
+  // 認証メールを送ったアラートを出す
   const handleSignUpSubmit = async (e) => {
     e.preventDefault();
     const params = generateParams();
@@ -76,7 +83,7 @@ export const SignUp = () => {
           />
         </div>
         <button type="submit" onClick={(e) => handleSignUpSubmit(e)}>
-          Submit
+          登録
         </button>
       </form>
       <Link to="/signin">サインインへ</Link>

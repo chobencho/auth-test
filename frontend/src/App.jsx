@@ -4,6 +4,7 @@ import { getCurrentUser } from "./api/auth";
 import { Home } from "./components/Home";
 import { SignIn } from "./components/SignIn";
 import { SignUp } from "./components/SignUp";
+import { User } from "./components/User";
 
 export const AuthContext = createContext();
 
@@ -12,14 +13,15 @@ function App() {
   const [isSignedIn, setIsSignedIn] = useState(false);
   const [currentUser, setCurrentUser] = useState();
 
+  // ログインユーザー取得
   const handleGetCurrentUser = async () => {
     try {
       const res = await getCurrentUser();
-
       if (res?.data.isLogin === true) {
         setIsSignedIn(true);
-        setCurrentUser(res?.data.data);
-        console.log(res?.data.data);
+        const currnet_user = res?.data.data;
+        setCurrentUser(currnet_user);
+        console.log(currnet_user);
       } else {
         console.log("no current user");
       }
@@ -33,6 +35,8 @@ function App() {
     handleGetCurrentUser();
   }, [setCurrentUser]);
 
+  // ログインしているか確認
+  // ログインしていなければSignInページへ遷移
   const Private = ({ children }) => {
     if (!loading) {
       if (isSignedIn) {
@@ -65,7 +69,10 @@ function App() {
           </Route>
           <Private>
             <Route exact path="/">
-              <Home />
+              <Home currentUser={currentUser}/>
+            </Route>
+            <Route exact path="/users/:id">
+              <User currentUser={currentUser}/>
             </Route>
           </Private>
         </Switch>

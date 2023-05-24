@@ -7,4 +7,10 @@ Rails.application.routes.draw do
   namespace :auth do
     resources :sessions, only: %i[index]
   end
+
+  # マイページ
+  get '/users/:id' => 'user#show'
+
+  delete '/users/:id/destroy' => 'user#destroy'
+
 end

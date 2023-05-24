@@ -64,7 +64,7 @@ export const SignIn = () => {
           />
         </div>
         <button type="submit" onClick={(e) => handleSignInSubmit(e)}>
-          Submit
+          ログイン
         </button>
       </form>
       <Link to="/signup">サインアップへ</Link>
