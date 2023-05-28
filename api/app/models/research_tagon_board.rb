@@ -1,0 +1,2 @@
+class ResearchTagonBoard < ApplicationRecord
+end

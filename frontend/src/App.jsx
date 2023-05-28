@@ -5,6 +5,7 @@ import { Home } from "./components/Home";
 import { SignIn } from "./components/SignIn";
 import { SignUp } from "./components/SignUp";
 import { User } from "./components/User";
+import { UserEdit } from "./components/UserEdit";
 
 export const AuthContext = createContext();
 
@@ -69,10 +70,13 @@ function App() {
           </Route>
           <Private>
             <Route exact path="/">
-              <Home currentUser={currentUser}/>
+              <Home currentUser={currentUser} />
             </Route>
             <Route exact path="/users/:id">
-              <User currentUser={currentUser}/>
+              <User currentUser={currentUser} />
+            </Route>
+            <Route exact path="/users/:id/edit">
+              <UserEdit currentUser={currentUser} />
             </Route>
           </Private>
         </Switch>

@@ -1,0 +1,2 @@
+class ResearchTag < ApplicationRecord
+end
