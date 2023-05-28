@@ -2,7 +2,6 @@ import { Link, useParams, useHistory } from "react-router-dom";
 import React, { useEffect, useState } from 'react'
 import { axiosInstance } from "../utils/axios.js";
 import { signOut } from "../api/auth";
-import axios from 'axios';
 
 export const User = ({ currentUser }) => {
 
@@ -68,10 +67,7 @@ export const User = ({ currentUser }) => {
           <td>tags</td>
         </tr>
       </table>
-
-      {
-        userId == { currentUser }.currentUser.id && <Link to={`/users/${userId}/edit`}>編集する</Link>
-      }
+      {userId == { currentUser }.currentUser.id && <Link to={`/users/${userId}/edit`}>編集する</Link>}
     </div >
   )
 }

@@ -8,9 +8,13 @@ Rails.application.routes.draw do
     resources :sessions, only: %i[index]
   end
 
+  post '/users/:id/update' => 'user#update'
+
   # マイページ
   get '/users/:id' => 'user#show'
 
   delete '/users/:id/destroy' => 'user#destroy'
+
+
 
 end
