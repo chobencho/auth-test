@@ -10,6 +10,7 @@ class UserController < ApplicationController
         @user.hobby = params[:hobby]
         @user.content = params[:content]
         @user.save
+
         render json: {status: 'SUCCESS', message: 'Update Complete', data: @user}
     end
 

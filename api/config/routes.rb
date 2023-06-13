@@ -8,11 +8,17 @@ Rails.application.routes.draw do
     resources :sessions, only: %i[index]
   end
 
+  get '/search' => 'search#show'
+
+  post '/board/:id/update' => 'board#update'
+  post '/board/create' => 'board#create'
+  get '/boards/search/:id' => 'board#search'
+  get '/board/:id' => 'board#show'
+  get '/boards' => 'board#index'
+
+
   post '/users/:id/update' => 'user#update'
-
-  # マイページ
   get '/users/:id' => 'user#show'
-
   delete '/users/:id/destroy' => 'user#destroy'
 
 

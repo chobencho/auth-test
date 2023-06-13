@@ -1,26 +1,14 @@
-import { Link, useParams, useHistory } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import React, { useEffect, useState } from 'react'
 import { axiosInstance } from "../utils/axios.js";
 import { signOut } from "../api/auth";
+import { Header } from './Header';
+import { Footer } from './Footer';
 
 export const User = ({ currentUser }) => {
 
-  const history = useHistory();
-
   const [userData, setUserData] = useState();
   const params = useParams();
-
-  const handleSignOut = async (e) => {
-    signOut();
-    history.push("/signin");
-  }
-
-  const handleDeleteAccountSubmit = async (e) => {
-    if (window.confirm("アカウントを削除すると元の状態に戻せませんがよろしいですか？")) {
-      axiosInstance.delete(`/users/${params.id}/destroy`);
-      history.push("/signin");
-    }
-  }
 
   useEffect(() => {
     const f = async () => {
@@ -34,15 +22,7 @@ export const User = ({ currentUser }) => {
 
   return (
     <div>
-      {/* <p>ログインユーザー : {userData?.email}</p> */}
-      <p>ログインユーザー : {{ currentUser }.currentUser.email}</p>
-      <Link to={`/`}>トップページ</Link>
-      <button type="submit" onClick={(e) => handleSignOut(e)}>
-        サインアウト
-      </button>
-      <button type="submit" onClick={(e) => handleDeleteAccountSubmit(e)}>
-        アカウント削除
-      </button>
+      <Header currentUser={currentUser} />
       <br />
       <br />
       <table>
@@ -68,6 +48,10 @@ export const User = ({ currentUser }) => {
         </tr>
       </table>
       {userId == { currentUser }.currentUser.id && <Link to={`/users/${userId}/edit`}>編集する</Link>}
+
+      <br />
+      <br />
+      <Footer currentUser={currentUser} />
     </div >
   )
 }

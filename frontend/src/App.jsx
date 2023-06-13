@@ -5,6 +5,13 @@ import { Home } from "./components/Home";
 import { SignIn } from "./components/SignIn";
 import { SignUp } from "./components/SignUp";
 import { User } from "./components/User";
+import { Search } from "./components/Search";
+import { Board } from "./components/Board";
+import { Boards } from "./components/Boards";
+import { BoardsSearch } from "./components/BoardsSearch";
+import { BoardCreate } from "./components/BoardCreate";
+import { BoardEdit } from "./components/BoardEdit";
+import { DirectMessages } from "./components/DirectMessages";
 import { UserEdit } from "./components/UserEdit";
 
 export const AuthContext = createContext();
@@ -71,6 +78,27 @@ function App() {
           <Private>
             <Route exact path="/">
               <Home currentUser={currentUser} />
+            </Route>
+            <Route exact path="/search">
+              <Search currentUser={currentUser} />
+            </Route>
+            <Route exact path="/board/:id">
+              <Board currentUser={currentUser} />
+            </Route>
+            <Route exact path="/boards">
+              <Boards currentUser={currentUser} />
+            </Route>
+            <Route exact path="/boards/search/:id">
+              <BoardsSearch currentUser={currentUser} />
+            </Route>
+            <Route exact path="/boardCreate">
+              <BoardCreate currentUser={currentUser} />
+            </Route>
+            <Route exact path="/board/:id/edit">
+              <BoardEdit currentUser={currentUser} />
+            </Route>
+            <Route exact path="/directMessages">
+              <DirectMessages currentUser={currentUser} />
             </Route>
             <Route exact path="/users/:id">
               <User currentUser={currentUser} />
