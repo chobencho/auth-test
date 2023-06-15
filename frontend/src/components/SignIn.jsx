@@ -46,6 +46,7 @@ export const SignIn = () => {
         <div>
           <label htmlFor="email">メールアドレス</label>
           <input
+            class="border border-gray-200 border-solid rounded"
             type="email"
             id="email"
             name="email"

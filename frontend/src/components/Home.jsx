@@ -11,6 +11,8 @@ export const Home = ({ currentUser }) => {
             <br />
             <br />
             <br />
+
+            <p class="text-3xl font-bold underline">Hello world!</p>
             
             <Footer currentUser={currentUser} />
         </div>

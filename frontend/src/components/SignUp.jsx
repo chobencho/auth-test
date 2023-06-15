@@ -35,7 +35,7 @@ export const SignUp = () => {
     try {
       const res = await signUp(params);
       console.log(res);
-      alert("confirm email");
+      alert("登録いただいたメールアドレスにメールを送りました。n/ 届いたメールに記載されているURLをクリックして登録を完了してください。");
     } catch (e) {
       console.log(e);
     }
