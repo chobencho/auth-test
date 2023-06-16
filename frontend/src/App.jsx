@@ -1,6 +1,8 @@
 import { createContext, useEffect, useState } from "react";
 import { BrowserRouter, Switch, Route, Redirect } from "react-router-dom";
 import { getCurrentUser } from "./api/auth";
+import { Header } from "./components/Header";
+import { Footer } from "./components/Footer";
 import { Home } from "./components/Home";
 import { SignIn } from "./components/SignIn";
 import { SignUp } from "./components/SignUp";
@@ -57,59 +59,69 @@ function App() {
     }
   };
   return (
-    <AuthContext.Provider
-      value={{
-        loading,
-        setLoading,
-        isSignedIn,
-        setIsSignedIn,
-        currentUser,
-        setCurrentUser,
-      }}
-    >
-      <BrowserRouter>
-        <Switch>
-          <Route exact path="/signup">
-            <SignUp />
-          </Route>
-          <Route exact path="/signin">
-            <SignIn />
-          </Route>
-          <Private>
-            <Route exact path="/">
-              <Home currentUser={currentUser} />
-            </Route>
-            <Route exact path="/search">
-              <Search currentUser={currentUser} />
-            </Route>
-            <Route exact path="/board/:id">
-              <Board currentUser={currentUser} />
-            </Route>
-            <Route exact path="/boards">
-              <Boards currentUser={currentUser} />
-            </Route>
-            <Route exact path="/boards/search/:id">
-              <BoardsSearch currentUser={currentUser} />
-            </Route>
-            <Route exact path="/boardCreate">
-              <BoardCreate currentUser={currentUser} />
-            </Route>
-            <Route exact path="/board/:id/edit">
-              <BoardEdit currentUser={currentUser} />
-            </Route>
-            <Route exact path="/directMessages">
-              <DirectMessages currentUser={currentUser} />
-            </Route>
-            <Route exact path="/users/:id">
-              <User currentUser={currentUser} />
-            </Route>
-            <Route exact path="/users/:id/edit">
-              <UserEdit currentUser={currentUser} />
-            </Route>
-          </Private>
-        </Switch>
-      </BrowserRouter>
-    </AuthContext.Provider>
+    <div class="w-full mx-auto bg-red-300 min-h-screen">
+      <div class="w-full mx-auto bg-red-200 min-h-screen">
+        <AuthContext.Provider
+        value={{
+          loading,
+          setLoading,
+          isSignedIn,
+          setIsSignedIn,
+          currentUser,
+          setCurrentUser,
+        }}
+        >
+          <BrowserRouter>
+            <Switch>
+              <Route exact path="/signup">
+                <SignUp />
+              </Route>
+              <Route exact path="/signin">
+                <SignIn />
+              </Route>
+              <Private>
+                <Header currentUser={currentUser} />
+                  {/* 余白用 */}
+                  <div class="h-20"></div>
+                  <Route exact path="/">
+                    <Home currentUser={currentUser} />
+                  </Route>
+                  <Route exact path="/search">
+                    <Search currentUser={currentUser} />
+                  </Route>
+                  <Route exact path="/board/:id">
+                    <Board currentUser={currentUser} />
+                  </Route>
+                  <Route exact path="/boards">
+                    <Boards currentUser={currentUser} />
+                  </Route>
+                  <Route exact path="/boards/search/:id">
+                    <BoardsSearch currentUser={currentUser} />
+                  </Route>
+                  <Route exact path="/boardCreate">
+                    <BoardCreate currentUser={currentUser} />
+                  </Route>
+                  <Route exact path="/board/:id/edit">
+                    <BoardEdit currentUser={currentUser} />
+                  </Route>
+                  <Route exact path="/directMessages">
+                    <DirectMessages currentUser={currentUser} />
+                  </Route>
+                  <Route exact path="/users/:id">
+                    <User currentUser={currentUser} />
+                  </Route>
+                  <Route exact path="/users/:id/edit">
+                    <UserEdit currentUser={currentUser} />
+                  </Route>
+                  {/* 余白用 */}
+                  <div class="h-20"></div>
+                <Footer currentUser={currentUser} />
+              </Private>
+            </Switch>
+          </BrowserRouter>
+        </AuthContext.Provider>
+      </div>
+    </div>
   );
 }
 

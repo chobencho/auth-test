@@ -41,34 +41,44 @@ export const SignIn = () => {
   };
   return (
     <>
-      <p>サインインページです</p>
-      <form>
+      <h1 class="text-center text-xl">サインインページです</h1>
+      <form >
         <div>
-          <label htmlFor="email">メールアドレス</label>
           <input
-            class="border border-gray-200 border-solid rounded"
             type="email"
+            class="border border-gray-200 border-solid rounded w-full mt-3"
             id="email"
             name="email"
+            placeholder="メールアドレス"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
           />
         </div>
         <div>
-          <label htmlFor="password">パスワード</label>
           <input
             type="password"
+            class="border border-gray-200 border-solid rounded w-full mt-3"
             id="password"
             name="password"
+            placeholder="パスワード"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
           />
         </div>
-        <button type="submit" onClick={(e) => handleSignInSubmit(e)}>
+        <button type="submit" class="border border-gray-200 bg-green-500 border-solid rounded w-full mt-3" onClick={(e) => handleSignInSubmit(e)}>
           ログイン
         </button>
+
+        <div class="text-center">
+          <Link to="/signup" class="underline text-xs">パスワードを忘れた方はこちら</Link>
+        </div>
+
+        <p class="text-xs text-center mt-3">アカウントをお持ちでない方はこちら</p>
+
+
+          <Link to="/signup" class="inline-block border border-gray-200 bg-green-500 border-solid rounded text-center w-full mt-3">新規会員登録</Link>
+
       </form>
-      <Link to="/signup">サインアップへ</Link>
     </>
   );
 };

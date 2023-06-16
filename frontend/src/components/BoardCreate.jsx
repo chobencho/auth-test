@@ -23,10 +23,6 @@ export const BoardCreate = ({ currentUser }) => {
 
     return (
         <div>
-            <Header currentUser={currentUser} />
-
-            <br />
-            <br />
 
             <p>タイトル</p>
             <input type="text" value={title} defaultValue="" onChange={(e) => setTitle(e.target.value)} />
@@ -40,12 +36,6 @@ export const BoardCreate = ({ currentUser }) => {
 
             <button type='submit' onClick={(e) => { handleCreateBoard(e) }}>掲示板を作成する</button>
 
-            
-            <br />
-            <br />
-            
-
-            <Footer currentUser={currentUser} />
         </div>
     )
 }

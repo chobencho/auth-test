@@ -42,34 +42,37 @@ export const SignUp = () => {
   };
   return (
     <>
-      <h1>サインアップページです</h1>
+      <h1 class="text-center text-xl">サインアップページです</h1>
       <form>
         <div>
-          <label htmlFor="email">メールアドレス</label>
           <input
             type="email"
+            class="border border-gray-200 border-solid rounded w-full mt-3"
             id="email"
             name="email"
+            placeholder="メールアドレス"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
           />
         </div>
         <div>
-          <label htmlFor="password">パスワード</label>
           <input
             type="password"
+            class="border border-gray-200 border-solid rounded w-full mt-3"
             id="password"
             name="password"
+            placeholder="パスワード"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
           />
         </div>
         <div>
-          <label htmlFor="password_confirmation">パスワード確認</label>
           <input
             type="password"
+            class="border border-gray-200 border-solid rounded w-full mt-3"
             id="password_confirmation"
             name="password_confirmation"
+            placeholder="パスワード確認用"
             value={passwordConfirmation}
             onChange={(e) => setPasswordConfirmation(e.target.value)}
           />
@@ -82,11 +85,15 @@ export const SignUp = () => {
             value={confirmSuccessUrl}
           />
         </div>
-        <button type="submit" onClick={(e) => handleSignUpSubmit(e)}>
+        <button type="submit" class="border border-gray-200 bg-green-500 border-solid rounded w-full mt-3" onClick={(e) => handleSignUpSubmit(e)}>
           登録
         </button>
+
+        <p class="text-xs text-center mt-3">アカウントをすでにお持ちの方はこちら</p>
+        <Link to="/signin" class="inline-block border border-gray-200 bg-green-500 border-solid rounded text-center w-full mt-3">ログイン</Link>
+
       </form>
-      <Link to="/signin">サインインへ</Link>
+
     </>
   );
 };

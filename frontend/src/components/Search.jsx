@@ -1,6 +1,4 @@
 import React from 'react'
-import { Header } from './Header';
-import { Footer } from './Footer';
 import { useEffect, useState } from 'react'
 import { Link } from "react-router-dom";
 import { axiosInstance } from "../utils/axios.js";
@@ -20,11 +18,6 @@ export const Search = ({ currentUser }) => {
 
     return (
         <div>
-            <Header currentUser={currentUser} />
-
-            <br />
-            <br />
-
             <p>検索キーワード</p>
             <input type="text" />
             <button>検索</button>
@@ -42,10 +35,6 @@ export const Search = ({ currentUser }) => {
                 </ul>
             </div>
 
-            <br />
-            <br />
-
-            <Footer currentUser={currentUser} />
         </div>
     )
 }

@@ -21,10 +21,6 @@ export const BoardEdit = ({ currentUser }) => {
 
     return (
         <div>
-            <Header currentUser={currentUser} />
-
-            <br />
-            <br />
 
             <p>タイトル</p>
 
@@ -41,10 +37,6 @@ export const BoardEdit = ({ currentUser }) => {
                 保存する
             </button>
 
-            <br />
-            <br />
-
-            <Footer currentUser={currentUser} />
         </div>
     )
 }

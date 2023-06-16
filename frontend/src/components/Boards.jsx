@@ -28,11 +28,6 @@ export const Boards = ({ currentUser }) => {
 
     return (
         <div>
-            <Header currentUser={currentUser} />
-
-            <br />
-            <br />
-
             <p>検索キーワード</p>
             <input type="text" value={searchKeyword} defaultValue="" onChange={(e) => setSearchKeyword(e.target.value)} />
             <button type='submit' onClick={(e) => { handleSearchKeywordOnBoard(e) }}>検索</button>
@@ -56,10 +51,6 @@ export const Boards = ({ currentUser }) => {
                 </ul>
             </div>
 
-            <br />
-            <br />
-
-            <Footer currentUser={currentUser} />
         </div>
     )
 }

@@ -26,18 +26,23 @@ export const Header = ({ currentUser }) => {
     }
     
     return (
-        <div>
-            <div>
-                ログインユーザー : {{ currentUser }.currentUser.email}
+        <div id="header" class="bg-red-100 fixed w-full">
+            <div class="flex justify-between">
+                <h1 class="text-xl p-1">院生ゲーム</h1>
+                <div class="p-1">{{ currentUser }.currentUser.name}がログイン中</div>
             </div>
-            <Link to={`/users/${{ currentUser }.currentUser.id}`}>マイページへ</Link>
-            <button type="submit" onClick={(e) => handleSignOut(e)}>
-                サインアウト
-            </button>
-            <button type="submit" onClick={(e) => handleDeleteAccountSubmit(e)}>
-                アカウント削除
-            </button>
+
+            <div class="flex justify-between">
+                <Link to={`/`} class="border rounded bg-gray-100 m-1 border-black p-1">ホーム</Link>
+                <button type="submit" onClick={(e) => handleSignOut(e)} class="border rounded bg-gray-100 m-1 border-black p-1">
+                    ログアウト
+                </button>
+                <button type="submit" onClick={(e) => handleDeleteAccountSubmit(e)} class="border rounded bg-gray-100 m-1 border-black p-1">
+                    アカウント削除
+                </button>
+            </div>
         </div>
+
     )
 }
 

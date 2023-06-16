@@ -24,10 +24,6 @@ export const Board = ({ currentUser }) => {
 
     return (
         <div>
-            <Header currentUser={currentUser} />
-
-            <br />
-            <br />
 
             <p>ユーザIDは"{user_id}"</p>
 
@@ -40,10 +36,6 @@ export const Board = ({ currentUser }) => {
 
             {user_id == { currentUser }.currentUser.id && <Link to={`/board/${params.id}/edit`}>編集する</Link>}
 
-            <br />
-            <br />
-
-            <Footer currentUser={currentUser} />
         </div>
     )
 }
