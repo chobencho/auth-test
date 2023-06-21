@@ -1,6 +1,6 @@
 import React from 'react'
-import { Header } from './Header';
-import { Footer } from './Footer';
+import moment from 'moment';
+import peopleimg from '../images/people.jpg';
 import { useEffect, useState } from 'react';
 import { Link, useParams, useHistory } from "react-router-dom";
 import { axiosInstance } from "../utils/axios.js";
@@ -10,6 +10,8 @@ export const Board = ({ currentUser }) => {
     const [board, setBoard] = useState();
     const params = useParams();
 
+
+
     useEffect(() => {
         const f = async () => {
           const res = await axiosInstance.get(`/board/${params.id}`);
@@ -18,24 +20,53 @@ export const Board = ({ currentUser }) => {
         f();
     }, []);
 
-    const user_id = board?.user_id;
-    const board_title = board?.title;
-    const board_content = board?.content;
+    const userId = board?.user_id;
+
+    const editBtn = () => {
+        if (userId == { currentUser }.currentUser.id) {
+          return <Link to={`/board/${params.id}/edit`} class="border border-gray-200 bg-green-500 text-white text-center text-xs py-2 fixed bottom-20 inset-x-1/4 w-1/2">編集する</Link>;
+        } else {
+          return <button class="border border-gray-200 bg-green-500 text-white text-center text-xs py-2 fixed bottom-20 inset-x-1/4 w-1/2">メッセージをする</button>;
+        }
+    };
 
     return (
-        <div>
+        <div class="w-11/12 mx-auto my-3">
+          <div class="flex justify-between">
+            <div class="flex">
+              <img src={peopleimg} alt="" class="w-12 h-12 object-cover rounded mr-3" />
+              <h1 class="font-semibold text-xl my-auto">{board?.name}</h1>
+            </div>
+            <p class="my-auto">{moment(board?.created_at).format('YYYY/MM/DD HH:mm')}</p>
+          </div>
 
-            <p>ユーザIDは"{user_id}"</p>
+          <h1 class="text-xl font-semibold my-3">{board?.title}</h1>
+          <img src={peopleimg} alt="" />
+          <p>
+            {board?.board_content}
+          </p>
+          
+          <div class="my-3">
+            <span class="bg-yellow-100 border rounded p-1 mr-1 text-sm">生物学</span>
+            <span class="bg-yellow-100 border rounded p-1 mr-1 text-sm">獣医</span>
+            <span class="bg-yellow-100 border rounded p-1 mr-1 text-sm">微生物</span>
+            <span class="bg-yellow-100 border rounded p-1 mr-1 text-sm">生物学</span>
+            <span class="bg-yellow-100 border rounded p-1 mr-1 text-sm">獣医</span>
+            <span class="bg-yellow-100 border rounded p-1 mr-1 text-sm">微生物</span>
+          </div>
 
-            <p>タイトルは"{board_title}"</p>
-
-            <p>内容は"{board_content}"</p>
-
-            <br />
-            <br />
-
-            {user_id == { currentUser }.currentUser.id && <Link to={`/board/${params.id}/edit`}>編集する</Link>}
-
+          <h1 class="font-semibold text-xl">コメント</h1>
+          
+          <div>
+            <div>
+              <img src={peopleimg} alt="" class="w-12 h-12 object-cover rounded mr-3" />
+              <div>
+                <h1>たけし</h1>
+                <p>10:24</p>
+              </div>
+            </div>
+          </div>
+          {editBtn()}
         </div>
     )
 }

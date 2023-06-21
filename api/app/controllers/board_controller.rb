@@ -1,17 +1,17 @@
 class BoardController < ApplicationController
 
     def index
-        @boards = Board.all
+        @boards = User.joins(:board).select("*")
         render json: @boards
     end
 
     def show
-        @board = Board.find_by(id: params[:id])
+        @board = User.joins(:board).select("*").find_by(board: {id: params[:id]})
         render json: @board
     end
 
     def create
-        @board = Board.new(user_id: params[:user_id], title: params[:title], content: params[:content])
+        @board = Board.new(user_id: params[:user_id], title: params[:title], board_content: params[:content])
         @board.save
 
         render json: {status: 'SUCCESS', message: 'Board Create Complete', data: @board }
@@ -20,7 +20,7 @@ class BoardController < ApplicationController
     def update
         @board = Board.find_by(id: params[:id])
         @board.title = params[:title]
-        @board.content = params[:content]
+        @board.board_content = params[:boardContent]
         @board.save
 
         render json: {status: 'SUCCESS', message: 'Board Update Complete', data: @board}

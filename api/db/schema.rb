@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_05_27_084520) do
+ActiveRecord::Schema[7.0].define(version: 2023_06_21_062729) do
   create_table "board_research_tags", force: :cascade do |t|
     t.integer "board_id"
     t.integer "tag_id"
@@ -27,7 +27,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_05_27_084520) do
   create_table "boards", force: :cascade do |t|
     t.integer "user_id"
     t.string "title"
-    t.text "content"
+    t.text "board_content"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end

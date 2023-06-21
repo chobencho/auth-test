@@ -93,6 +93,10 @@ GEM
     erubi (1.12.0)
     globalid (1.1.0)
       activesupport (>= 5.0)
+    hirb (0.7.3)
+    hirb-unicode (0.0.5)
+      hirb (~> 0.5)
+      unicode-display_width (~> 0.1.1)
     i18n (1.13.0)
       concurrent-ruby (~> 1.0)
     io-console (0.6.0)
@@ -174,6 +178,7 @@ GEM
       concurrent-ruby (~> 1.0)
     tzinfo-data (1.2023.3)
       tzinfo (>= 1.0.0)
+    unicode-display_width (0.1.1)
     warden (1.2.9)
       rack (>= 2.0.9)
     websocket-driver (0.7.5)
@@ -191,6 +196,8 @@ DEPENDENCIES
   devise
   devise_token_auth
   dotenv-rails
+  hirb
+  hirb-unicode
   puma (~> 5.0)
   rack-cors
   rails (~> 7.0.4, >= 7.0.4.3)

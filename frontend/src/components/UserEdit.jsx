@@ -21,11 +21,6 @@ export const UserEdit = ({ currentUser }) => {
     history.push(`/users/${params.id}`);
   }
 
-
-
-
-
-
   useEffect(() => {
     const f = async () => {
       const res = await axiosInstance.get(`/users/${params.id}`);
