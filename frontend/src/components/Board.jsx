@@ -55,14 +55,27 @@ export const Board = ({ currentUser }) => {
             <span class="bg-yellow-100 border rounded p-1 mr-1 text-sm">微生物</span>
           </div>
 
-          <h1 class="font-semibold text-xl">コメント</h1>
+          <h1 class="font-semibold text-xl border-b py-2 border-gray-500">コメント</h1>
           
           <div>
-            <div>
+            <div class="flex bg-slate-300 p-2">
               <img src={peopleimg} alt="" class="w-12 h-12 object-cover rounded mr-3" />
               <div>
-                <h1>たけし</h1>
-                <p>10:24</p>
+                <div class="flex">
+                  <h1 class="font-semibold text-sm my-auto">たけし</h1>
+                  <p class="text-xs text-slate-500 my-auto mx-1">10:24</p>
+                </div>
+                <p class="text-xs">私は東京大学大学院で生物学の研究をしております。ぜひ仲良くしてください。しれくれないとおこです。</p>
+              </div>
+            </div>
+            <div class="flex bg-slate-300 p-2">
+              <img src={peopleimg} alt="" class="w-12 h-12 object-cover rounded mr-3" />
+              <div>
+                <div class="flex">
+                  <h1 class="font-semibold text-sm my-auto">たけし</h1>
+                  <p class="text-xs text-slate-500 my-auto mx-1">10:24</p>
+                </div>
+                <p class="text-xs">私は東京大学大学院で生物学の研究をしております。ぜひ仲良くしてください。しれくれないとおこです。</p>
               </div>
             </div>
           </div>

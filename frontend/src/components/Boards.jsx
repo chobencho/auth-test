@@ -59,7 +59,7 @@ export const Boards = ({ currentUser }) => {
                             <p class="my-1 font-semibold">{boardData.title}</p>
                             <img src={peopleimg} alt="" class="my-3" />
                             <p>
-                                {boardData.content}
+                                {boardData.board_content}
                             </p>
                             <div class="my-3">
                                 <span class="bg-yellow-100 border rounded p-1 mr-1 text-sm">生物学</span>

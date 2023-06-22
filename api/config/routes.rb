@@ -15,6 +15,7 @@ Rails.application.routes.draw do
   get '/boards/search/:id' => 'board#search'
   get '/board/:id' => 'board#show'
   get '/boards' => 'board#index'
+  get '/myboards/:id' => 'board#myboards'
 
 
   post '/users/:id/update' => 'user#update'

@@ -13,13 +13,6 @@ export const Header = ({ currentUser }) => {
         history.push("/signin");
     }
 
-    const handleDeleteAccountSubmit = async (e) => {
-        if (window.confirm("アカウントを削除すると元の状態に戻せませんがよろしいですか？")) {
-          axiosInstance.delete(`/users/${params.id}/destroy`);
-          history.push("/signin");
-        }
-    }
-
     const onClick = (e) => {
         console.log(e.target.value);
         console.log(e.target.value);
@@ -36,9 +29,6 @@ export const Header = ({ currentUser }) => {
                 <Link to={`/`} class="border rounded bg-gray-100 m-1 border-black p-1">ホーム</Link>
                 <button type="submit" onClick={(e) => handleSignOut(e)} class="border rounded bg-gray-100 m-1 border-black p-1">
                     ログアウト
-                </button>
-                <button type="submit" onClick={(e) => handleDeleteAccountSubmit(e)} class="border rounded bg-gray-100 m-1 border-black p-1">
-                    アカウント削除
                 </button>
             </div>
         </div>

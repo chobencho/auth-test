@@ -31,4 +31,9 @@ class BoardController < ApplicationController
         @boards = Board.where("title LIKE ?", "%#{@keyword}%").or(Board.where("content LIKE ?", "%#{@keyword}%"))
         render json: @boards
     end
+
+    def myboards
+        @board = User.joins(:board).select("*").where(users: {id: params[:id]})
+        render json: @board
+    end
 end

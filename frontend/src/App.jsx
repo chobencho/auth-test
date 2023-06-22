@@ -4,6 +4,18 @@ import { getCurrentUser } from "./api/auth";
 import { Header } from "./components/Header";
 import { Footer } from "./components/Footer";
 import { Home } from "./components/Home";
+import { Mypage } from "./components/Mypage";
+import { ValidateAge } from "./components/ValidateAge";
+import { Info } from "./components/Info";
+import { Information } from "./components/Information";
+import { Setting } from "./components/Setting";
+import { Inquiry } from "./components/Inquiry";
+import { ChangePassword } from "./components/ChangePassword";
+import { Terms } from "./components/Terms";
+import { PrivacyPolicy } from "./components/PrivacyPolicy";
+import { DeleteAccount } from "./components/DeleteAccount";
+import { MyBoard } from "./components/MyBoard";
+import { MyFav } from "./components/MyFav";
 import { SignIn } from "./components/SignIn";
 import { SignUp } from "./components/SignUp";
 import { User } from "./components/User";
@@ -86,6 +98,46 @@ function App() {
                   <Route exact path="/">
                     <Home currentUser={currentUser} />
                   </Route>
+                  <Route exact path="/mypage/:id">
+                    <Mypage currentUser={currentUser} />
+                  </Route>
+
+                  <Route exact path="/validateage">
+                    <ValidateAge currentUser={currentUser} />
+                  </Route>
+                  <Route exact path="/info">
+                    <Info currentUser={currentUser} />
+                  </Route>
+                  <Route exact path="/information">
+                    <Information currentUser={currentUser} />
+                  </Route>
+                  <Route exact path="/setting">
+                    <Setting currentUser={currentUser} />
+                  </Route>
+                  <Route exact path="/inquiry">
+                    <Inquiry currentUser={currentUser} />
+                  </Route>
+                  <Route exact path="/changePassword">
+                    <ChangePassword currentUser={currentUser} />
+                  </Route>
+                  <Route exact path="/terms">
+                    <Terms currentUser={currentUser} />
+                  </Route>
+                  <Route exact path="/privacyPolicy">
+                    <PrivacyPolicy currentUser={currentUser} />
+                  </Route>
+                  <Route exact path="/deleteAccount">
+                    <DeleteAccount currentUser={currentUser} />
+                  </Route>
+
+                  <Route exact path="/myboards/:id">
+                    <MyBoard currentUser={currentUser} />
+                  </Route>
+                  <Route exact path="/myfav">
+                    <MyFav currentUser={currentUser} />
+                  </Route>
+
+
                   <Route exact path="/search">
                     <Search currentUser={currentUser} />
                   </Route>
