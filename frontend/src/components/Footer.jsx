@@ -10,8 +10,6 @@ export const Footer = ({ currentUser }) => {
     return (
         <div class=" bg-red-100 flex justify-between text-center text-xs py-2 fixed bottom-0 w-full">
 
-{{ currentUser }.currentUser.id}
-
             <Link to={`/`} class="w-1/4">
                 <img src={search} alt="logo" class="w-7 mx-auto mb-1"/>
                 ユーザー検索
