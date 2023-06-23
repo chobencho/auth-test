@@ -20,8 +20,8 @@ export const Home = ({ currentUser }) => {
     return (
         <>
             <div class="flex justify-between py-4 px-2">
-                <h1 class="text-xl font-semibold">さがす</h1>
-                <Link to={'/search'} class="flex justify-between border bg-gray-100 rounded w-3/4">
+                <h1 class="text-base font-semibold">ユーザー検索</h1>
+                <Link to={'/searchuser'} class="flex justify-between border bg-gray-100 rounded w-2/3">
                     <span class="my-auto mx-2 text-gray-600">条件で絞り込む</span>
                     <img src={search} alt="logo" class="w-4 my-auto mx-1"/>
                 </Link>

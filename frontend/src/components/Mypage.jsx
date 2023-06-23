@@ -11,10 +11,17 @@ import favsvg from '../images/fav.svg';
 
 export const Mypage = ({ currentUser }) => {
 
-  const params = useParams();
+  const [userData, setUserData] = useState();
 
   const userId = { currentUser }.currentUser.id;
 
+  useEffect(() => {
+    const f = async () => {
+      const res = await axiosInstance.get(`/users/${userId}`);
+      setUserData(res.data);
+    };
+    f();
+  }, []);
 
   return (
     <div class="">
@@ -22,7 +29,7 @@ export const Mypage = ({ currentUser }) => {
       <h1 class="font-semibold text-xl text-center mt-5">マイページ</h1>
 
       <img src={peopleimg} class="w-40 h-40 object-cover rounded-full mx-auto mt-5" alt="" />
-      <p class="font-semibold text-xl text-center my-2">たけし</p>
+      <p class="font-semibold text-xl text-center my-2">{userData?.name}</p>
       
       <div class="flex flex-wrap w-11/12 mx-auto">
         <Link to={`/users/${userId}/edit`} class="w-1/2 p-1 mb-3">

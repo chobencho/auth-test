@@ -19,13 +19,15 @@ import { MyFav } from "./components/MyFav";
 import { SignIn } from "./components/SignIn";
 import { SignUp } from "./components/SignUp";
 import { User } from "./components/User";
-import { Search } from "./components/Search";
+import { SearchUser } from "./components/SearchUser";
+import { SearchBoard } from "./components/SearchBoard";
 import { Board } from "./components/Board";
 import { Boards } from "./components/Boards";
 import { BoardsSearch } from "./components/BoardsSearch";
 import { BoardCreate } from "./components/BoardCreate";
 import { BoardEdit } from "./components/BoardEdit";
 import { DirectMessages } from "./components/DirectMessages";
+import { Message } from "./components/Message";
 import { UserEdit } from "./components/UserEdit";
 
 export const AuthContext = createContext();
@@ -138,8 +140,11 @@ function App() {
                   </Route>
 
 
-                  <Route exact path="/search">
-                    <Search currentUser={currentUser} />
+                  <Route exact path="/searchboard">
+                    <SearchBoard currentUser={currentUser} />
+                  </Route>
+                  <Route exact path="/searchuser">
+                    <SearchUser currentUser={currentUser} />
                   </Route>
                   <Route exact path="/board/:id">
                     <Board currentUser={currentUser} />
@@ -158,6 +163,9 @@ function App() {
                   </Route>
                   <Route exact path="/directMessages">
                     <DirectMessages currentUser={currentUser} />
+                  </Route>
+                  <Route exact path="/message">
+                    <Message currentUser={currentUser} />
                   </Route>
                   <Route exact path="/users/:id">
                     <User currentUser={currentUser} />

@@ -1,0 +1,61 @@
+.balloon_r {
+    display: flex;
+    align-items: start;
+    gap: 0 8px;
+    margin: 8px 8px 20px 8px;
+    z-index: -100;
+}
+
+.balloon_r p {
+    position: relative;
+    max-width: 300px;
+    margin: 3px 0 0;
+    padding: .5em 1em;
+    border-radius: 5px;
+    background-color: #ffffff;
+    color: #333333;
+    font-size: .9em;
+    z-index: 0;
+}
+
+.balloon_r p::before {
+    position: absolute;
+    left: -15px;
+    width: 16px;
+    height: 20px;
+    background-color: #ffffff;
+    clip-path: polygon(0 50%, 100% 0, 100% 100%);
+    content: '';
+}
+
+.balloon_s {
+    display: flex;
+    align-items: start;
+    justify-content: flex-end;
+    gap: 0 8px;
+
+    margin: 8px 30px 20px auto;
+    width: 80%;
+}
+
+.balloon_s p {
+    position: relative;
+    max-width: 300px;
+    margin: 3px 0 0;
+    padding: .5em 1em;
+    border-radius: 5px;
+    background-color: #c2ffa8;
+    color: #333333;
+    font-size: .9em;
+    z-index: 0;
+}
+
+.balloon_s p::before {
+    position: absolute;
+    right: -15px;
+    width: 16px;
+    height: 20px;
+    background-color: #c2ffa8;
+    clip-path: polygon(0 0, 100% 50%, 0 100%);
+    content: '';
+}

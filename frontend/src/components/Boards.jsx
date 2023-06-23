@@ -31,11 +31,11 @@ export const Boards = ({ currentUser }) => {
     return (
         <div class="pb-14">
             <div class="flex justify-between py-4 px-2">
-                <h1 class="text-xl font-semibold">掲示板</h1>
-                <button class="flex justify-between border bg-gray-100 rounded w-3/4">
+                <h1 class="text-base font-semibold">掲示板検索</h1>
+                <Link to={'/searchboard'} class="flex justify-between border bg-gray-100 rounded w-2/3">
                     <span class="my-auto mx-2 text-gray-600">条件で絞り込む</span>
                     <img src={search} alt="logo" class="w-4 my-auto mx-1"/>
-                </button>
+                </Link>
             </div>
 
             {/* 

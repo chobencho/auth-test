@@ -51,9 +51,17 @@ export const UserEdit = ({ currentUser }) => {
         <textarea name="" id="" cols="30" rows="5" class="border border-gray-200 rounded w-full mb-3" value={content} defaultValue={userData?.content} onChange={(e) => setContent(e.target.value)} ></textarea>
         <h2 class="font-semibold mt-3 mb-1">年齢</h2>
         <input type="number" class="border border-gray-200 rounded w-full mb-3 h-8" />
+        <h2 class="font-semibold mt-3 mb-1">性別</h2>
+        <input type="number" class="border border-gray-200 rounded w-full mb-3 h-8" />
         <h2 class="font-semibold mt-3 mb-1">居住地</h2>
         <select class="border border-gray-200 rounded w-full mb-3 h-8">
           {Prefectures.PREF_OPTIONS.map(option => {
+            return (<option value={option}>{option}</option>)
+          })}
+        </select>
+        <h2 class="font-semibold mt-3 mb-1">学年</h2>
+        <select class="border border-gray-200 rounded w-full mb-3 h-8">
+          {Subjects.SUB_OPTIONS.map(option => {
             return (<option value={option}>{option}</option>)
           })}
         </select>
@@ -63,7 +71,7 @@ export const UserEdit = ({ currentUser }) => {
             return (<option value={option}>{option}</option>)
           })}
         </select>
-        <h2 class="font-semibold mt-3 mb-1">研究キーワード</h2>
+        <h2 class="font-semibold mt-3 mb-1">研究タグ</h2>
         <input type="text" class="border border-gray-200 rounded w-3/4 h-8" />
         <button class="border border-gray-500 bg-gray-600 text-white w-1/5 text-sm h-8 mx-2">追加する</button>
         <h2 class="font-semibold mt-3 mb-1">興味ある分野</h2>
@@ -82,7 +90,7 @@ export const UserEdit = ({ currentUser }) => {
             return (<option value={option}>{option}</option>)
           })}
         </select>
-        <h2 class="font-semibold mt-3 mb-1">趣味タグ</h2>
+        <h2 class="font-semibold mt-3 mb-1">趣味</h2>
         <input type="text"  class="border border-gray-200 rounded w-full mb-3 h-8" />
       </div>
 

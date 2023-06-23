@@ -19,7 +19,7 @@ export const Header = ({ currentUser }) => {
     }
     
     return (
-        <div id="header" class="bg-red-100 fixed w-full">
+        <div id="header" class="bg-red-100 fixed w-full z-20 h-20">
             <div class="flex justify-between">
                 <h1 class="text-xl p-1">院生ゲーム</h1>
                 <div class="p-1">{{ currentUser }.currentUser.name}がログイン中</div>

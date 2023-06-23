@@ -14,6 +14,10 @@ export const Info = ({ currentUser }) => {
       <p class="my-3">
         学生証を使って年齢確認を行ってください。年齢が確認でき次第チャット機能が解放されます。
       </p>
+
+      <button type='submit' class="block border border-gray-200 bg-green-500 text-white text-center text-xs py-2 mx-auto w-1/2" >
+          戻る
+      </button>
     </div >
   )
 }

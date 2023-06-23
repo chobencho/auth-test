@@ -58,7 +58,7 @@ export const Board = ({ currentUser }) => {
           <h1 class="font-semibold text-xl border-b py-2 border-gray-500">コメント</h1>
           
           <div>
-            <div class="flex bg-slate-300 p-2">
+            <div class="flex p-2">
               <img src={peopleimg} alt="" class="w-12 h-12 object-cover rounded mr-3" />
               <div>
                 <div class="flex">
@@ -68,7 +68,7 @@ export const Board = ({ currentUser }) => {
                 <p class="text-xs">私は東京大学大学院で生物学の研究をしております。ぜひ仲良くしてください。しれくれないとおこです。</p>
               </div>
             </div>
-            <div class="flex bg-slate-300 p-2">
+            <div class="flex p-2">
               <img src={peopleimg} alt="" class="w-12 h-12 object-cover rounded mr-3" />
               <div>
                 <div class="flex">
