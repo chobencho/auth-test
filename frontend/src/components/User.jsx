@@ -30,7 +30,7 @@ export const User = ({ currentUser }) => {
 
   return (
     <div class="pb-14">
-      <img src={peopleimg} alt="" />
+      <img src={`${process.env.PUBLIC_URL}/images/${userData?.image}`} alt="" />
 
       <div class="w-max flex m-auto ">
         <img src={peopleimg} alt="" class="w-14 h-14 object-cover rounded m-1"/>
@@ -38,8 +38,8 @@ export const User = ({ currentUser }) => {
       </div>
       <div class="flex justify-center">
         <h2 class="text-xl font-semibold">{userData?.name}</h2>
-        <p class="text-sm m-1">24歳</p>
-        <p class="text-sm m-1">東京都</p>
+        <p class="text-sm m-1">{userData?.age}歳</p>
+        <p class="text-sm m-1">{userData?.code}</p>
       </div>
       <div class="flex text-sm justify-center">
         <p>24時間以内</p>

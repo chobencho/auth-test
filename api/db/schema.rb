@@ -10,16 +10,16 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_06_21_062729) do
-  create_table "board_research_tags", force: :cascade do |t|
+ActiveRecord::Schema[7.0].define(version: 2023_06_27_074508) do
+  create_table "board_likes", force: :cascade do |t|
     t.integer "board_id"
-    t.integer "tag_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
-  create_table "boardlikes", force: :cascade do |t|
+  create_table "board_research_tags", force: :cascade do |t|
     t.integer "board_id"
+    t.integer "tag_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -28,6 +28,21 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_21_062729) do
     t.integer "user_id"
     t.string "title"
     t.text "board_content"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "image"
+  end
+
+  create_table "check_ages", force: :cascade do |t|
+    t.integer "user_id"
+    t.integer "check_age"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "information", force: :cascade do |t|
+    t.string "title"
+    t.text "body"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -40,7 +55,14 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_21_062729) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "research_tagon_boards", force: :cascade do |t|
+  create_table "prefectures", force: :cascade do |t|
+    t.string "code"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer "prefecture_id"
+  end
+
+  create_table "research_tag_on_boards", force: :cascade do |t|
     t.integer "tag_id"
     t.string "name"
     t.datetime "created_at", null: false
@@ -54,6 +76,13 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_21_062729) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "room_members", force: :cascade do |t|
+    t.integer "user_id"
+    t.integer "room_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "rooms", force: :cascade do |t|
     t.integer "room_id"
     t.datetime "created_at", null: false
@@ -63,13 +92,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_21_062729) do
   create_table "user_research_tags", force: :cascade do |t|
     t.integer "user_id"
     t.integer "tag_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
-  create_table "user_rooms", force: :cascade do |t|
-    t.integer "user_id"
-    t.integer "room_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -95,6 +117,17 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_21_062729) do
     t.text "tokens"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "age"
+    t.integer "gender"
+    t.integer "prefecture_id"
+    t.integer "grade"
+    t.integer "subject"
+    t.integer "hobby_1"
+    t.integer "hobby_2"
+    t.integer "hobby_3"
+    t.integer "interest_1"
+    t.integer "interest_2"
+    t.integer "interest_3"
     t.index ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true

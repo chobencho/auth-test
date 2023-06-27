@@ -3,6 +3,8 @@ import { Link, useParams, useHistory } from "react-router-dom";
 import { axiosInstance } from "../utils/axios.js";
 import Prefectures from '../common/prefectures';
 import Subjects from '../common/subjects';
+import Gender from '../common/gender';
+import Grade from '../common/grade';
 
 export const UserEdit = ({ currentUser }) => {
   const [name, setName] = useState();
@@ -52,7 +54,11 @@ export const UserEdit = ({ currentUser }) => {
         <h2 class="font-semibold mt-3 mb-1">年齢</h2>
         <input type="number" class="border border-gray-200 rounded w-full mb-3 h-8" />
         <h2 class="font-semibold mt-3 mb-1">性別</h2>
-        <input type="number" class="border border-gray-200 rounded w-full mb-3 h-8" />
+        <select class="border border-gray-200 rounded w-full mb-3 h-8">
+          {Gender.GEN_OPTIONS.map(option => {
+            return (<option value={option}>{option}</option>)
+          })}
+        </select>
         <h2 class="font-semibold mt-3 mb-1">居住地</h2>
         <select class="border border-gray-200 rounded w-full mb-3 h-8">
           {Prefectures.PREF_OPTIONS.map(option => {
@@ -61,7 +67,7 @@ export const UserEdit = ({ currentUser }) => {
         </select>
         <h2 class="font-semibold mt-3 mb-1">学年</h2>
         <select class="border border-gray-200 rounded w-full mb-3 h-8">
-          {Subjects.SUB_OPTIONS.map(option => {
+          {Grade.GRD_OPTIONS.map(option => {
             return (<option value={option}>{option}</option>)
           })}
         </select>
