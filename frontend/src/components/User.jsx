@@ -30,7 +30,7 @@ export const User = ({ currentUser }) => {
 
   return (
     <div class="pb-14">
-      <img src={`${process.env.PUBLIC_URL}/images/${userData?.image}`} alt="" />
+      <img src={`${process.env.PUBLIC_URL}/images/profile/${userData?.image}`} alt="" />
 
       <div class="w-max flex m-auto ">
         <img src={peopleimg} alt="" class="w-14 h-14 object-cover rounded m-1"/>
@@ -48,9 +48,13 @@ export const User = ({ currentUser }) => {
       </div>
       <div class="w-11/12 mx-auto my-3">
         <h2 class="font-semibold mt-3 mb-1">自己紹介</h2>
-        <p class="text-base">東京大学大学院で生物学について研究しています。広告分野にきょうみがあります。最近そろのみにはまっています。</p>
+        <p class="text-base whitespace-pre-wrap">{userData?.content}</p>
+        <h2 class="font-semibold mt-3 mb-1">性別</h2>
+        <p class="text-base">{userData?.gender_code}</p>
+        <h2 class="font-semibold mt-3 mb-1">学年</h2>
+        <p class="text-base">{userData?.grade_code}</p>
         <h2 class="font-semibold mt-3 mb-1">専攻分野</h2>
-        <p class="text-base">生物学</p>
+        <p class="text-base">{userData?.subject_code}</p>
         <h2 class="font-semibold mt-3 mb-1">研究キーワード</h2>
         <span class="bg-yellow-100 border rounded p-1 mr-1 text-sm">生物学</span>
         <span class="bg-yellow-100 border rounded p-1 mr-1 text-sm">獣医</span>

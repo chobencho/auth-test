@@ -107,7 +107,7 @@ function App() {
                   <Route exact path="/validateage">
                     <ValidateAge currentUser={currentUser} />
                   </Route>
-                  <Route exact path="/info">
+                  <Route exact path="/info/:id">
                     <Info currentUser={currentUser} />
                   </Route>
                   <Route exact path="/information">

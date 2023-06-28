@@ -14,6 +14,7 @@ Rails.application.routes.draw do
   post '/board/create' => 'board#create'
   get '/boards/search/:id' => 'board#search'
   get '/board/:id' => 'board#show'
+  get '/board/:id/edit' => 'board#show'
   get '/boards' => 'board#index'
   get '/myboards/:id' => 'board#myboards'
 
@@ -21,7 +22,8 @@ Rails.application.routes.draw do
   post '/users/:id/update' => 'user#update'
   get '/users/:id' => 'user#show'
   delete '/users/:id/destroy' => 'user#destroy'
-
+  get '/information' => 'user#information'
+  get '/info/:id' => 'user#info'
 
 
 end

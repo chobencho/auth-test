@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_06_27_074508) do
+ActiveRecord::Schema[7.0].define(version: 2023_06_28_070703) do
   create_table "board_likes", force: :cascade do |t|
     t.integer "board_id"
     t.datetime "created_at", null: false
@@ -40,9 +40,27 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_27_074508) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "genders", force: :cascade do |t|
+    t.string "gender_code"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "grades", force: :cascade do |t|
+    t.string "grade_code"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "information", force: :cascade do |t|
     t.string "title"
     t.text "body"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "interests", force: :cascade do |t|
+    t.string "interest_code"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -89,6 +107,12 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_27_074508) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "subjects", force: :cascade do |t|
+    t.string "subject_code"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "user_research_tags", force: :cascade do |t|
     t.integer "user_id"
     t.integer "tag_id"
@@ -118,10 +142,10 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_27_074508) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "age"
-    t.integer "gender"
+    t.integer "gender_id"
     t.integer "prefecture_id"
-    t.integer "grade"
-    t.integer "subject"
+    t.integer "grade_id"
+    t.integer "subject_id"
     t.integer "hobby_1"
     t.integer "hobby_2"
     t.integer "hobby_3"
