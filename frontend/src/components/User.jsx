@@ -1,4 +1,4 @@
-import { Link, useParams } from "react-router-dom";
+import { Link, useParams, useHistory } from "react-router-dom";
 import React, { useEffect, useState } from 'react'
 import { axiosInstance } from "../utils/axios.js";
 import peopleimg from '../images/people.jpg';
@@ -7,14 +7,20 @@ export const User = ({ currentUser }) => {
 
   const [userData, setUserData] = useState();
   const params = useParams();
+  const history = useHistory();
 
   const userId = params.id;
+
+  const handleMessage = (e) => {
+    axiosInstance.post(`/message/${params.id}/new`, {  });
+    history.push(`/message/${params.id}`);
+  }
 
   const editBtn = () => {
     if (userId == { currentUser }.currentUser.id) {
       return <Link to={`/users/${userId}/edit`} class="border border-gray-200 bg-green-500 text-white text-center text-xs py-2 fixed bottom-20 inset-x-1/4 w-1/2">編集する</Link>;
     } else {
-      return <button class="border border-gray-200 bg-green-500 text-white text-center text-xs py-2 fixed bottom-20 inset-x-1/4 w-1/2">メッセージをする</button>;
+      return <button onClick={(e) => { handleMessage(e) }} class="border border-gray-200 bg-green-500 text-white text-center text-xs py-2 fixed bottom-20 inset-x-1/4 w-1/2">メッセージをする</button>;
     }
   };
 
