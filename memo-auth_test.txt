@@ -14,6 +14,13 @@ https://teratail.com/questions/272990
 ・Sourcetreeの使い方
 https://sunny10side.com/how-to-connect-and-use-github-and-sourcetree-mac-version/
 
+・Rails x React x carrierwaveで画像投稿機能作成
+https://qiita.com/kazama1209/items/1a0186f635f14a8161d8#%E3%83%95%E3%83%AD%E3%83%B3%E3%83%88%E3%82%A8%E3%83%B3%E3%83%89
+エラー対応
+①import { makeStyles } from "@material-ui/core/styles"　→　import { makeStyles } from "@mui/styles" に変更
+②uploadImage(e)　→　uploadImage(e: any) に変更
+③react-router-domは、v5をインストールする　→　react-router-dom@5 @types/react-router-dom@5
+
 
 ■Railsの命名規則
 モデルクラス：ModelSchedule
