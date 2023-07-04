@@ -12,67 +12,57 @@ export const SignUp = () => {
   const [passwordConfirmation, setPasswordConfirmation] = useState("");
   const confirmSuccessUrl = "http://localhost:3000";
 
-  // サインアップ時に登録するアカウント情報をパラメータとして設定
   const generateParams = () => {
     const signUpParams = {
       email: email,
       password: password,
       passwordConfirmation: passwordConfirmation,
-      name: "noName",
-      nickname: "noNickname",
-      image: "sample.jpg",
       confirmSuccessUrl: confirmSuccessUrl,
     };
     return signUpParams;
   };
 
-  // サインアップ時の処理
-  // paramsに登録情報をぶち込む
-  // 認証メールを送ったアラートを出す
   const handleSignUpSubmit = async (e) => {
     e.preventDefault();
     const params = generateParams();
     try {
       const res = await signUp(params);
       console.log(res);
-      alert("登録いただいたメールアドレスにメールを送りました。\n 届いたメールに記載されているURLをクリックして登録を完了してください。");
+      alert("confirm email");
     } catch (e) {
       console.log(e);
     }
   };
   return (
     <>
-      <h1 class="text-center text-xl">サインアップページです</h1>
+      <h1>サインアップページです</h1>
       <form>
         <div>
+          <label htmlFor="email">メールアドレス</label>
           <input
             type="email"
-            class="border border-gray-200 border-solid rounded w-full mt-3"
             id="email"
             name="email"
-            placeholder="メールアドレス"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
           />
         </div>
         <div>
+          <label htmlFor="password">パスワード</label>
           <input
             type="password"
-            class="border border-gray-200 border-solid rounded w-full mt-3"
             id="password"
             name="password"
-            placeholder="パスワード"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
           />
         </div>
         <div>
+          <label htmlFor="password_confirmation">パスワード確認</label>
           <input
             type="password"
-            class="border border-gray-200 border-solid rounded w-full mt-3"
             id="password_confirmation"
             name="password_confirmation"
-            placeholder="パスワード確認用"
             value={passwordConfirmation}
             onChange={(e) => setPasswordConfirmation(e.target.value)}
           />
@@ -85,15 +75,11 @@ export const SignUp = () => {
             value={confirmSuccessUrl}
           />
         </div>
-        <button type="submit" class="border border-gray-200 bg-green-500 border-solid rounded w-full mt-3" onClick={(e) => handleSignUpSubmit(e)}>
-          登録
+        <button type="submit" onClick={(e) => handleSignUpSubmit(e)}>
+          Submit
         </button>
-
-        <p class="text-xs text-center mt-3">アカウントをすでにお持ちの方はこちら</p>
-        <Link to="/signin" class="inline-block border border-gray-200 bg-green-500 border-solid rounded text-center w-full mt-3">ログイン</Link>
-
       </form>
-
+      <Link to="/signin">サインインへ</Link>
     </>
   );
 };

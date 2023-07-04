@@ -1,2 +1,0 @@
-class ResearchTagonBoard < ApplicationRecord
-end

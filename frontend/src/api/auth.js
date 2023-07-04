@@ -1,7 +1,6 @@
 import client from "./client";
 import Cookies from "js-cookie";
 
-
 // サインアップ
 export const signUp = (params) => {
   return client.post("/auth", params);

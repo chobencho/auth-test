@@ -10,116 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_06_28_070703) do
-  create_table "board_likes", force: :cascade do |t|
-    t.integer "board_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
-  create_table "board_research_tags", force: :cascade do |t|
-    t.integer "board_id"
-    t.integer "tag_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
-  create_table "boards", force: :cascade do |t|
-    t.integer "user_id"
-    t.string "title"
-    t.text "board_content"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.string "image"
-  end
-
-  create_table "check_ages", force: :cascade do |t|
-    t.integer "user_id"
-    t.integer "check_age"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
-  create_table "genders", force: :cascade do |t|
-    t.string "gender_code"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
-  create_table "grades", force: :cascade do |t|
-    t.string "grade_code"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
-  create_table "information", force: :cascade do |t|
-    t.string "title"
-    t.text "body"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
-  create_table "interests", force: :cascade do |t|
-    t.string "interest_code"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
-  create_table "messages", force: :cascade do |t|
-    t.integer "user_id"
-    t.integer "room_id"
-    t.text "body"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
-  create_table "prefectures", force: :cascade do |t|
-    t.string "code"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.integer "prefecture_id"
-  end
-
-  create_table "research_tag_on_boards", force: :cascade do |t|
-    t.integer "tag_id"
-    t.string "name"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
-  create_table "research_tags", force: :cascade do |t|
-    t.integer "tag_id"
-    t.string "tag_name"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
-  create_table "room_members", force: :cascade do |t|
-    t.integer "user_id"
-    t.integer "room_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
-  create_table "rooms", force: :cascade do |t|
-    t.integer "room_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
-  create_table "subjects", force: :cascade do |t|
-    t.string "subject_code"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
-  create_table "user_research_tags", force: :cascade do |t|
-    t.integer "user_id"
-    t.integer "tag_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
+ActiveRecord::Schema[7.0].define(version: 2023_07_04_084104) do
   create_table "users", force: :cascade do |t|
     t.string "provider", default: "email", null: false
     t.string "uid", default: "", null: false
@@ -133,14 +24,9 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_28_070703) do
     t.datetime "confirmation_sent_at"
     t.string "unconfirmed_email"
     t.string "name"
-    t.string "nickname"
     t.string "image"
     t.string "email"
-    t.string "hobby"
-    t.text "content"
-    t.text "tokens"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.string "body"
     t.integer "age"
     t.integer "gender_id"
     t.integer "prefecture_id"
@@ -149,9 +35,14 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_28_070703) do
     t.integer "hobby_1"
     t.integer "hobby_2"
     t.integer "hobby_3"
+    t.integer "hobby_4"
+    t.integer "hobby_5"
     t.integer "interest_1"
     t.integer "interest_2"
     t.integer "interest_3"
+    t.text "tokens"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.index ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
