@@ -8,6 +8,7 @@ export const signUp = (params) => {
 
 // サインイン
 export const signIn = (params) => {
+  console.log(params)
   return client.post("/auth/sign_in", params);
 };
 

@@ -1,6 +1,6 @@
 import Cookies from "js-cookie";
 import { useContext, useState } from "react";
-import { Link, useHistory } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { signIn } from "../api/auth";
 import { AuthContext } from "../App";
 
@@ -9,7 +9,7 @@ export const SignIn = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const history = useHistory();
+  const navigate = useNavigate()
 
   const generateParams = () => {
     const signInParams = {
@@ -33,21 +33,23 @@ export const SignIn = () => {
         setIsSignedIn(true);
         setCurrentUser(res.data.data);
 
-        history.push("/");
+        navigate("/");
       }
     } catch (e) {
       console.log(e);
+
     }
   };
   return (
     <>
-      <p>サインインページです</p>
+      <p class="text-center text-xl">サインインページです</p>
       <form>
         <div>
           <label htmlFor="email">メールアドレス</label>
           <input
             type="email"
             id="email"
+            class="border border-gray-200 border-solid rounded w-full mt-3"
             name="email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
@@ -58,16 +60,26 @@ export const SignIn = () => {
           <input
             type="password"
             id="password"
+            class="border border-gray-200 border-solid rounded w-full mt-3"
             name="password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
           />
         </div>
-        <button type="submit" onClick={(e) => handleSignInSubmit(e)}>
+        <button type="submit" onClick={(e) => handleSignInSubmit(e)} class="border border-gray-200 bg-green-500 border-solid rounded w-full mt-3">
           Submit
         </button>
       </form>
-      <Link to="/signup">サインアップへ</Link>
+
+      <div class="text-center">
+        <Link to="/signup" class="underline text-xs">パスワードを忘れた方はこちら</Link>
+      </div>
+
+      <p class="text-xs text-center mt-3">アカウントをお持ちでない方はこちら</p>
+
+
+      <Link to="/signup" class="inline-block border border-gray-200 bg-green-500 border-solid rounded text-center w-full mt-3">新規会員登録</Link>
+
     </>
   );
 };

@@ -7,4 +7,12 @@ Rails.application.routes.draw do
   namespace :auth do
     resources :sessions, only: %i[index]
   end
+
+  # search_controller
+  get '/search' => 'search#show'
+
+  # board_controller
+  get '/boards' => 'board#index'
+
+  
 end

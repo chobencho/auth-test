@@ -1,0 +1,2 @@
+class BoardResearchtagTagging < ApplicationRecord
+end

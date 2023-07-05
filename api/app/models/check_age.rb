@@ -1,0 +1,2 @@
+class CheckAge < ApplicationRecord
+end
