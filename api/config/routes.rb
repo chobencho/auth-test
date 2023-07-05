@@ -13,6 +13,11 @@ Rails.application.routes.draw do
 
   # board_controller
   get '/boards' => 'board#index'
+  get '/board/:id' => 'board#show'
 
+  # user_controller
+  get '/users/:id' => 'user#show'
+  get '/information' => 'user#information'
+  get '/info/:id' => 'user#info'
   
 end

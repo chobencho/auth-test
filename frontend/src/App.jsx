@@ -2,10 +2,24 @@ import { createContext, useEffect, useState } from "react";
 import { Routes, Route, Navigate, BrowserRouter } from "react-router-dom";
 import { getCurrentUser } from "./api/auth";
 import { Home } from "./components/Home";
+import { User } from "./components/User";
 import { SignIn } from "./components/SignIn";
 import { SignUp } from "./components/SignUp";
 import { Test } from "./components/Test";
 import { Boards } from "./components/Boards";
+import { Board } from "./components/Board";
+import { Messages } from "./components/Messages";
+import { Mypage } from "./components/Mypage";
+import { Setting } from "./components/Setting";
+import { Inquiry } from "./components/Inquiry";
+import { DeleteAccount } from "./components/DeleteAccount";
+import { ChangePassword } from "./components/ChangePassword";
+import { Terms } from "./components/Terms";
+import { PrivacyPolicy } from "./components/PrivacyPolicy";
+import { MyFav } from "./components/MyFav";
+import { Information } from "./components/Information";
+import { Info } from "./components/Info";
+import { Verification } from "./components/Verification";
 
 export const AuthContext = createContext();
 
@@ -76,10 +90,136 @@ function App() {
               />
 
               <Route
+                path="/users/:id"
+                element={
+                  <Private path="/users/:id">
+                    <User currentUser={currentUser} />
+                  </Private>
+                }
+              />
+
+              <Route
                 path="/boards"
                 element={
                   <Private path="/boards">
-                    <Boards currentUser={currentUser}/>
+                    <Boards currentUser={currentUser} />
+                  </Private>
+                }
+              />
+
+              <Route
+                path="/board/:id"
+                element={
+                  <Private path="/board/:id">
+                    <Board currentUser={currentUser} />
+                  </Private>
+                }
+              />
+
+              <Route
+                path="/messages"
+                element={
+                  <Private path="/messages">
+                    <Messages currentUser={currentUser} />
+                  </Private>
+                }
+              />
+
+              <Route
+                path="/mypage/:id"
+                element={
+                  <Private path="/mypage/:id">
+                    <Mypage currentUser={currentUser} />
+                  </Private>
+                }
+              />
+
+              <Route
+                path="/setting"
+                element={
+                  <Private path="/setting">
+                    <Setting currentUser={currentUser} />
+                  </Private>
+                }
+              />
+
+              <Route
+                path="/inquiry"
+                element={
+                  <Private path="/inquiry">
+                    <Inquiry currentUser={currentUser} />
+                  </Private>
+                }
+              />
+
+              <Route
+                path="/deleteaccount"
+                element={
+                  <Private path="/deleteaccount">
+                    <DeleteAccount currentUser={currentUser} />
+                  </Private>
+                }
+              />
+
+              <Route
+                path="/changepassword"
+                element={
+                  <Private path="/changepassword">
+                    <ChangePassword currentUser={currentUser} />
+                  </Private>
+                }
+              />
+
+              <Route
+                path="/privacypolicy"
+                element={
+                  <Private path="/privacypolicy">
+                    <PrivacyPolicy currentUser={currentUser} />
+                  </Private>
+                }
+              />
+
+              <Route
+                path="/terms"
+                element={
+                  <Private path="/terms">
+                    <Terms currentUser={currentUser} />
+                  </Private>
+                }
+              />
+
+              <Route
+                path="/myfav"
+                element={
+                  <Private path="/myfav">
+                    <MyFav currentUser={currentUser} />
+                  </Private>
+                }
+              />
+
+              <Route
+                path="/information"
+                element={
+                  <Private path="/information">
+                    <Information currentUser={currentUser} />
+                  </Private>
+                }
+              />
+
+              <Route
+                path="/info/:id"
+                element={
+                  <Private path="/info/:id">
+                    <Info currentUser={currentUser} />
+                  </Private>
+                }
+              />
+
+              <Route
+                path="/verification"
+                element={
+                  <Private path="/verification">
+                    <Verification currentUser={currentUser} />
                   </Private>
                 }
               />
@@ -88,7 +228,7 @@ function App() {
                 path="/test"
                 element={
                   <Private path="/test">
-                    <Test currentUser={currentUser}/>
+                    <Test currentUser={currentUser} />
                   </Private>
                 }
               />

@@ -14,8 +14,8 @@ export const Boards = ({ currentUser }) => {
 
     useEffect(() => {
         const f = async () => {
-          const res = await axiosInstance.get(`/boards`);
-          setBoards(res.data);
+            const res = await axiosInstance.get(`/boards`);
+            setBoards(res.data);
         };
         f();
     }, []);
@@ -23,9 +23,9 @@ export const Boards = ({ currentUser }) => {
 
     return (
         <>
-        
 
-            <Header currentUser={ currentUser }/>
+
+            <Header currentUser={currentUser} />
 
             <div class="py-20">
 
@@ -44,7 +44,7 @@ export const Boards = ({ currentUser }) => {
                                 <p class="my-1 font-semibold">{boardData.title}</p>
                                 <img src={people} alt="" class="my-3" />
                                 <p>
-                                    {boardData.board_content}
+                                    {boardData.body}
                                 </p>
                                 <div class="my-3">
                                     <span class="bg-yellow-100 border rounded p-1 mr-1 text-sm">生物学</span>
@@ -63,7 +63,7 @@ export const Boards = ({ currentUser }) => {
 
             </div>
 
-            <Footer currentUser={ currentUser }/>
+            <Footer currentUser={currentUser} />
         </>
 
     )
