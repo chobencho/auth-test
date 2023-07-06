@@ -3,12 +3,19 @@ import { Routes, Route, Navigate, BrowserRouter } from "react-router-dom";
 import { getCurrentUser } from "./api/auth";
 import { Home } from "./components/Home";
 import { User } from "./components/User";
+import { UserEdit } from "./components/UserEdit";
+import { SearchUser } from "./components/SearchUser";
 import { SignIn } from "./components/SignIn";
 import { SignUp } from "./components/SignUp";
 import { Test } from "./components/Test";
 import { Boards } from "./components/Boards";
 import { Board } from "./components/Board";
+import { BoardCreate } from "./components/BoardCreate";
+import { BoardEdit } from "./components/BoardEdit";
+import { MyBoard } from "./components/MyBoard";
+import { SearchBoard } from "./components/SearchBoard";
 import { Messages } from "./components/Messages";
+import { Message } from "./components/Message";
 import { Mypage } from "./components/Mypage";
 import { Setting } from "./components/Setting";
 import { Inquiry } from "./components/Inquiry";
@@ -99,6 +106,24 @@ function App() {
               />
 
               <Route
+                path="/users/:id/edit"
+                element={
+                  <Private path="/users/:id/edit">
+                    <UserEdit currentUser={currentUser} />
+                  </Private>
+                }
+              />
+
+              <Route
+                path="/searchuser"
+                element={
+                  <Private path="/searchuser">
+                    <SearchUser currentUser={currentUser} />
+                  </Private>
+                }
+              />
+
+              <Route
                 path="/boards"
                 element={
                   <Private path="/boards">
@@ -117,10 +142,55 @@ function App() {
               />
 
               <Route
+                path="/boardCreate"
+                element={
+                  <Private path="/boardCreate">
+                    <BoardCreate currentUser={currentUser} />
+                  </Private>
+                }
+              />
+
+              <Route
+                path="/board/:id/edit"
+                element={
+                  <Private path="/board/:id/edit">
+                    <BoardEdit currentUser={currentUser} />
+                  </Private>
+                }
+              />
+
+              <Route
+                path="/myboard/:id"
+                element={
+                  <Private path="/myboard/:id">
+                    <MyBoard currentUser={currentUser} />
+                  </Private>
+                }
+              />
+
+              <Route
+                path="/searchboard"
+                element={
+                  <Private path="/searchboard">
+                    <SearchBoard currentUser={currentUser} />
+                  </Private>
+                }
+              />
+
+              <Route
                 path="/messages"
                 element={
                   <Private path="/messages">
                     <Messages currentUser={currentUser} />
+                  </Private>
+                }
+              />
+
+              <Route
+                path="/message"
+                element={
+                  <Private path="/message">
+                    <Message currentUser={currentUser} />
                   </Private>
                 }
               />

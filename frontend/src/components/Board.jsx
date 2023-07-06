@@ -1,8 +1,9 @@
 import { Header } from "./Header";
 import { Footer } from "./Footer";
 import { useEffect, useState } from 'react';
-import { Link, useParams } from "react-router-dom";
+import { Link, useParams, useNavigate } from "react-router-dom";
 import { axiosInstance } from "../utils/axios.js";
+import { FaHeart } from "react-icons/fa6";
 
 import React from 'react'
 import moment from 'moment';
@@ -10,20 +11,39 @@ import people from '../images/people.jpg';
 
 export const Board = ({ currentUser }) => {
 
-  const [board, setBoard] = useState();
+  const [boardData, setBoardData] = useState();
   const params = useParams();
+  const navigate = useNavigate();
 
-
+  const userId = { currentUser }.currentUser.id
 
   useEffect(() => {
     const f = async () => {
-      const res = await axiosInstance.get(`/board/${params.id}`);
-      setBoard(res.data);
+      const res = await axiosInstance.get(`/board/${params.id}`, {params: {userId: userId}});
+      setBoardData(res.data);
     };
     f();
   }, []);
 
-  const userId = board?.user_id;
+
+  const handleCreateFavorite = (e) => {
+    axiosInstance.post(`/board/${params.id}/likecreate`, {userId: userId});
+    navigate(`/board/${params.id}`);
+  }
+
+  const handleDeleteFavorite = (e) => {
+    axiosInstance.post(`/board/${params.id}/likedelete`, {userId: userId});
+    navigate(`/board/${params.id}`);
+  }
+
+
+  const likeBtn = () => {
+    if (boardData?.like) {
+      return<button type="submit" onClick={(e) => { handleDeleteFavorite(e) }}><FaHeart class="text-xl text-red-400 my-3"/></button>;
+    } else {
+      return<button type="submit" onClick={(e) => { handleCreateFavorite(e) }}><FaHeart class="text-xl my-3"/></button>;
+    }
+  };
 
   const editBtn = () => {
     if (userId == { currentUser }.currentUser.id) {
@@ -36,19 +56,23 @@ export const Board = ({ currentUser }) => {
   return (
     <>
       <Header currentUser={currentUser} />
-      <div class="w-11/12 mx-auto py-20">
+
+      <div class="w-11/12 mx-auto py-24">
         <div class="flex justify-between">
           <div class="flex">
             <img src={people} alt="" class="w-12 h-12 object-cover rounded mr-3" />
-            <h1 class="font-semibold text-xl my-auto">{board?.name}</h1>
+            <h1 class="font-semibold text-xl my-auto">{boardData?.board.name}</h1>
           </div>
-          <p class="my-auto">{moment(board?.created_at).format('YYYY/MM/DD HH:mm')}</p>
+          <p class="my-auto">{moment(boardData?.board.created_at).format('YYYY/MM/DD HH:mm')}</p>
+        </div>
+        <div class="flex justify-between">
+          <h1 class="text-xl font-semibold my-3">{boardData?.board.title}</h1>
+          {likeBtn()}
         </div>
 
-        <h1 class="text-xl font-semibold my-3">{board?.title}</h1>
         <img src={people} alt="" />
         <p>
-          {board?.body}
+          {boardData?.board.board_body}
         </p>
 
         <div class="my-3">

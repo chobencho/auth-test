@@ -54,14 +54,14 @@ export const Mypage = ({ currentUser }) => {
             <img src={settingsvg} class="w-2/5 mx-auto pt-3" alt="" />
             <p class="text-center pt-2 text-sm">各種設定</p>
           </Link>
-          <Link to={`/myboards/${userId}`} class="w-1/2 p-1 mb-3">
+          <Link to={`/myboard/${userId}`} class="w-1/2 p-1 mb-3">
             <img src={boardsvg} class="w-2/5 mx-auto pt-3" alt="" />
-            <p class="text-center pt-2 text-sm">掲示板</p>
+            <p class="text-center pt-2 text-sm">自分の掲示板</p>
           </Link>
-          <Link to={`/myfav`} class="w-1/2 p-1 mb-3">
+          {/* <Link to={`/myfav`} class="w-1/2 p-1 mb-3">
             <img src={favsvg} class="w-2/5 mx-auto pt-3" alt="" />
-            <p class="text-center pt-2 text-sm">いいね</p>
-          </Link>
+            <p class="text-center pt-2 text-sm">掲示板にいいねくれた人</p>
+          </Link> */}
         </div>
 
 

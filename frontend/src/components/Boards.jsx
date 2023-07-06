@@ -6,6 +6,7 @@ import { axiosInstance } from "../utils/axios.js";
 
 import React from 'react';
 import people from '../images/people.jpg';
+import search from '../images/search.svg';
 import moment from 'moment';
 
 export const Boards = ({ currentUser }) => {
@@ -28,6 +29,14 @@ export const Boards = ({ currentUser }) => {
             <Header currentUser={currentUser} />
 
             <div class="py-20">
+
+                <div class="flex justify-between py-4 px-2">
+                    <h1 class="text-base font-semibold">掲示板検索</h1>
+                    <Link to={'/searchboard'} class="flex justify-between border bg-gray-100 rounded w-2/3">
+                        <span class="my-auto mx-2 text-gray-600">条件で絞り込む</span>
+                        <img src={search} alt="logo" class="w-4 my-auto mx-1"/>
+                    </Link>
+                </div>
 
                 {boards?.map((boardData) => (
                     <Link to={`/board/${boardData.id}`} key={boardData.id}>
@@ -59,7 +68,7 @@ export const Boards = ({ currentUser }) => {
                     </Link>
                 ))}
 
-                <Link to={`/`} class="border border-gray-200 bg-green-500 text-white text-center text-xs py-2 fixed bottom-20 inset-x-1/4 w-1/2">新規作成</Link>
+                <Link to={`/boardCreate`} class="border border-gray-200 bg-green-500 text-white text-center text-xs py-2 fixed bottom-20 inset-x-1/4 w-1/2">新規作成</Link>
 
             </div>
 

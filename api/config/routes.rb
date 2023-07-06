@@ -14,9 +14,19 @@ Rails.application.routes.draw do
   # board_controller
   get '/boards' => 'board#index'
   get '/board/:id' => 'board#show'
+  post '/board/create' => 'board#create'
+
+  get '/board/:id/edit' => 'board#show_edit'
+  post '/board/:id/update' => 'board#update'
+  post '/board/:id/likecreate' => 'board#likecreate'
+  post '/board/:id/likedelete' => 'board#likedelete'
+  get '/myboard/:id' => 'board#myboard'
+
 
   # user_controller
   get '/users/:id' => 'user#show'
+  post '/users/:id/update' => 'user#update'
+
   get '/information' => 'user#information'
   get '/info/:id' => 'user#info'
   
