@@ -1,2 +1,0 @@
-class RoomMember < ApplicationRecord
-end

@@ -1,2 +1,0 @@
-class UserResearchtagTagging < ApplicationRecord
-end
