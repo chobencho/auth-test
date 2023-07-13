@@ -1,24 +1,26 @@
-import React, { useContext } from "react"
-
+import React, { useContext, useEffect, useState } from "react"
 import { AuthContext } from "App"
+
+import { getUsers } from "lib/api/user"
+import { UserData } from "interfaces/index"
 
 // とりあえず認証済みユーザーの名前やメールアドレスを表示
 const Home = () => {
   const { isSignedIn, currentUser } = useContext(AuthContext)
+  const [users, setUsers] = useState<UserData[]>([]);
+
+  useEffect(() => {
+    const f = async () => {
+      getUsers().then((res) => setUsers(res.data))
+    };
+    f();
+}, []);
 
   return (
     <>
-      {
-        isSignedIn && currentUser ? (
-          <>
-            <h1>Signed in successfully!</h1>
-            <h2>Email: {currentUser?.email}</h2>
-            <h2>Name: {currentUser?.name}</h2>
-          </>
-        ) : (
-          <h1>Not signed in</h1>
-        )
-      }
+      {users?.map((user) => (
+        <p key={user.id}>{user.id}</p>
+      ))}
     </>
   )
 }
