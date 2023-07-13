@@ -19,7 +19,8 @@ const useStyles = makeStyles((theme: Theme) => ({
   },
   card: {
     width: "100%",
-    margin: "5px"
+    margin: "5px",
+    border: "0.1px solid #eee"
   },
   box: {
     margin: "10px",
@@ -58,10 +59,10 @@ const Home = () => {
             />
             <CardContent className={classes.cardContent}>
               <Typography variant="body2">
-                {user.id}
+                {user.name}
               </Typography>
-              <Typography variant="subtitle1">
-                {user.prefecture_code}
+              <Typography variant="body2">
+                {user.name} / {user.name}
               </Typography>
             </CardContent>
           </Card>
@@ -73,7 +74,3 @@ const Home = () => {
 
 export default Home
 
-
-{/* <p key={user.id}>{user.id}</p> */}
-{/* <p key={user.id}>{user.name}</p> */}
-{/* <img src={`${process.env.PUBLIC_URL}/images/${user.image}`} alt="" className="border" /> */}

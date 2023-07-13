@@ -23,7 +23,7 @@ export interface UserData {
   age: number
   image: string
   body: string
-  prefecture_code: string
+  hobby_id_1: number
   allowPasswordChange: boolean
   created_at: Date
   updated_at: Date
