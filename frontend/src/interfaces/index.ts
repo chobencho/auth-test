@@ -20,8 +20,10 @@ export interface UserData {
   provider: string
   email: string
   name: string
-  nickname?: string
-  image?: string
+  age: number
+  image: string
+  body: string
+  prefecture_code: string
   allowPasswordChange: boolean
   created_at: Date
   updated_at: Date
