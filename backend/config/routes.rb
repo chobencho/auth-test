@@ -10,7 +10,10 @@ Rails.application.routes.draw do
       end
 
       get '/users' => 'users#index'
+      get '/user/:id' => 'users#show'
 
+      get '/boards' => 'boards#index'
+      
     end
   end
 end

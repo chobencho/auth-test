@@ -23,9 +23,23 @@ export interface UserData {
   age: number
   image: string
   body: string
-  hobby_id_1: number
+  subjectCode: string
+  subjectId: number
+  genderCode: string
+  genderId: number
+  gradeCode: string
+  gradeId: number
+  prefectureCode: string
+  prefectureId: number
+  interestId_1: number
+  interestId_2: number
+  interestId_3: number
+  hobbyId_1: number
+  hobbyId_2: number
+  hobbyId_3: number
+  hobbyId_4: number
+  hobbyId_5: number
   allowPasswordChange: boolean
   created_at: Date
   updated_at: Date
 }
-

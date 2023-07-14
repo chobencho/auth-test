@@ -26,10 +26,10 @@ const CommonLayout = ({ children }: CommonLayoutProps) => {
 
   return (
     <>
-      <header>
+      <header className="fixed top-0 w-full">
         <Header />
       </header>
-      <main>
+      <main className="py-14">
         <Container maxWidth="lg" className={classes.container}>
           {children}
         </Container>

@@ -1,5 +1,5 @@
-import React, { useContext, useEffect, useState } from "react"
-import { AuthContext } from "App"
+import { useEffect, useState } from "react"
+import { Link } from 'react-router-dom'
 
 import { makeStyles, Theme } from "@material-ui/core/styles"
 
@@ -10,6 +10,7 @@ import Box from "@material-ui/core/Box"
 import { Typography } from "@material-ui/core"
 
 import { getUsers } from "lib/api/user"
+import { getData } from "lib/api/user"
 import { UserData } from "interfaces/index"
 
 const useStyles = makeStyles((theme: Theme) => ({
@@ -36,36 +37,43 @@ const useStyles = makeStyles((theme: Theme) => ({
 }))
 
 
+
+
 const Home = () => {
   const [users, setUsers] = useState<UserData[]>([]);
   const classes = useStyles()
 
   useEffect(() => {
     const f = async () => {
-      getUsers().then((res) => setUsers(res.data))
+      const res = await getUsers();
+      setUsers(res.data);
     };
     f();
-}, []);
+  }, []);
+
 
   return (
     <>
       <Box className={classes.flexbox}>
         {users?.map((user) => (
-          <Card className={classes.card}>
-            <CardMedia
-              component="img"
-              src={`${process.env.PUBLIC_URL}/images/${user.image}`}
-              alt="user image"
-            />
-            <CardContent className={classes.cardContent}>
-              <Typography variant="body2">
-                {user.name}
-              </Typography>
-              <Typography variant="body2">
-                {user.name} / {user.name}
-              </Typography>
-            </CardContent>
-          </Card>
+          <Link to={`/user/${user.id}`}>
+            <Card className={classes.card}>
+              <CardMedia
+                component="img"
+                src={`${process.env.PUBLIC_URL}/images/${user.image}`}
+                alt="user image"
+              />
+              <CardContent className={classes.cardContent}>
+                <Typography variant="body2">
+                  {user.name}
+                </Typography>
+                <Typography variant="body2">
+                  {user.name} / {user.subjectCode}
+                </Typography>
+              </CardContent>
+            </Card>
+          </Link>
+
         ))}
       </Box>
     </>
