@@ -45,7 +45,6 @@ const User = () => {
         <EditButton id={id || ''}/>
       </>
     }
-
     </>
   )
 }

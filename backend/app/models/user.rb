@@ -4,6 +4,7 @@ class User < ActiveRecord::Base
          :recoverable, :rememberable, :validatable, :confirmable
   include DeviseTokenAuth::Concerns::User
 
+  has_many :board
   belongs_to :prefecture, foreign_key: 'prefecture_id', primary_key: 'id', class_name: 'Prefecture'
   belongs_to :subject, foreign_key: 'subject_id', primary_key: 'id', class_name: 'Subject'
   belongs_to :grade, foreign_key: 'grade_id', primary_key: 'id', class_name: 'Grade'

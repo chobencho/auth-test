@@ -13,6 +13,7 @@ Rails.application.routes.draw do
       get '/user/:id' => 'users#show'
 
       get '/boards' => 'boards#index'
+      get '/board/:id' => 'boards#show'
       
     end
   end

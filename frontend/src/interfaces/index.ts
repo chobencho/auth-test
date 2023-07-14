@@ -43,3 +43,19 @@ export interface UserData {
   created_at: Date
   updated_at: Date
 }
+
+
+// ユーザー
+export interface BoardData {
+  id: number
+  boardId: number
+  userId: string
+  title: string
+  boardTitle: string
+  image: string
+  boardImage: string
+  body: string
+  boardBody: string
+  created_at: Date
+  updated_at: Date
+}

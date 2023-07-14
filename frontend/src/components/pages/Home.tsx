@@ -10,7 +10,6 @@ import Box from "@material-ui/core/Box"
 import { Typography } from "@material-ui/core"
 
 import { getUsers } from "lib/api/user"
-import { getData } from "lib/api/user"
 import { UserData } from "interfaces/index"
 
 const useStyles = makeStyles((theme: Theme) => ({
@@ -35,9 +34,6 @@ const useStyles = makeStyles((theme: Theme) => ({
     display: "flex"
   }
 }))
-
-
-
 
 const Home = () => {
   const [users, setUsers] = useState<UserData[]>([]);

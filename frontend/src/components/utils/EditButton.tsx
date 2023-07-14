@@ -14,7 +14,7 @@ const EditButton = ({id}: ChildComponentProps) => {
     <>
         {
             id == `${currentUser?.id}` ? (
-                <Link to={`/user/${id}/edit`} className="border bg-gray-200">編集</Link>
+                <Link to={`edit`} className="border bg-gray-200">編集</Link>
             ) : (
                 <Link to="/messages" className="border bg-gray-200">メッセージを送る</Link>
             )
