@@ -1,2 +1,0 @@
-class BoardLike < ApplicationRecord
-end
