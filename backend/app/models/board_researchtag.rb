@@ -1,0 +1,2 @@
+class BoardResearchtag < ApplicationRecord
+end
