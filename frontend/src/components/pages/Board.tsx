@@ -25,7 +25,7 @@ const Board = () => {
           <p>ユーザID:{board.userId}</p>
 
           <img src={`${process.env.PUBLIC_URL}/images/${board.image}`} alt="" />
-          <EditButton id={board.userId || ''} />
+          <EditButton userId={board.userId || ''} />
         </>
       }
     </>

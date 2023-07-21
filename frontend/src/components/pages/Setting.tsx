@@ -8,7 +8,16 @@ import { Link } from "react-router-dom";
 const Setting = () => {
   return (
     <>
-      <Link to={`/inquiry`} className="border m-2"><FormatAlignJustifyIcon /><span>お問い合わせ</span></Link><br />
+      <Link
+        to="https://www.google.com"
+        target="_blank"
+        rel="noopener noreferrer"
+        className="border m-2">
+        <FormatAlignJustifyIcon />
+        <span>
+          お問い合わせ
+        </span>
+      </Link><br />
       <Link to={`/changePassword`} className="border m-2"><LockIcon /><span>パスワード変更</span></Link><br />
       <Link to={`/terms`} className="border m-2"><BrandingWatermarkIcon /><span>利用規約</span></Link><br />
       <Link to={`/privacyPolicy`} className="border m-2"><SecurityIcon /><span>プライバシーポリシー</span></Link><br />

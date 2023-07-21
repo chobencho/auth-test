@@ -21,7 +21,7 @@ const Messages = () => {
   return (
     <>
       {chatUsers?.map((chatUser) => (
-        <Link to={`/message/${chatUser.roomId}`} className="border m-2 inline-block">
+        <Link to={`/message/${chatUser.roomId}?partnerId=${chatUser.id}`} className="border m-2 inline-block">
           <p>名前:{chatUser.name}</p>
           <p>メール:{chatUser.email}</p>
           <img src={`${process.env.PUBLIC_URL}/images/${chatUser.image}`} alt="" />

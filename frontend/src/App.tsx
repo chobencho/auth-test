@@ -9,6 +9,7 @@ import SignIn from "components/pages/SignIn"
 import Board from "components/pages/Board"
 import Boards from "components/pages/Boards"
 import BoardCreate from "components/pages/BoardCreate"
+import BoardEdit from "components/pages/BoardEdit"
 import Messages from "components/pages/Messages"
 import Message from "components/pages/Message"
 import User from "components/pages/User"
@@ -21,6 +22,11 @@ import Information from "components/pages/Information"
 
 import { getCurrentUser } from "lib/api/auth"
 import { UserData } from "interfaces/index"
+import ChangePassword from "components/pages/ChangePassword"
+import Terms from "components/pages/Terms"
+import PrivacyPolicy from "components/pages/PrivacyPolicy"
+import Verification from "components/pages/Verification"
+import UserEdit from "components/pages/UserEdit"
 
 export const AuthContext = createContext({} as {
   loading: boolean
@@ -108,6 +114,13 @@ const App = () => {
                 </Private>
               } />
             <Route
+              path="/board/:id/edit"
+              element={
+                <Private>
+                  <BoardEdit />
+                </Private>
+              } />
+            <Route
               path="/messages"
               element={
                 <Private>
@@ -126,6 +139,13 @@ const App = () => {
               element={
                 <Private>
                   <User />
+                </Private>
+              } />
+            <Route
+              path="/user/:id/edit"
+              element={
+                <Private>
+                  <UserEdit />
                 </Private>
               } />
             <Route
@@ -168,6 +188,34 @@ const App = () => {
               element={
                 <Private>
                   <Info />
+                </Private>
+              } />
+            <Route
+              path="/changePassword"
+              element={
+                <Private>
+                  <ChangePassword />
+                </Private>
+              } />
+            <Route
+              path="/terms"
+              element={
+                <Private>
+                  <Terms />
+                </Private>
+              } />
+            <Route
+              path="/privacyPolicy"
+              element={
+                <Private>
+                  <PrivacyPolicy />
+                </Private>
+              } />
+            <Route
+              path="/verification"
+              element={
+                <Private>
+                  <Verification />
                 </Private>
               } />
           </Routes>

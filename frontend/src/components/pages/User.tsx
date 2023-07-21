@@ -7,10 +7,9 @@ import EditButton from "components/utils/EditButton"
 
 
 const User = () => {
-  const [user, setUser] = useState<UserData | null>(null);
-
-  const { id } = useParams<{ id: string }>();
-
+  const [user, setUser] = useState<UserData | null>(null)
+  // 閲覧先のユーザIDを取得
+  const { id } = useParams<{ id: string }>()
 
   useEffect(() => {
     const f = async () => {
@@ -42,7 +41,7 @@ const User = () => {
           <p>{user.hobbyId_4}</p>
           <p>{user.hobbyId_5}</p>
           <img src={`${process.env.PUBLIC_URL}/images/${user.image}`} alt="" />
-          <EditButton id={id || ''} />
+          <EditButton userId={id || ''} />
         </>
       }
     </>

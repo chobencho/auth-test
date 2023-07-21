@@ -1,3 +1,6 @@
+import { useContext } from "react"
+import { AuthContext } from "App"
+
 import { useEffect, useState } from "react"
 import { Link } from 'react-router-dom'
 
@@ -39,9 +42,13 @@ const Home = () => {
   const [users, setUsers] = useState<UserData[]>([]);
   const classes = useStyles()
 
+  const { currentUser } = useContext(AuthContext)
+  const myId = currentUser ? currentUser.id : null
+  const stringMyId = myId?.toString()
+
   useEffect(() => {
     const f = async () => {
-      const res = await getUsers();
+      const res = await getUsers(stringMyId);
       setUsers(res.data);
     };
     f();
