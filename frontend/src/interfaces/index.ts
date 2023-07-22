@@ -21,7 +21,9 @@ export interface UserData {
   email: string
   name: string
   age: number
-  image: string
+  image?: {
+    url: string
+  }
   body: string
   subjectCode: string
   subjectId: number

@@ -78,6 +78,22 @@ class Api::V1::MessagesController < ApplicationController
         end
     end
 
+    def exist
+        user_id = params[:user_id].to_i
+        my_id = params[:string_my_id].to_i
+    
+        room_id_1 = RoomMember.where(user_id: user_id).pluck(:room_id)
+        room_id_2 = RoomMember.where(user_id: my_id).pluck(:room_id)
+
+        common_room_id = room_id_1 & room_id_2
+
+        if common_room_id.present?
+            render json: common_room_id
+          else
+            render json: nil
+        end
+      end
+
     private
 
     def message_params

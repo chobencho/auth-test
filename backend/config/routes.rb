@@ -11,16 +11,21 @@ Rails.application.routes.draw do
 
       get '/users' => 'users#index'
       get '/user/:id' => 'users#show'
-      get '/user/existChatRoom' => 'users#existChatRoom'
+      get '/user/:id/edit' => 'users#showEdit'
+      post '/user/:id/edit' => 'users#edit'
 
       get '/boards' => 'boards#index'
       get '/board/:id' => 'boards#show'
+      get '/board/:id/getLike' => 'boards#getLike'
+      post '/board/:id/createLike' => 'boards#createLike'
+      delete '/board/:id/deleteLike' => 'boards#deleteLike'
       get '/myboard/:id' => 'boards#mypage'
 
       get '/information' => 'infos#index'
       get '/info/:id' => 'infos#show'
 
       get '/messages' => 'messages#index'
+      get '/message/exist' => 'messages#exist'
       post '/chatCreate' => 'messages#chatCreate'
       get '/message/:id' => 'messages#show'
       delete '/message/:id' => 'messages#destroy'

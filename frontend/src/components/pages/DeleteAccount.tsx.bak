@@ -10,6 +10,7 @@ const DeleteAccount = () => {
 
   const handleDeleteAccount = async (e: React.MouseEvent<HTMLButtonElement>) => {
     if (window.confirm("アカウントを削除すると元の状態に戻せませんがよろしいですか？")) {
+
       try {
         const res = await deleteAccount()
         console.log(res)

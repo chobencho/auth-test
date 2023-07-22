@@ -1,4 +1,3 @@
-import React from 'react'
 import { useEffect, useState } from "react"
 import { useParams } from "react-router-dom"
 import { getUserData } from "lib/api/user"
@@ -40,6 +39,7 @@ const User = () => {
           <p>{user.hobbyId_3}</p>
           <p>{user.hobbyId_4}</p>
           <p>{user.hobbyId_5}</p>
+
           <img src={`${process.env.PUBLIC_URL}/images/${user.image}`} alt="" />
           <EditButton userId={id || ''} />
         </>

@@ -10,7 +10,7 @@ interface BoardFormProps {
 }
 
 const ChatForm = ({ handleGetMessages }: BoardFormProps) => {
-  const [roomid, setRoomid] = useState<string>("")
+  const [roomId, setRoomId] = useState<string>("")
   const [userid, setUserid] = useState<string>("")
   const [body, setBody] = useState<string>("")
 
@@ -22,8 +22,7 @@ const ChatForm = ({ handleGetMessages }: BoardFormProps) => {
 
   const createFormData = (): FormData => {
     const formData = new FormData()
-
-
+    
     formData.append("room_id", id ? id : "")
     formData.append("user_id", stringUserId ? stringUserId : "")
     formData.append("body", body)
@@ -38,7 +37,7 @@ const ChatForm = ({ handleGetMessages }: BoardFormProps) => {
 
     await createMessage(data)
       .then(() => {
-        setRoomid("")
+        setRoomId("")
         setUserid("")
         setBody("")
         handleGetMessages()

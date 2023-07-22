@@ -27,3 +27,7 @@ export const createMessage = (data: FormData): AxiosPromise => {
 export const deleteChatRoom = (room_id: string): AxiosPromise => {
   return client.delete(`/message/${room_id}`)
 }
+
+export const getCommonRoomId = (userId: string | undefined, stringMyId: string | undefined) => {
+  return client.get<string | null>(`/message/exist`, { params: { userId, stringMyId } })
+}

@@ -11,6 +11,7 @@ Rails.application.routes.draw do
 
       get '/users' => 'users#index'
       get '/user/:id' => 'users#show'
+      get '/user/existChatRoom' => 'users#existChatRoom'
 
       get '/boards' => 'boards#index'
       get '/board/:id' => 'boards#show'
@@ -20,7 +21,10 @@ Rails.application.routes.draw do
       get '/info/:id' => 'infos#show'
 
       get '/messages' => 'messages#index'
+      post '/chatCreate' => 'messages#chatCreate'
       get '/message/:id' => 'messages#show'
+      delete '/message/:id' => 'messages#destroy'
+      post '/message' => 'messages#create'
       
     end
   end
