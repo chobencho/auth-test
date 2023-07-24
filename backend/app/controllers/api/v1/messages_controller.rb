@@ -28,6 +28,11 @@ class Api::V1::MessagesController < ApplicationController
         render json: json_data
     end
 
+    def chatPartner
+        @partner = User.find_by(id: params[:id])
+        render json: @partner
+    end
+
     def show
         @messages = Message.where(room_id: params[:id])
 

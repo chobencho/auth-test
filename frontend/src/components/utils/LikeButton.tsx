@@ -8,8 +8,8 @@ interface LikeFormProps {
     boardId: string
     myId: string
     handleGetBoardData: Function
-  }
-  
+}
+
 const LikeButton = ({ boardId, myId, handleGetBoardData }: LikeFormProps) => {
     const [like, setLike] = useState<boolean>(false);
 
@@ -28,25 +28,25 @@ const LikeButton = ({ boardId, myId, handleGetBoardData }: LikeFormProps) => {
             handleGetBoardData()
         })
     }
-    
+
     useEffect(() => {
         const f = async () => {
-          getLike(boardId, myId).then((res) => setLike(res.data))
+            getLike(boardId, myId).then((res) => setLike(res.data))
         };
         f();
-      }, []);
-    
-  return (
-    <>
-        {
-            like ? (
-                <button onClick={handleDeleteLike} ><FaHeart className="text-xl text-red-400 my-3"/></button>
-            ) : (
-                <button onClick={handleCreateLike} ><FaHeart className="text-xl my-3"/></button>
-            )
-        }
-    </>
-  )
+    }, []);
+
+    return (
+        <>
+            {
+                like ? (
+                    <button onClick={handleDeleteLike} ><FaHeart className="text-xl text-red-400 my-3" /></button>
+                ) : (
+                    <button onClick={handleCreateLike} ><FaHeart className="text-xl my-3" /></button>
+                )
+            }
+        </>
+    )
 }
 
 export default LikeButton

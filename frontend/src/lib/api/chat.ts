@@ -8,6 +8,11 @@ export const getChatRooms = (id: string | undefined) => {
   return client.get<ChatUserData[]>(`/messages`, { params: { id } });
 }
 
+// 自分がやりとりしてるルーム情報を取得
+export const getChatPartner = (id: string | undefined) => {
+  return client.get<ChatUserData>(`/message`, { params: { id } });
+}
+
 // 新しいチャットルームを作成する
 export const createChatRoom = (id: string | undefined, stringMyId: string | undefined) => {
   return client.post(`/chatCreate`, { id, stringMyId })

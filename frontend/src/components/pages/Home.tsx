@@ -21,7 +21,7 @@ const useStyles = makeStyles((theme: Theme) => ({
     textAlign: "center"
   },
   card: {
-    width: "100%",
+    width: "300px",
     margin: "5px",
     border: "0.1px solid #eee"
   },
@@ -34,7 +34,14 @@ const useStyles = makeStyles((theme: Theme) => ({
     padding: "0px"
   },
   flexbox: {
-    display: "flex"
+    display: "flex",
+    width: "100%",
+    flexWrap: "wrap"
+  },
+  image: {
+    width: "100%",
+    height: "200px",
+    objectFit: "cover"
   }
 }))
 
@@ -60,11 +67,16 @@ const Home = () => {
         {users?.map((user) => (
           <Link to={`/user/${user.id}`}>
             <Card className={classes.card}>
-              <CardMedia
-                component="img"
-                src={`${process.env.PUBLIC_URL}/images/${user.image}`}
-                alt="user image"
-              />
+
+              {user.image?.url ?
+                <CardMedia
+                  component="img"
+                  src={user.image.url}
+                  alt="user image"
+                  className={classes.image}
+                /> : null
+              }
+
               <CardContent className={classes.cardContent}>
                 <Typography variant="body2">
                   {user.name}

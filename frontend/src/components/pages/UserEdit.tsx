@@ -1,8 +1,9 @@
-import { useState, useEffect, useCallback } from "react"
-import { getEditUserData, editUserData } from "lib/api/user"
+import { useState, useEffect } from "react"
+import { getEditUserData } from "lib/api/user"
 import { useParams } from "react-router-dom"
 import { UserData } from "interfaces/index"
 import UserEditForm from "components/utils/UserEditForm"
+import UserEditItem from "components/utils/UserEditItem"
 
 const UserEdit = () => {
   const [userData, setUserData] = useState<UserData | null>(null)
@@ -16,21 +17,17 @@ const UserEdit = () => {
     handleGetUserData()
   }, [])
 
-
   return (
     <>
+      <UserEditForm
+        handleGetUserData={handleGetUserData}
+      />
+
       {userData !== null && (
         <>
-        {userData.name}
-        {userData.image?.url ?
-          <img
-            src={userData.image.url}
-            alt="userData image"
-          /> : null
-        }
-
-          <UserEditForm 
+          <UserEditItem
             handleGetUserData={handleGetUserData}
+            userData={userData}
           />
         </>
       )}

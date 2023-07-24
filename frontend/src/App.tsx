@@ -14,6 +14,7 @@ import Messages from "components/pages/Messages"
 import Message from "components/pages/Message"
 import User from "components/pages/User"
 import MyPage from "components/pages/MyPage"
+import MyFav from "components/pages/MyFav"
 import MyBoard from "components/pages/MyBoard"
 import Setting from "components/pages/Setting"
 import DeleteAccount from "components/pages/DeleteAccount"
@@ -160,6 +161,13 @@ const App = () => {
               element={
                 <Private>
                   <MyPage />
+                </Private>
+              } />
+            <Route
+              path="/myFav"
+              element={
+                <Private>
+                  <MyFav />
                 </Private>
               } />
             <Route

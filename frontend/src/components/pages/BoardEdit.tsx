@@ -1,23 +1,38 @@
 import { useState, useEffect } from "react"
+import { getEditBoardData } from "lib/api/board"
+import { BoardData } from "interfaces/index"
+import { useParams } from "react-router-dom"
+import BoradEditForm from "components/utils/BoradEditForm"
+import BoardEditItem from "components/utils/BoardEditItem"
+import GoBackButton from "components/utils/GoBackButton"
 
 const BoardEdit = () => {
-  const [name, setName] = useState<string>("")
-  const handleEditUserData = () => {
+  const [boardData, setBoardData] = useState<BoardData | null>(null)
+  const { id } = useParams<{ id: string }>();
 
+  const handleGetBoardData = async () => {
+    getEditBoardData(id).then((res) => setBoardData(res.data))
   }
+
+  useEffect(() => {
+    handleGetBoardData()
+  }, [])
 
   return (
     <>
-      <form onSubmit={handleEditUserData}>
+      <BoradEditForm
+        handleGetBoardData={handleGetBoardData}
+      />
 
-        <h6>名前</h6>
-        <input
-          type="text"
-          placeholder="name"
-          value={name}
-          onChange={(e: React.ChangeEvent<HTMLInputElement>) => { setName(e.target.value) }}
-        />
-      </form>
+      {boardData !== null && (
+        <>
+          <BoardEditItem
+            handleGetBoardData={handleGetBoardData}
+            boardData={boardData}
+          />
+        </>
+      )}
+      <GoBackButton />
     </>
   )
 }

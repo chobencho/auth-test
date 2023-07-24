@@ -2,7 +2,7 @@ import { useEffect, useState } from "react"
 import { useParams } from "react-router-dom"
 import { getUserData } from "lib/api/user"
 import { UserData } from "interfaces/index"
-import EditButton from "components/utils/EditButton"
+import UserEditButton from "components/utils/UserEditButton"
 
 
 const User = () => {
@@ -40,8 +40,14 @@ const User = () => {
           <p>{user.hobbyId_4}</p>
           <p>{user.hobbyId_5}</p>
 
-          <img src={`${process.env.PUBLIC_URL}/images/${user.image}`} alt="" />
-          <EditButton userId={id || ''} />
+          {user.image?.url ?
+            <img
+              src={user.image.url}
+              alt="userData image"
+              className="w-1/3"
+            /> : null
+          }
+          <UserEditButton userId={id || ''} />
         </>
       }
     </>

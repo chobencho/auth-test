@@ -5,7 +5,7 @@ class Api::V1::UsersController < ApplicationController
   end
 
   def show
-      @user = User.joins(:prefecture, :subject, :gender, :grade).select("*").find(params[:id])
+      @user = User.joins(:prefecture, :subject, :gender, :grade).select("*, users.id AS id").find_by(id: params[:id])
       render json: @user  
   end
 

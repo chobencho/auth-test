@@ -53,8 +53,12 @@ export interface BoardData {
   userId: string
   title: string
   boardTitle: string
-  image: string
-  boardImage: string
+  image?: {
+    url: string
+  }
+  boardImage?: {
+    url: string
+  }
   body: string
   boardBody: string
   createdAt: Date
@@ -78,7 +82,9 @@ export interface ChatUserData {
   email: string
   name: string
   age: number
-  image: string
+  image?: {
+    url: string
+  }
   roomId: string
 }
 

@@ -16,8 +16,7 @@ export const getEditUserData = (id: string | undefined) => {
   return client.get(`/user/${id}/edit`)
 }
 
-
 // ユーザ情報変更
-export const editUserData = (id:string | undefined, data: FormData): AxiosPromise => {
+export const editUserData = (id: string | undefined, data: FormData): AxiosPromise => {
   return clientImage.post(`/user/${id}/edit`, data)
 }

@@ -1,11 +1,12 @@
 import { useContext } from "react"
 import { AuthContext } from "App"
-import { useParams, useLocation  } from "react-router-dom"
+import { useParams, useLocation } from "react-router-dom"
 import { useEffect, useState } from "react"
 import { MessageData } from "interfaces/index"
 import { getMessages } from "lib/api/chat"
 import ChatMessage from "components/utils/ChatMessage"
 import ChatForm from "components/utils/ChatForm"
+import ChatPartner from "components/utils/ChatPartner"
 import DeleteButton from "components/utils/DeleteButton"
 
 const Message = () => {
@@ -23,7 +24,7 @@ const Message = () => {
     const location = useLocation();
     const searchParams = new URLSearchParams(location.search);
     const chatPartnerId = searchParams.get('partnerId') || '';
-    
+
     // ルームIDからメッセージ情報を取得・更新
     const handleGetMessages = async () => {
         getMessages(id, chatPartnerId).then((res) => setMessages(res.data))
@@ -36,6 +37,7 @@ const Message = () => {
 
     return (
         <>
+            <ChatPartner chatPartnerId={chatPartnerId} />
             {messages.map((message: MessageData) => (
                 <ChatMessage
                     message={message}
@@ -43,7 +45,7 @@ const Message = () => {
                 />
             ))}
             <ChatForm handleGetMessages={handleGetMessages} />
-            <DeleteButton room_id={id}/>
+            <DeleteButton room_id={id} />
         </>
     )
 }

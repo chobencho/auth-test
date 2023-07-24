@@ -24,7 +24,13 @@ const Messages = () => {
         <Link to={`/message/${chatUser.roomId}?partnerId=${chatUser.id}`} className="border m-2 inline-block">
           <p>名前:{chatUser.name}</p>
           <p>メール:{chatUser.email}</p>
-          <img src={`${process.env.PUBLIC_URL}/images/${chatUser.image}`} alt="" />
+          {chatUser.image?.url ?
+            <img
+              src={chatUser.image.url}
+              alt="userData image"
+              className="w-1/2"
+            /> : null
+          }
           <p>ルームID:{chatUser.roomId}</p>
         </Link>
       ))}

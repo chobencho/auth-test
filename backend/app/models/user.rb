@@ -5,7 +5,7 @@ class User < ActiveRecord::Base
 
   mount_uploader :image, ImageUploader
 
-  has_many :board
+  has_many :boards
   belongs_to :prefecture, foreign_key: 'prefecture_id', primary_key: 'id', class_name: 'Prefecture'
   belongs_to :subject, foreign_key: 'subject_id', primary_key: 'id', class_name: 'Subject'
   belongs_to :grade, foreign_key: 'grade_id', primary_key: 'id', class_name: 'Grade'

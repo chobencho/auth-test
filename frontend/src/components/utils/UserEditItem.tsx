@@ -1,8 +1,27 @@
 import React from 'react'
+import { UserData } from "interfaces/index"
 
-const UserEditItem = () => {
+interface UserEditItemProps {
+  handleGetUserData: Function
+  userData: UserData
+}
+
+const UserEditItem = ({ userData, handleGetUserData }: UserEditItemProps) => {
+
   return (
-    <div>UserEditItem</div>
+    <>
+      <p>名前:{userData.name}</p>
+      <p>画像:
+        {userData.image?.url ?
+          <img
+            src={userData.image.url}
+            alt="userData image"
+            className="w-1/2"
+          /> : null
+        }
+      </p>
+      <p>年齢:{userData.age}</p>
+    </>
   )
 }
 

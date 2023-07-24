@@ -1,75 +1,73 @@
 import React, { useState, useEffect, useCallback } from "react"
 import { editUserData } from "lib/api/user"
 import { useParams } from "react-router-dom"
-import { UserData } from "interfaces/index"
 
 interface UserEditFormProps {
-    handleGetUserData: Function
+  handleGetUserData: Function
 }
 
 const UserEditForm = ({ handleGetUserData }: UserEditFormProps) => {
-    const [name, setName] = useState<string>("")
-    const [image, setImage] = useState<File | undefined>()
-    const [preview, setPreview] = useState<string>("")
-  
-    const { id } = useParams<{ id: string }>();
-  
+  const [name, setName] = useState<string>("")
+  const [image, setImage] = useState<File | undefined>()
+  const [preview, setPreview] = useState<string>("")
 
-    // 画像アップロード機能
-    const uploadImage = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
-        const file = e.target.files?.[0]
-        setImage(file)
-    }, [])
+  const { id } = useParams<{ id: string }>();
 
-    // プレビュー機能
-    const previewImage = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
-        const file = e.target.files?.[0]
-        if (file) {
-        setPreview(window.URL.createObjectURL(file))
-        } else {
-        setPreview("") // ファイルが選択されていない場合はプレビューをクリア
-        }
-    }, [])
+  // 画像アップロード機能
+  const uploadImage = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0]
+    setImage(file)
+  }, [])
 
-    // プレビュークリア機能
-    const handleClearPreview = () => {
-        setPreview("")
-        // プレビューをクリアすると同時に、inputタグの内容もクリア
-        const fileInput = document.getElementById("icon-button-file") as HTMLInputElement
-        if (fileInput) {
-        fileInput.value = "";
-        }
+  // プレビュー機能
+  const previewImage = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0]
+    if (file) {
+      setPreview(window.URL.createObjectURL(file))
+    } else {
+      setPreview("") // ファイルが選択されていない場合はプレビューをクリア
     }
+  }, [])
 
-    // FormData形式でデータを作成
-    const createFormData = (): FormData => {
-        const formData = new FormData()
-
-        formData.append("name", name)
-        if (image) formData.append("image", image)
-
-        return formData
+  // プレビュークリア機能
+  const handleClearPreview = () => {
+    setPreview("")
+    // プレビューをクリアすると同時に、inputタグの内容もクリア
+    const fileInput = document.getElementById("icon-button-file") as HTMLInputElement
+    if (fileInput) {
+      fileInput.value = "";
     }
+  }
 
-    // ユーザ情報を変更する
-    const handleEditUserData = async (e: React.FormEvent<HTMLFormElement>) => {
-      e.preventDefault()
+  // FormData形式でデータを作成
+  const createFormData = (): FormData => {
+    const formData = new FormData()
 
-      const data = createFormData()
+    formData.append("name", name)
+    if (image) formData.append("image", image)
 
-      await editUserData(id, data)
+    return formData
+  }
+
+  // ユーザ情報を変更する
+  const handleEditUserData = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault()
+
+    const data = createFormData()
+
+    await editUserData(id, data)
       .then(() => {
         setName("")
         setPreview("")
         setImage(undefined)
+        handleGetUserData()
       })
-
-    }
+  }
 
   return (
     <>
-        {}
-        <form onSubmit={handleEditUserData}>
+      { }
+      <form onSubmit={handleEditUserData}>
 
         <b>名前</b>
         <input
@@ -108,8 +106,10 @@ const UserEditForm = ({ handleGetUserData }: UserEditFormProps) => {
 
       {preview ?
         <div>
-          {/* <button onClick={() => setPreview("")}>×</button> */}
-          <button onClick={() => handleClearPreview()} className="border text-2xl text-white bg-gray-600 px-3 py-1" >×</button>
+          <button
+            onClick={() => handleClearPreview()}
+            className="border text-2xl text-white bg-gray-600 px-3 py-1"
+          >×</button>
           <img
             src={preview}
             alt="preview img"

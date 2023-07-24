@@ -1,14 +1,30 @@
 class Api::V1::BoardsController < ApplicationController
 
     def index
-        @boards = User.joins(:board).select("users.*, boards.id AS board_id, boards.user_id AS user_id, boards.title AS board_title, boards.body AS board_body, boards.image AS board_image")
+        @boards = Board.joins(:user).select("boards.*, boards.id AS board_id, boards.user_id, users.name, boards.title, boards.body AS board_body, boards.image AS url, users.image AS user_image")
+
         render json: @boards
     end
 
     def show
-        @board = User.joins(:board).select("board.id, user_id, name, title, board.body AS board__body,  board.image AS board_image, users.image AS user_image").find_by(board: {id: params[:id]})
-        render json: @board  
+        @board = Board.joins(:user).select("boards.*, boards.id AS board_id, boards.user_id, users.name, boards.title, boards.body AS board_body, boards.image AS url, users.image AS user_image").find_by(id: params[:id])
+        
+        render json: @board
     end
+
+    def showEdit
+        @board = Board.find_by(id: params[:id])
+        render json: @board
+    end
+
+    def edit
+        @board = Board.find_by(id: params[:id])
+        if @board.update(board_edit_params)
+          render json: @board
+        else
+          render json: {status: "error", message: "ŒfŽ¦”Âî•ñ‚ÌXV‚ÉŽ¸”s‚µ‚Ü‚µ‚½"}
+        end
+      end
 
     def getLike
         @like = BoardLike.find_by(user_id: params[:user_id], board_id: params[:id]).present?
@@ -16,7 +32,7 @@ class Api::V1::BoardsController < ApplicationController
     end
 
     def createLike
-        @like = BoardLike.create(user_id: params[:user_id], board_id: params[:id])
+        @like = BoardLike.create(user_id: params[:user_id], board_id: params[:board_id])
         render json: true
     end
 
@@ -26,7 +42,13 @@ class Api::V1::BoardsController < ApplicationController
     end
 
     def mypage
-        @boards = User.joins(:board).select("*").where(users: {id: params[:id]})
+        @boards = Board.joins(:user).select("boards.*, boards.id AS board_id, boards.user_id, users.name, boards.title, boards.body AS board_body, boards.image AS url, users.image AS user_image").where(users: {id: params[:id]})
         render json: @boards
+    end
+
+    private
+
+    def board_edit_params
+      params.permit(:title, :image, :body)
     end
 end
