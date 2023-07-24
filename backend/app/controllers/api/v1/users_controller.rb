@@ -26,7 +26,7 @@ class Api::V1::UsersController < ApplicationController
   private
 
   def user_edit_params
-    params.permit(:name, :image)
+    params.permit(:name, :image, :body, :age)
   end
 
 end

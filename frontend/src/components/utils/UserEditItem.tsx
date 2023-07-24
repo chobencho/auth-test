@@ -20,6 +20,12 @@ const UserEditItem = ({ userData, handleGetUserData }: UserEditItemProps) => {
           /> : null
         }
       </p>
+      <p 
+        // className→whitespace-pre-wrapで改行している
+        className="whitespace-pre-wrap"
+      >
+        紹介文:{userData.body}
+      </p>
       <p>年齢:{userData.age}</p>
     </>
   )

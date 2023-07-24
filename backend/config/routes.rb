@@ -2,7 +2,8 @@ Rails.application.routes.draw do
   namespace :api do
     namespace :v1 do
       mount_devise_token_auth_for 'User', at: 'auth', controllers: {
-        registrations: 'api/v1/auth/registrations'
+        registrations: 'api/v1/auth/registrations',
+        passwords: 'api/v1/auth/passwords'
       }
 
       namespace :auth do
@@ -45,16 +46,9 @@ Rails.application.routes.draw do
 
       # mypage
       get '/myboard/:id' => 'boards#mypage'
-
-      # ルーティングはroute.rbのファイルの上から順に評価される
-      # ルーティングの実行される順番を把握することが大切
-      # 検証画面 > Network > Name を見て、実際の実行の順番を把握する
-      # 順番を把握できたら、このroute.rbにルーティングを書く
-      # user,boardのようにページごとの処理に分けて、そこに実行順にルーティングを書く
-      # 実際にUIを操作してみて問題がないことを確認(Networkで正確なJSONがJSONが返ってきていることも確認)
-
-
       
+      # myfav
+      get '/boards/myFav' => 'boards#myfav'
     end
   end
 end

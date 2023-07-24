@@ -24,3 +24,7 @@ export const getEditBoardData = (id: string | undefined) => {
 export const editBoardData = (id: string | undefined, data: FormData): AxiosPromise => {
   return clientImage.post(`/board/${id}/edit`, data)
 }
+
+export const getMyFavBoards = (id: string | undefined) => {
+  return client.get<BoardData[]>("/boards/myFav", {params: {id}})
+}

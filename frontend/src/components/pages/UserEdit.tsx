@@ -19,12 +19,14 @@ const UserEdit = () => {
 
   return (
     <>
-      <UserEditForm
-        handleGetUserData={handleGetUserData}
-      />
+
 
       {userData !== null && (
         <>
+          <UserEditForm
+            handleGetUserData={handleGetUserData}
+            userData={userData}
+          />
           <UserEditItem
             handleGetUserData={handleGetUserData}
             userData={userData}

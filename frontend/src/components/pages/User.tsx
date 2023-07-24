@@ -22,6 +22,9 @@ const User = () => {
       {user &&
         <>
           <p>ID:{user.id}</p>
+          <p>名前:{user.name}</p>
+          <p className="whitespace-pre-wrap">紹介文:{user.body}</p>
+          <p>年齢:{user.age}</p>
           <p>性別:{user.genderCode}</p>
           <p>学年:{user.gradeCode}</p>
           <p>専攻分野:{user.subjectCode}</p>

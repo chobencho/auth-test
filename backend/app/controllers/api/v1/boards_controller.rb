@@ -22,7 +22,7 @@ class Api::V1::BoardsController < ApplicationController
         if @board.update(board_edit_params)
           render json: @board
         else
-          render json: {status: "error", message: "ŒfŽ¦”Âî•ñ‚ÌXV‚ÉŽ¸”s‚µ‚Ü‚µ‚½"}
+          render json: {status: "error", message: "æŽ²ç¤ºæ¿ã®ç·¨é›†ã«å¤±æ•—ã—ã¾ã—ãŸ"}
         end
       end
 
@@ -43,6 +43,11 @@ class Api::V1::BoardsController < ApplicationController
 
     def mypage
         @boards = Board.joins(:user).select("boards.*, boards.id AS board_id, boards.user_id, users.name, boards.title, boards.body AS board_body, boards.image AS url, users.image AS user_image").where(users: {id: params[:id]})
+        render json: @boards
+    end
+
+    def myfav
+        @boards = Board.joins(:board_likes).select("boards.*, board_likes.user_id AS user_id, board_likes.board_id AS board_id, boards.body AS board_body").where(board_likes: {user_id: params[:id]})
         render json: @boards
     end
 

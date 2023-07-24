@@ -1,13 +1,17 @@
 import React, { useState, useEffect, useCallback } from "react"
 import { editUserData } from "lib/api/user"
+import { UserData } from "interfaces/index"
 import { useParams } from "react-router-dom"
 
 interface UserEditFormProps {
   handleGetUserData: Function
+  userData: UserData
 }
 
-const UserEditForm = ({ handleGetUserData }: UserEditFormProps) => {
-  const [name, setName] = useState<string>("")
+const UserEditForm = ({ handleGetUserData, userData }: UserEditFormProps) => {
+  const [name, setName] = useState<string>(userData.name || "")
+  const [body, setBody] = useState<string>(userData.body || "")
+  const [age, setAge] = useState<string>(userData.age || "")
   const [image, setImage] = useState<File | undefined>()
   const [preview, setPreview] = useState<string>("")
 
@@ -45,40 +49,46 @@ const UserEditForm = ({ handleGetUserData }: UserEditFormProps) => {
 
     formData.append("name", name)
     if (image) formData.append("image", image)
+    formData.append("body", body)
+    formData.append("age", age)
 
     return formData
   }
 
   // ユーザ情報を変更する
   const handleEditUserData = async (e: React.FormEvent<HTMLFormElement>) => {
+    // デフォルト操作を拒否するメソッド(ページ再読み込みを拒否する)
     e.preventDefault()
 
     const data = createFormData()
 
     await editUserData(id, data)
       .then(() => {
-        setName("")
-        setPreview("")
-        setImage(undefined)
         handleGetUserData()
       })
   }
 
+  const colors = ["red", "blue", "yellow"]
+
   return (
     <>
-      { }
+      
       <form onSubmit={handleEditUserData}>
 
-        <b>名前</b>
-        <input
-          type="text"
-          placeholder="name"
-          className="border p-2 m-2"
-          value={name}
-          onChange={(e: React.ChangeEvent<HTMLInputElement>) => { setName(e.target.value) }}
-        />
+        <div className="border m-2 p-2">
+          <b>名前</b>
+          <input
+            type="text"
+            placeholder="name"
+            className="border p-2 m-2"
+            value={name}
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) => { setName(e.target.value) }}
+          />
+        </div>
 
-        <div>
+
+        <div className="border m-2 p-2">
+          <b>プロフィール画像</b>
           <input
             id="icon-button-file"
             type="file"
@@ -99,6 +109,40 @@ const UserEditForm = ({ handleGetUserData }: UserEditFormProps) => {
             </div>
           </label>
         </div>
+
+        <div className="border m-2 p-2">
+          <b>自己紹介文</b>
+          <textarea 
+            placeholder="introduce"
+            // className→whitespace-pre-wrapで改行している
+            className="border p-2 m-2 w-full whitespace-pre-wrap h-40"
+            value={body}
+            onChange={(e) => { setBody(e.target.value) }}
+          ></textarea> 
+        </div>
+
+
+        <div className="border m-2 p-2">
+          <b>年齢</b>
+          <input
+            type="number"
+            placeholder="age"
+            className="border p-2 m-2"
+            value={age}
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) => { setAge(e.target.value) }}
+          />
+        </div>
+
+
+        <div className="border m-2 p-2">
+          <b>性別</b>
+          <select className="border m-2 p-2">
+            {colors.map((color) => {
+              return <option key={color}>{color}</option>;
+            })}
+          </select>
+        </div>
+
 
         <button type="submit" className="border text-white bg-gray-600 p-2 m-2">変更する</button>
 

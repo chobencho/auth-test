@@ -20,7 +20,7 @@ export interface UserData {
   provider: string
   email: string
   name: string
-  age: number
+  age: string
   image?: {
     url: string
   }
