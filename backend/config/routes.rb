@@ -15,7 +15,9 @@ Rails.application.routes.draw do
 
       # user
       get '/user/:id' => 'users#show'
-      get '/user/:id/edit' => 'users#showEdit'
+      get '/user/:id/edit' => 'users#show'
+      get '/user/:id/editHobby' => 'users#showEditHobby'
+      get '/user/:id/editInterest' => 'users#showEditInterest'
       post '/user/:id/edit' => 'users#edit'
 
       # boards

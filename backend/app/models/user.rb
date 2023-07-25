@@ -10,5 +10,9 @@ class User < ActiveRecord::Base
   belongs_to :subject, foreign_key: 'subject_id', primary_key: 'id', class_name: 'Subject'
   belongs_to :grade, foreign_key: 'grade_id', primary_key: 'id', class_name: 'Grade'
   belongs_to :gender, foreign_key: 'gender_id', primary_key: 'id', class_name: 'Gender'
+  has_many :user_hobbies
+  has_many :hobbies, through: :user_hobbies
+  has_many :user_interests
+  has_many :interests, through: :user_interests
 end
 

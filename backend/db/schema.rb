@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_07_18_072100) do
+ActiveRecord::Schema[7.0].define(version: 2023_07_25_103308) do
   create_table "board_comments", force: :cascade do |t|
     t.integer "board_id", null: false
     t.string "comment", null: false
@@ -67,6 +67,12 @@ ActiveRecord::Schema[7.0].define(version: 2023_07_18_072100) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "hobbies", force: :cascade do |t|
+    t.string "hobby_code"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "information", force: :cascade do |t|
     t.string "title"
     t.string "body"
@@ -109,6 +115,20 @@ ActiveRecord::Schema[7.0].define(version: 2023_07_18_072100) do
 
   create_table "subjects", force: :cascade do |t|
     t.string "subject_code"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "user_hobbies", force: :cascade do |t|
+    t.integer "user_id", null: false
+    t.integer "hobby_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "user_interests", force: :cascade do |t|
+    t.integer "user_id", null: false
+    t.integer "interest_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
