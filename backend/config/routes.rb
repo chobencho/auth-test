@@ -28,6 +28,7 @@ Rails.application.routes.draw do
       get '/board/:id/getLike' => 'boards#getLike'
       get '/message/exist' => 'messages#exist'
       get '/board/:id/:edit' => 'boards#showEdit'
+      post '/board/create' => 'boards#create'
       post '/board/createLike' => 'boards#createLike'
       post '/board/:id/:edit' => 'boards#edit'
       delete '/board/:id/deleteLike' => 'boards#deleteLike'
@@ -51,6 +52,9 @@ Rails.application.routes.draw do
       
       # myfav
       get '/boards/myFav' => 'boards#myfav'
+
+      # verification
+      post '/verification/sendCertificateImage' => 'verifications#create'
     end
   end
 end

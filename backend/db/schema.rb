@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_07_25_103308) do
+ActiveRecord::Schema[7.0].define(version: 2023_07_26_085419) do
   create_table "board_comments", force: :cascade do |t|
     t.integer "board_id", null: false
     t.string "comment", null: false
@@ -53,6 +53,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_07_25_103308) do
     t.integer "check_age", default: 0, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "image"
   end
 
   create_table "genders", force: :cascade do |t|
@@ -92,6 +93,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_07_25_103308) do
     t.string "body", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "image"
   end
 
   create_table "prefectures", force: :cascade do |t|

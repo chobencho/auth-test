@@ -33,9 +33,7 @@ export interface UserData {
   gradeId: number;
   prefectureCode: string;
   prefectureId: number;
-  interestId_1: number;
-  interestId_2: number;
-  interestId_3: number;
+  interestId: number;
   hobbyId_1: number;
   hobbyId_2: number;
   hobbyId_3: number;
@@ -106,4 +104,7 @@ export interface MessageData {
   userId: string;
   roomId: string;
   body: string;
+  image?: {
+    url: string;
+  };
 }

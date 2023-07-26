@@ -22,11 +22,21 @@ class Api::V1::UsersController < ApplicationController
   def edit
     user_id = params[:id]
     hobby_ids = params[:hobby_ids]
+    interest_ids = params[:interest_ids]
 
     ActiveRecord::Base.transaction do
       begin
         @user = User.find_by(id: user_id)
         @user.update(user_edit_params)
+
+        unless interest_ids.nil?
+          # 既存の興味データを削除
+          @deleteInterest = UserInterest.where( user_id: user_id).destroy_all
+          # 新しく興味データを作成
+          # user_interestsテーブルに関連を登録する
+          @interests = Interest.where(id: interest_ids)
+          @user.interests << @interests
+        end
 
         unless hobby_ids.nil?
           # 既存の趣味データを削除
@@ -42,6 +52,7 @@ class Api::V1::UsersController < ApplicationController
         render json: { hobby_create: false, message: "失敗" }
       end
     end
+
   end
 
   private

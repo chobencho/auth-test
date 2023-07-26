@@ -102,7 +102,7 @@ class Api::V1::MessagesController < ApplicationController
     private
 
     def message_params
-        params.permit(:room_id, :user_id, :body)
+        params.permit(:room_id, :user_id, :body, :image)
     end
 end
 

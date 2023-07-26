@@ -31,7 +31,7 @@ export default class Hobby {
         [29, "温泉", "hobby_onsen.jpg"],
         [30, "遊園地", "hobby_ferris-wheel.jpg"],
         [31, "アルコール", "hobby_alchool.jpg"],
-        [32, "お喋り", "hobby_talk.jpg"],
+        [32, "お喋り", "hobby_talk.jpg"]
     ];
 }
 

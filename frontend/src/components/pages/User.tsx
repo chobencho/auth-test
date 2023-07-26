@@ -33,9 +33,7 @@ const User = () => {
           <p>タグ2</p>
           <p>タグ3</p>
           <p>興味分野:</p>
-          <p>{user.interestId_1}</p>
-          <p>{user.interestId_2}</p>
-          <p>{user.interestId_3}</p>
+          <p>{user.interestId}</p>
           <p>趣味:</p>
           <p>{user.hobbyId_1}</p>
           <p>{user.hobbyId_2}</p>

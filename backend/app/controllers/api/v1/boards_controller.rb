@@ -19,7 +19,7 @@ class Api::V1::BoardsController < ApplicationController
 
     def edit
         @board = Board.find_by(id: params[:id])
-        if @board.update(board_edit_params)
+        if @board.update(board_params)
           render json: @board
         else
           render json: {status: "error", message: "掲示板の編集に失敗しました"}
@@ -29,6 +29,11 @@ class Api::V1::BoardsController < ApplicationController
     def getLike
         @like = BoardLike.find_by(user_id: params[:user_id], board_id: params[:id]).present?
         render json: @like
+    end
+
+    def create
+        @board = Board.new(board_params)  
+        @board.save
     end
 
     def createLike
@@ -53,7 +58,7 @@ class Api::V1::BoardsController < ApplicationController
 
     private
 
-    def board_edit_params
-      params.permit(:title, :image, :body)
+    def board_params
+      params.permit(:user_id, :title, :image, :body)
     end
 end

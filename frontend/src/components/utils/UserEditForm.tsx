@@ -43,28 +43,26 @@ const UserEditForm = ({
   const [body, setBody] = useState<string>(userData.body || "");
   const [age, setAge] = useState<string>(userData.age || "");
   const [gender, setGender] = useState<string>(
-    userData.genderId.toString() || ""
+    userData.genderId ? userData.genderId.toString() : ""
   );
-  const [grade, setGrade] = useState<string>(userData.gradeId.toString() || "");
+  const [grade, setGrade] = useState<string>(
+    userData.gradeId ? userData.gradeId.toString() : ""
+  );
   const [subject, setSubject] = useState<string>(
-    userData.subjectId.toString() || ""
+    userData.subjectId ? userData.subjectId.toString() : ""
   );
   const [prefecture, setPrefecture] = useState<string>(
-    userData.prefectureId.toString() || ""
+    userData.prefectureId ? userData.prefectureId.toString() : ""
   );
-  const [interest_1, setInterest_1] = useState<string>(
-    userData.interestId_1.toString() || ""
-  );
-  const [interest_2, setInterest_2] = useState<string>(
-    userData.interestId_2.toString() || ""
-  );
-  const [interest_3, setInterest_3] = useState<string>(
-    userData.interestId_3.toString() || ""
-  );
+  const [interest, setInterest] = useState<string[]>([]);
+
   const [image, setImage] = useState<File | undefined>();
   const [preview, setPreview] = useState<string>("");
 
   const { id } = useParams<{ id: string }>();
+
+  const [showInterestOptions, setShowInterestOptions] = useState(false);
+  const [showHobbyOptions, setShowHobbyOptions] = useState(false);
 
   type HobbyOption = [string, string, string];
   const classes = useStyles();
@@ -84,6 +82,28 @@ const UserEditForm = ({
         } else {
           // 選択可能なホビーの数を超えた場合、現在の選択を維持
           return prevSelectedHobbies;
+        }
+      }
+    });
+  };
+
+  type InterestOption = [string, string, string];
+  const [selectedInterests, setSelectedInterests] = useState<string[]>([]); // string[] 型を指定
+
+  const MAX_INTEREST_SELECTION = 3; // 最大選択可能なホビーの数
+
+  const handleInterestSelection = (interestValue: string) => {
+    setSelectedInterests((prevSelectedInterests) => {
+      if (prevSelectedInterests.includes(interestValue)) {
+        // チェックを外す場合
+        return prevSelectedInterests.filter((value) => value !== interestValue);
+      } else {
+        // チェックを付ける場合
+        if (prevSelectedInterests.length < MAX_INTEREST_SELECTION) {
+          return [...prevSelectedInterests, interestValue];
+        } else {
+          // 選択可能なホビーの数を超えた場合、現在の選択を維持
+          return prevSelectedInterests;
         }
       }
     });
@@ -129,19 +149,18 @@ const UserEditForm = ({
     formData.append("grade_id", grade);
     formData.append("prefecture_id", prefecture);
     formData.append("subject_id", subject);
-    formData.append("interest_id_1", interest_1);
-    formData.append("interest_id_2", interest_2);
-    formData.append("interest_id_3", interest_3);
 
     // チェックした趣味をデータ登録用に配列に格納する
-    // なにもチェックしてない場合は、登録してある
-    if (selectedHobbies.length == 0) {
-      // userHobbyData.forEach((hobbyValue) => {
-      //   const hobbyId = hobbyValue.hobbyId.toString(); // hobbyValueからhobbyIdを抽出して文字列としてフォームデータに追加
-      //   formData.append(`hobby_ids[]`, hobbyId);
-      // }
-      // );
-    } else {
+    // なにもチェックしてない場合は、データを送信しない
+    if (selectedInterests.length != 0) {
+      selectedInterests.forEach((interestValue) => {
+        formData.append(`interest_ids[]`, interestValue);
+      });
+    }
+
+    // チェックした趣味をデータ登録用に配列に格納する
+    // なにもチェックしてない場合は、データを送信しない
+    if (selectedHobbies.length != 0) {
       selectedHobbies.forEach((hobbyValue) => {
         formData.append(`hobby_ids[]`, hobbyValue);
       });
@@ -160,9 +179,22 @@ const UserEditForm = ({
     await editUserData(id, data).then(() => {
       handleGetUserData();
       handleGetUserHobbyData();
+      handleGetUserInterestData();
     });
 
     handleClearPreview();
+  };
+
+  // 興味オプションの表示を切り替えるボタンが押されたときの処理
+  const handleToggleInterestOptions = () => {
+    setShowInterestOptions(
+      (prevShowInterestOptions) => !prevShowInterestOptions
+    );
+  };
+
+  // 興味オプションの表示を切り替えるボタンが押されたときの処理
+  const handleToggleHobbyOptions = () => {
+    setShowHobbyOptions((prevShowHobbyOptions) => !prevShowHobbyOptions);
   };
 
   return (
@@ -302,79 +334,89 @@ const UserEditForm = ({
           </select>
         </div>
 
-        <div className="border m-2 p-2">
+        {/* 興味オプションの表示を切り替えるボタン */}
+        <button
+          className="border bg-gray-600 text-white rounded py-1 px-2"
+          onClick={handleToggleInterestOptions}
+        >
+          {showInterestOptions ? "興味分野一覧を隠す" : "興味分野一覧を見る"}
+        </button>
+
+        {/* 興味オプションを表示する部分 */}
+        {showInterestOptions && (
           <div>
-            <b>興味分野1</b>
-            <select
-              className="border m-2 p-2"
-              value={interest_1}
-              onChange={(e) => setInterest_1(e.target.value)}
-            >
-              {Interest.INT_OPTIONS.map((option) => {
-                return <option value={option[0]}>{option[1]}</option>;
-              })}
-            </select>
-          </div>
+            <b>興味</b>
+            <div className="w-full flex flex-wrap border m-2">
+              {Interest.INT_OPTIONS.map((option: (string | number)[]) => {
+                if (option.length !== 3) return null; // オプションが3つの要素を持たない場合はnullを返す
 
+                const [value, label, image] = option as InterestOption; // オプションの型をInterestOptionに変換
+                const isChecked = selectedInterests.includes(value);
+
+                return (
+                  <div key={value} className="w-1/2 border p-2">
+                    <label className="flex">
+                      <input
+                        type="checkbox"
+                        checked={isChecked}
+                        onChange={() => handleInterestSelection(value)}
+                      />
+                      <option value={value} className="text-center text-sm">
+                        {label}
+                      </option>
+                    </label>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+        )}
+
+        {/* 興味オプションの表示を切り替えるボタン */}
+        <button
+          className="border bg-gray-600 text-white rounded py-1 px-2"
+          onClick={handleToggleHobbyOptions}
+        >
+          {showHobbyOptions ? "趣味一覧を隠す" : "趣味一覧を見る"}
+        </button>
+
+        {/* 興味オプションを表示する部分 */}
+        {showHobbyOptions && (
           <div>
-            <b>興味分野2</b>
-            <select
-              className="border m-2 p-2"
-              value={interest_2}
-              onChange={(e) => setInterest_2(e.target.value)}
-            >
-              {Interest.INT_OPTIONS.map((option) => {
-                return <option value={option[0]}>{option[1]}</option>;
+            <b>趣味</b>
+            <div className="w-full flex flex-wrap border m-2">
+              {Hobby.HOB_OPTIONS.map((option: (string | number)[]) => {
+                if (option.length !== 3) return null; // オプションが3つの要素を持たない場合はnullを返す
+
+                const [value, label, image] = option as HobbyOption; // オプションの型をHobbyOptionに変換
+                const isChecked = selectedHobbies.includes(value);
+
+                return (
+                  <div key={value} className="w-1/5 border p-2">
+                    <label>
+                      <input
+                        type="checkbox"
+                        className={`${classes.checkBox}`}
+                        checked={isChecked}
+                        onChange={() => handleHobbySelection(value)}
+                      />
+                      <img
+                        src={`${process.env.PUBLIC_URL}/images/hobby/${image}`}
+                        className={` ${
+                          isChecked ? classes.checkBoxChecked : ""
+                        }`}
+                        alt=""
+                      />
+                      <option value={value} className="text-center text-sm">
+                        {label}
+                      </option>
+                    </label>
+                  </div>
+                );
               })}
-            </select>
+            </div>
           </div>
-
-          <div>
-            <b>興味分野3</b>
-            <select
-              className="border m-2 p-2"
-              value={interest_3}
-              onChange={(e) => setInterest_3(e.target.value)}
-            >
-              {Interest.INT_OPTIONS.map((option) => {
-                return <option value={option[0]}>{option[1]}</option>;
-              })}
-            </select>
-          </div>
-        </div>
-
-        <div>
-          <b>趣味</b>
-          <div className="w-full flex flex-wrap border m-2">
-            {Hobby.HOB_OPTIONS.map((option: (string | number)[]) => {
-              if (option.length !== 3) return null; // オプションが3つの要素を持たない場合はnullを返す
-
-              const [value, label, image] = option as HobbyOption; // オプションの型をHobbyOptionに変換
-              const isChecked = selectedHobbies.includes(value);
-
-              return (
-                <div key={value} className="w-1/5 border p-2">
-                  <label>
-                    <input
-                      type="checkbox"
-                      className={`${classes.checkBox}`}
-                      checked={isChecked}
-                      onChange={() => handleHobbySelection(value)}
-                    />
-                    <img
-                      src={`${process.env.PUBLIC_URL}/images/hobby/${image}`}
-                      className={` ${isChecked ? classes.checkBoxChecked : ""}`}
-                      alt=""
-                    />
-                    <option value={value} className="text-center">
-                      {label}
-                    </option>
-                  </label>
-                </div>
-              );
-            })}
-          </div>
-        </div>
+        )}
 
         <button type="submit" className="border text-white bg-gray-600 p-2 m-2">
           変更する

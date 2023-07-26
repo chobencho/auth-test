@@ -1,9 +1,12 @@
-import React from 'react'
+import { useState, useEffect } from "react";
+import VerificationForm from "components/utils/VerificationForm";
 
 const Verification = () => {
   return (
-    <div>Verification</div>
-  )
-}
+    <>
+      <VerificationForm />
+    </>
+  );
+};
 
-export default Verification
+export default Verification;
