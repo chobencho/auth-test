@@ -1,15 +1,8 @@
-<<<<<<< HEAD
-=======
 import client from "lib/api/client";
->>>>>>> b21bfa0 (add actionMailer, passwoedReset)
 import clientImage from "lib/api/clientImage";
 import { AxiosPromise } from "axios";
 
 // 証明書登録
-<<<<<<< HEAD
-export const sendCertificateImage = (data: FormData): AxiosPromise => {
-  return clientImage.post(`/verification/sendCertificateImage`, data);
-=======
 export const sendCertificateImage = (
   stringMyId: string,
   data: FormData
@@ -34,5 +27,4 @@ export const sendMail = (
     message,
     image,
   });
->>>>>>> b21bfa0 (add actionMailer, passwoedReset)
 };

@@ -41,29 +41,6 @@ const User = () => {
     <>
       {userData && (
         <>
-<<<<<<< HEAD
-          <p>ID:{user.id}</p>
-          <p>名前:{user.name}</p>
-          <p className="whitespace-pre-wrap">紹介文:{user.body}</p>
-          <p>年齢:{user.age}</p>
-          <p>性別:{user.genderCode}</p>
-          <p>学年:{user.gradeCode}</p>
-          <p>専攻分野:{user.subjectCode}</p>
-          <p>研究キーワード:</p>
-          <p>タグ1</p>
-          <p>タグ2</p>
-          <p>タグ3</p>
-          <p>興味分野:</p>
-          <p>{user.interestId}</p>
-          <p>趣味:</p>
-          <p>{user.hobbyId_1}</p>
-          <p>{user.hobbyId_2}</p>
-          <p>{user.hobbyId_3}</p>
-          <p>{user.hobbyId_4}</p>
-          <p>{user.hobbyId_5}</p>
-
-          {user.image?.url ?
-=======
           <p className="border m-2 p-2">ID:{userData.id}</p>
           <p className="border m-2 p-2">名前:{userData.name}</p>
           <p className="whitespace-pre-wrap border m-2 p-2">
@@ -76,7 +53,6 @@ const User = () => {
           <p className="border m-2 p-2">研究キーワード:</p>
           <br />
           {userData.image?.url ? (
->>>>>>> b21bfa0 (add actionMailer, passwoedReset)
             <img
               src={userData.image.url}
               alt="userData image"

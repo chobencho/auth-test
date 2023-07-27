@@ -54,13 +54,9 @@ Rails.application.routes.draw do
       get '/boards/myFav' => 'boards#myfav'
 
       # verification
-<<<<<<< HEAD
-      post '/verification/sendCertificateImage' => 'verifications#create'
-=======
       post '/verification/:id/sendCertificateImage' => 'verifications#create'
       post '/verification/sendMail' => 'verifications#sendMail'
 
->>>>>>> b21bfa0 (add actionMailer, passwoedReset)
     end
   end
 end

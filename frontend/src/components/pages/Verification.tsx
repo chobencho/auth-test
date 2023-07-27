@@ -1,16 +1,3 @@
-<<<<<<< HEAD
-import { useState, useEffect } from "react";
-import VerificationForm from "components/utils/VerificationForm";
-
-const Verification = () => {
-  return (
-    <>
-      <VerificationForm />
-    </>
-  );
-};
-
-=======
 import React, { useState, useCallback, useContext } from "react";
 import { AuthContext } from "App";
 import { v4 as uuidv4 } from "uuid";
@@ -170,5 +157,4 @@ const Verification = () => {
   );
 };
 
->>>>>>> b21bfa0 (add actionMailer, passwoedReset)
 export default Verification;
