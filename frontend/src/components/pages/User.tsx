@@ -5,14 +5,19 @@ import { UserData } from "interfaces/index";
 import UserEditButton from "components/utils/UserEditButton";
 import { UserHobbyData } from "interfaces/index";
 import { UserInterestData } from "interfaces/index";
+import { UserTagData } from "interfaces/index";
 import { getEditUserData } from "lib/api/user";
 import { getEditUserHobbyData } from "lib/api/user";
 import { getEditUserInterestData } from "lib/api/user";
+import { getEditUserResearchTagData } from "lib/api/user";
 
 const User = () => {
   const [userData, setUserData] = useState<UserData | null>(null);
   const [userHobbyData, setUserHobbyData] = useState<UserHobbyData[]>([]);
   const [userInterestData, setUserInterestData] = useState<UserInterestData[]>(
+    []
+  );
+  const [userResearchTagData, setUserResearchTagData] = useState<UserTagData[]>(
     []
   );
 
@@ -31,10 +36,17 @@ const User = () => {
     getEditUserInterestData(id).then((res) => setUserInterestData(res.data));
   };
 
+  const handleGetUserResearchTagData = async () => {
+    getEditUserResearchTagData(id).then((res) =>
+      setUserResearchTagData(res.data)
+    );
+  };
+
   useEffect(() => {
     handleGetUserData();
     handleGetUserHobbyData();
     handleGetUserInterestData();
+    handleGetUserResearchTagData();
   }, []);
 
   return (
@@ -50,7 +62,14 @@ const User = () => {
           <p className="border m-2 p-2">性別:{userData.genderCode}</p>
           <p className="border m-2 p-2">学年:{userData.gradeCode}</p>
           <p className="border m-2 p-2">専攻分野:{userData.subjectCode}</p>
-          <p className="border m-2 p-2">研究キーワード:</p>
+          <p className="m-2">研究キーワード:</p>
+          <div className="flex border m-2 p-2">
+            {userResearchTagData.map((tag) => (
+              <p className="border bg-yellow-200 rounded py-1 px-2 m-1">
+                {tag.tagName}
+              </p>
+            ))}
+          </div>
           <br />
           {userData.image?.url ? (
             <img

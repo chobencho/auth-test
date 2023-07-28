@@ -65,12 +65,10 @@ const BoardEditForm = ({
     const data = createFormData();
 
     await editBoardData(id, data).then(() => {
-      setTitle("");
-      setPreview("");
-      setImage(undefined);
-      setBody("");
       handleGetBoardData();
     });
+
+    handleClearPreview();
   };
 
   return (

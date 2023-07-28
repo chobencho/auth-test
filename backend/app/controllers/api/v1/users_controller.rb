@@ -1,6 +1,9 @@
 class Api::V1::UsersController < ApplicationController
   def index
-      @users = User.joins(:prefecture, :subject, :gender, :grade).select("*, users.*").where.not(id: params[:string_my_id])
+      # @users = User.joins(:prefecture, :subject, :gender, :grade).select("*, users.*").where.not(id: params[:string_my_id])
+      # render json: @users
+
+      @users = User.joins(:prefecture, :subject, :gender, :grade).select("*, users.*").where("name LIKE ?", "%#{params[:name]}%").where.not(id: params[:id])
       render json: @users
   end
 
@@ -19,10 +22,16 @@ class Api::V1::UsersController < ApplicationController
     render json: @interests
   end
 
+  def showEditResearchTag
+    @tags = UserResearchtagTagging.where(user_id: params[:id])
+    render json: @tags
+  end
+
   def edit
     user_id = params[:id]
     hobby_ids = params[:hobby_ids]
     interest_ids = params[:interest_ids]
+    tags = params[:tags]
 
     ActiveRecord::Base.transaction do
       begin
@@ -47,12 +56,24 @@ class Api::V1::UsersController < ApplicationController
           @user.hobbies << @hobbies
         end
 
-        render json: { hobby_create: true, message: "成功" }
+
+        # 既存のタグデータを削除
+        # tagsが空の場合はデータもデータを削除するため、unlessの外に出している
+        @deleteResearchTags = UserResearchtagTagging.where( user_id: user_id).destroy_all
+
+        unless tags.nil?
+          # 新しくタグデータを作成
+          tags.each do |tag_name|
+            tag = UserResearchtagTagging.new(user_id: user_id, tag_id: "1", tag_name: tag_name)
+            @user.user_researchtag_taggings << tag
+          end
+        end
+
+        render json: { userData_edit: true, message: "成功" }
       rescue ActiveRecord::RecordInvalid => e
-        render json: { hobby_create: false, message: "失敗" }
+        render json: { userData_edit: false, message: "失敗" }
       end
     end
-
   end
 
   private

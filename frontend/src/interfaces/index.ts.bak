@@ -21,7 +21,6 @@ export interface UserData {
   email: string;
   name: string;
   age: string;
-  tags: string[]
   image?: {
     url: string;
   };
@@ -35,17 +34,14 @@ export interface UserData {
   prefectureCode: string;
   prefectureId: number;
   interestId: number;
+  hobbyId_1: number;
+  hobbyId_2: number;
+  hobbyId_3: number;
+  hobbyId_4: number;
+  hobbyId_5: number;
   allowPasswordChange: boolean;
   createdAt: Date;
   updatedAt: Date;
-}
-
-// 趣味情報
-export interface UserTagData {
-  id: number;
-  userId: string
-  tagId: string;
-  tagName: string;
 }
 
 // 趣味情報

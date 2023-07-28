@@ -3,8 +3,11 @@ import clientImage from "lib/api/clientImage";
 import { AxiosPromise } from "axios";
 import { UserData } from "interfaces/index";
 
-export const getUsers = (id: string | undefined, name: string | undefined) => {
-  return client.get<UserData[]>("/users", { params: { id, name } });
+export const searchUsers = (
+  id: string | undefined,
+  name: string | undefined
+) => {
+  return client.get<UserData[]>("/searchUsers", { params: { id, name } });
 };
 
 export const getUserData = (id: string | undefined) => {
@@ -24,11 +27,6 @@ export const getEditUserHobbyData = (id: string | undefined) => {
 // ユーザ興味情報取得
 export const getEditUserInterestData = (id: string | undefined) => {
   return client.get(`/user/${id}/editInterest`);
-};
-
-// ユーザ研究タグ情報取得
-export const getEditUserResearchTagData = (id: string | undefined) => {
-  return client.get(`/user/${id}/editResearchTag`);
 };
 
 // ユーザ情報変更

@@ -13,12 +13,14 @@ Rails.application.routes.draw do
       # users
       get '/users' => 'users#index'
 
+      # search
+      get '/searchUsers' => 'searches#show'
+
       # user
       get '/user/:id' => 'users#show'
       get '/user/:id/edit' => 'users#show'
       get '/user/:id/editHobby' => 'users#showEditHobby'
       get '/user/:id/editInterest' => 'users#showEditInterest'
-      get '/user/:id/editResearchTag' => 'users#showEditResearchTag'
       post '/user/:id/edit' => 'users#edit'
 
       # boards

@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useCallback } from "react";
 import { editUserData } from "lib/api/user";
 import { UserData } from "interfaces/index";
+import { UserTagData } from "interfaces/index";
 import { UserHobbyData } from "interfaces/index";
 import { UserInterestData } from "interfaces/index";
 import { useParams } from "react-router-dom";
@@ -17,9 +18,11 @@ interface UserEditFormProps {
   handleGetUserData: Function;
   handleGetUserHobbyData: Function;
   handleGetUserInterestData: Function;
+  handleGetUserResearchTagData: Function;
   userData: UserData;
   userHobbyData: UserHobbyData[];
   userInterestData: UserInterestData[];
+  userResearchTagData: UserTagData[];
 }
 
 const useStyles = makeStyles((theme: Theme) => ({
@@ -35,13 +38,24 @@ const UserEditForm = ({
   handleGetUserData,
   handleGetUserHobbyData,
   handleGetUserInterestData,
+  handleGetUserResearchTagData,
   userData,
   userHobbyData,
   userInterestData,
+  userResearchTagData,
 }: UserEditFormProps) => {
   const [name, setName] = useState<string>(userData.name || "");
   const [body, setBody] = useState<string>(userData.body || "");
   const [age, setAge] = useState<string>(userData.age || "");
+
+  // 現在のtagsステートとtagステートの初期値を設定します
+  // const [tags, setTags] = useState<string[]>(userData.tags || []);
+  const [tags, setTags] = useState<string[]>([
+    ...userResearchTagData.map((tag) => tag.tagName),
+  ]);
+
+  const [tag, setTag] = useState<string>("");
+
   const [gender, setGender] = useState<string>(
     userData.genderId ? userData.genderId.toString() : ""
   );
@@ -54,7 +68,6 @@ const UserEditForm = ({
   const [prefecture, setPrefecture] = useState<string>(
     userData.prefectureId ? userData.prefectureId.toString() : ""
   );
-  const [interest, setInterest] = useState<string[]>([]);
 
   const [image, setImage] = useState<File | undefined>();
   const [preview, setPreview] = useState<string>("");
@@ -150,6 +163,14 @@ const UserEditForm = ({
     formData.append("prefecture_id", prefecture);
     formData.append("subject_id", subject);
 
+    // タグをデータ登録用に配列に格納する
+    // なにもタグがない場合は、データを送信しない
+    if (tags.length !== 0) {
+      tags.forEach((tagValue) => {
+        formData.append("tags[]", tagValue);
+      });
+    }
+
     // チェックした趣味をデータ登録用に配列に格納する
     // なにもチェックしてない場合は、データを送信しない
     if (selectedInterests.length != 0) {
@@ -180,21 +201,44 @@ const UserEditForm = ({
       handleGetUserData();
       handleGetUserHobbyData();
       handleGetUserInterestData();
+      handleGetUserResearchTagData();
     });
 
     handleClearPreview();
   };
 
   // 興味オプションの表示を切り替えるボタンが押されたときの処理
-  const handleToggleInterestOptions = () => {
+  const handleToggleInterestOptions = (
+    e: React.MouseEvent<HTMLButtonElement, MouseEvent>
+  ) => {
+    e.preventDefault();
     setShowInterestOptions(
       (prevShowInterestOptions) => !prevShowInterestOptions
     );
   };
 
   // 興味オプションの表示を切り替えるボタンが押されたときの処理
-  const handleToggleHobbyOptions = () => {
+  const handleToggleHobbyOptions = (
+    e: React.MouseEvent<HTMLButtonElement, MouseEvent>
+  ) => {
+    e.preventDefault();
     setShowHobbyOptions((prevShowHobbyOptions) => !prevShowHobbyOptions);
+  };
+
+  const handleAddTag = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+    // デフォルト操作を拒否するメソッド(ページ再読み込みを拒否する)
+    e.preventDefault();
+    if (tag.trim() !== "") {
+      // 新しいタグを追加する場合は、元のtagsステートには影響を与えないようにします
+      setTags((prevTags) => [...prevTags, tag.trim()]);
+      setTag(""); // タグを追加したら入力フィールドをクリア
+    }
+  };
+
+  // 新しくhandleRemoveTag関数を追加します
+  const handleRemoveTag = (tagToRemove: string) => {
+    // タグを取り除くために、現在のtagsステートから対象のタグをフィルタリングします
+    setTags((prevTags) => prevTags.filter((tag) => tag !== tagToRemove));
   };
 
   return (
@@ -211,6 +255,43 @@ const UserEditForm = ({
               setName(e.target.value);
             }}
           />
+        </div>
+
+        <div className="border m-2 p-2">
+          <b>研究タグ</b>
+          <div className="flex">
+            <input
+              type="text"
+              value={tag}
+              className="border p-2 m-2"
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                setTag(e.target.value);
+              }}
+            />
+            <button
+              className="border text-white bg-gray-600 p-2 m-2"
+              onClick={handleAddTag}
+            >
+              追加
+            </button>
+          </div>
+        </div>
+
+        {/* 追加されたタグを表示 */}
+        <div className="border m-2 p-2 flex flex-wrap">
+          <b>追加されたタグ：</b>
+
+          {tags.map((tag, index) => (
+            <p key={index} className="border p-1 m-1 bg-blue-100 w-1/8">
+              {tag}
+              <button
+                className="my-1 mx-2 px-2 text-xl bg-gray-600 text-white"
+                onClick={() => handleRemoveTag(tag)}
+              >
+                ×
+              </button>
+            </p>
+          ))}
         </div>
 
         <div className="border m-2 p-2">

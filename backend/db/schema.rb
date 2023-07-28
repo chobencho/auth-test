@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_07_26_085419) do
+ActiveRecord::Schema[7.0].define(version: 2023_07_28_051244) do
   create_table "board_comments", force: :cascade do |t|
     t.integer "board_id", null: false
     t.string "comment", null: false
@@ -140,6 +140,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_07_26_085419) do
     t.integer "tag_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "tag_name"
   end
 
   create_table "user_researchtags", force: :cascade do |t|

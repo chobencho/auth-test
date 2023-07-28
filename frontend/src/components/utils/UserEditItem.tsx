@@ -2,23 +2,20 @@ import React from "react";
 import { UserData } from "interfaces/index";
 import { UserHobbyData } from "interfaces/index";
 import { UserInterestData } from "interfaces/index";
+import { UserTagData } from "interfaces/index";
 
 interface UserEditItemProps {
-  handleGetUserData: Function;
-  handleGetUserHobbyData: Function;
-  handleGetUserInterestData: Function;
   userData: UserData;
   userHobbyData: UserHobbyData[];
   userInterestData: UserInterestData[];
+  userResearchTagData: UserTagData[];
 }
 
 const UserEditItem = ({
   userData,
-  handleGetUserData,
-  handleGetUserHobbyData,
-  handleGetUserInterestData,
   userHobbyData,
   userInterestData,
+  userResearchTagData,
 }: UserEditItemProps) => {
   return (
     <>
@@ -44,6 +41,13 @@ const UserEditItem = ({
       <p>学年:{userData.gradeCode}</p>
       <p>居住地:{userData.prefectureCode}</p>
       <p>専攻:{userData.subjectCode}</p>
+      <div className="flex">
+        {userResearchTagData.map((tag) => (
+          <p className="border bg-yellow-200 rounded py-1 px-2 m-1">
+            {tag.tagName}
+          </p>
+        ))}
+      </div>
       <div className="flex">
         {userHobbyData.map((hobby) => (
           <p className="border bg-yellow-200 rounded py-1 px-2 m-1">
