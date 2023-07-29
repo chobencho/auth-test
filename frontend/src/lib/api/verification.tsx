@@ -13,18 +13,15 @@ export const sendCertificateImage = (
   );
 };
 
+// 管理者にメール送信
 export const sendMail = (
   stringMyId: string,
-  name: string,
   email: string,
-  message: string,
   image: File | undefined
 ) => {
   return clientImage.post(`/verification/sendMail`, {
     stringMyId,
-    name,
     email,
-    message,
     image,
   });
 };

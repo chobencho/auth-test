@@ -3,8 +3,8 @@ import clientImage from "lib/api/clientImage";
 import { AxiosPromise } from "axios";
 import { UserData } from "interfaces/index";
 
-export const getUsers = (id: string | undefined, name: string | undefined) => {
-  return client.get<UserData[]>("/users", { params: { id, name } });
+export const getUsers = (id: string | undefined, keywords: string[]) => {
+  return client.get<UserData[]>("/users", { params: { id, keywords } });
 };
 
 export const getUserData = (id: string | undefined) => {

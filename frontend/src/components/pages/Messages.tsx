@@ -1,21 +1,26 @@
-import { useContext } from "react"
+import { useContext, useEffect, useState } from "react"
 import { Link } from 'react-router-dom'
 import { AuthContext } from "App"
-import { useEffect, useState } from "react"
-import { ChatUserData } from "interfaces/index"
+// Function
 import { getChatRooms } from "lib/api/chat"
+// Interface
+import { ChatUserData } from "interfaces/index"
 
 const Messages = () => {
+  // State
+  const [chatUsers, setChatUsers] = useState<ChatUserData[]>([]);
+  //Id
   const { currentUser } = useContext(AuthContext)
   const userId = currentUser ? currentUser.id : null
   const stringUserId = userId?.toString()
-  const [chatUsers, setChatUsers] = useState<ChatUserData[]>([]);
+
+  // 自分の入っているチャットルームを取得
+  const handleGetChatRooms = async () => {
+    getChatRooms(stringUserId).then((res) => setChatUsers(res.data))
+  };
 
   useEffect(() => {
-    const f = async () => {
-      getChatRooms(stringUserId).then((res) => setChatUsers(res.data))
-    };
-    f();
+    handleGetChatRooms();
   }, []);
 
   return (

@@ -1,10 +1,22 @@
 class Api::V1::UsersController < ApplicationController
   def index
-      # @users = User.joins(:prefecture, :subject, :gender, :grade).select("*, users.*").where.not(id: params[:string_my_id])
-      # render json: @users
 
-      @users = User.joins(:prefecture, :subject, :gender, :grade).select("*, users.*").where("name LIKE ?", "%#{params[:name]}%").where.not(id: params[:id])
-      render json: @users
+    # keywordsが空の場合、全ユーザ情報を取得
+    # keywordsが空でない場合、検索条件に合うユーザ情報を取得
+    if params[:keywords].nil?
+      @users = User.joins(:prefecture, :subject, :gender, :grade).where.not(id: params[:id])
+    else
+      # 二重配列をフラットな配列に変換
+      keywords = params[:keywords].flatten
+
+      # 複数のキーワードに対して部分一致の条件を作成し、それをORで結合する
+      conditions = keywords.map { |keyword| "tag_name LIKE '%#{keyword}%'" }.join(" OR ")
+
+      user_ids = UserResearchtagTagging.where(conditions).pluck(:user_id).uniq
+      @users = User.joins(:prefecture, :subject, :gender, :grade).where(id: user_ids).where.not(id: params[:id])
+    end
+    
+    render json: @users
   end
 
   def show
@@ -96,4 +108,5 @@ class Api::V1::UsersController < ApplicationController
 
 
 end
+
 

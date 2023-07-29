@@ -1,18 +1,24 @@
 import { useEffect, useState } from "react"
 import { useParams } from "react-router-dom"
-import { getInfoData } from "lib/api/info"
-import { InfoData } from "interfaces/index"
 import moment from 'moment';
+// Function
+import { getInfoData } from "lib/api/info"
+// Interface
+import { InfoData } from "interfaces/index"
 
 const Info = () => {
+  // State
   const [info, setInfo] = useState<InfoData | null>(null);
+  // Id
   const { id } = useParams<{ id: string }>();
 
+  // お知らせ情報を取得
+  const handleGetInfoData = async () => {
+    getInfoData(id).then((res) => setInfo(res.data))
+  };
+
   useEffect(() => {
-    const f = async () => {
-      getInfoData(id).then((res) => setInfo(res.data))
-    };
-    f();
+    handleGetInfoData();
   }, []);
 
   return (

@@ -1,27 +1,30 @@
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "App";
-import { useEffect, useState } from "react";
-import { getBoardData } from "lib/api/board";
-import { BoardData } from "interfaces/index";
 import { useParams } from "react-router-dom";
-import BoardEditButton from "components/utils/BoardEditButton";
-import LikeButton from "components/utils/LikeButton";
-import GoBackButton from "components/utils/GoBackButton";
+// Function
+import { getBoardData } from "lib/api/board";
+// Interface
+import { BoardData } from "interfaces/index";
+// Components
+import BoardEditButton from "components/utils/board/BoardEditButton";
+import LikeButton from "components/utils/board/LikeButton";
+import GoBackButton from "components/utils/common/GoBackButton";
+import BoardContent from "components/utils/board/BoardContent";
 
 const Board = () => {
+  // State
   const [board, setBoard] = useState<BoardData | null>(null);
+  // Id
   const { id } = useParams<{ id: string }>();
-
   const { currentUser } = useContext(AuthContext);
   const myId = currentUser ? currentUser.id : null;
   const stringMyId = myId?.toString();
 
-  // ルームIDからメッセージ情報を取得・更新
+  // 掲示板情報を取得
   const handleGetBoardData = async () => {
     getBoardData(id).then((res) => setBoard(res.data));
   };
 
-  // 初回ページ遷移時、setMessagesの更新時にレンダリング実行
   useEffect(() => {
     handleGetBoardData();
   }, []);
@@ -30,32 +33,22 @@ const Board = () => {
     <>
       {board && (
         <>
+          {/* いいねボタン */}
           <LikeButton
             handleGetBoardData={handleGetBoardData}
             boardId={board.id.toString()}
             myId={stringMyId || ""}
           />
-          <p>ID:{board.id}</p>
-          <p>タイトル:{board.title}</p>
-          <p className="whitespace-pre-wrap">内容:{board.boardBody}</p>
-          {board.image?.url ? (
-            <img
-              src={board.image.url}
-              alt="boardData image"
-              className="w-1/2"
-            />
-          ) : null}
-          <p>ユーザID:{board.userId}</p>
+          {/* 掲示板表示 */}
+          <BoardContent board={board} />
 
-          <img
-            src={`${process.env.PUBLIC_URL}/images/${board.boardImage}`}
-            alt=""
-          />
+          {/* チャット開始ボタン || 掲示板編集ボタン */}
           <BoardEditButton
             userId={board.userId || ""}
             myId={stringMyId || ""}
             boardId={board.id.toString()}
           />
+          {/* 戻るボタン */}
           <GoBackButton />
         </>
       )}

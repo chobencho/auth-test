@@ -1,8 +1,8 @@
 class Api::V1::VerificationsController < ApplicationController
     def create
-        myId = params[:id]
+        id = params[:id]
 
-        @deleteCertificateImage = CheckAge.where(user_id: myId).destroy_all
+        @deleteCertificateImage = CheckAge.where(user_id: id).destroy_all
 
         @verification = CheckAge.new(verification_params) 
 
@@ -14,7 +14,7 @@ class Api::V1::VerificationsController < ApplicationController
     end
 
     def sendMail
-        myId = params[:stringMyId]
+        id = params[:stringMyId]
         name = params[:name]
         email = params[:email]
         message = params[:message]
@@ -27,8 +27,8 @@ class Api::V1::VerificationsController < ApplicationController
                 file.write(uploaded_file.read)
             end
 
-            image_url = "http://localhost:3001/uploads/check_age/image/#{myId}/#{uploaded_file.original_filename}"
-            ContactMailer.contact_email(name, email, message, image_url).deliver_now
+            image_url = "http://localhost:3001/uploads/check_age/image/#{id}/#{uploaded_file.original_filename}"
+            ContactMailer.contact_email(id, email, image_url).deliver_now
 
             render json: {status: 200, message: "証明書を管理者に送信しました。"}
         else

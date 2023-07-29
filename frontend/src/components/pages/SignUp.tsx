@@ -1,7 +1,8 @@
 import React, { useState, useContext } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import Cookies from "js-cookie";
-
+import { AuthContext } from "App";
+// Style
 import { makeStyles, Theme } from "@material-ui/core/styles";
 import { Typography } from "@material-ui/core";
 import TextField from "@material-ui/core/TextField";
@@ -10,11 +11,12 @@ import CardContent from "@material-ui/core/CardContent";
 import CardHeader from "@material-ui/core/CardHeader";
 import Button from "@material-ui/core/Button";
 import Box from "@material-ui/core/Box";
-
-import { AuthContext } from "App";
-import AlertMessage from "components/utils/AlertMessage";
+// Function
 import { signUp } from "lib/api/auth";
+// Interface
 import { SignUpParams } from "interfaces/index";
+// Components
+import AlertMessage from "components/utils/common/AlertMessage";
 
 const useStyles = makeStyles((theme: Theme) => ({
   container: {
@@ -43,17 +45,15 @@ const useStyles = makeStyles((theme: Theme) => ({
 const SignUp = () => {
   const classes = useStyles();
   const navigate = useNavigate();
-
   const { setIsSignedIn, setCurrentUser } = useContext(AuthContext);
-
+  // State
   const [name, setName] = useState<string>("");
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const [passwordConfirmation, setPasswordConfirmation] = useState<string>("");
   const [alertMessageOpen, setAlertMessageOpen] = useState<boolean>(false);
-  const [alertConfirmMessageOpen, setAlertConfirmMessageOpen] =
-    useState<boolean>(false);
-
+  const [alertConfirmMessageOpen, setAlertConfirmMessageOpen] = useState<boolean>(false);
+  // URL
   const confirmSuccessUrl = "http://localhost:3000";
 
   const handleSubmit = async (e: React.MouseEvent<HTMLButtonElement>) => {
@@ -77,10 +77,8 @@ const SignUp = () => {
         Cookies.set("_access_token", res.headers["access-token"]);
         Cookies.set("_client", res.headers["client"]);
         Cookies.set("_uid", res.headers["uid"]);
-
         setIsSignedIn(true);
         setCurrentUser(res.data.data);
-
         setAlertConfirmMessageOpen(true);
         console.log("Signed in successfully!");
       } else {

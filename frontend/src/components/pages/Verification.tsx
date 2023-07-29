@@ -1,18 +1,25 @@
-import React, { useState, useCallback, useContext } from "react";
+import React, { useState, useCallback, useContext, useEffect } from "react";
 import { AuthContext } from "App";
 import { v4 as uuidv4 } from "uuid";
+// Function
 import { sendCertificateImage } from "lib/api/verification";
 import { sendMail } from "lib/api/verification";
-import GoBackButton from "components/utils/GoBackButton";
+import { getEditUserData } from "lib/api/user";
+// Interface
+import { UserData } from "interfaces/index";
+// Components
+import GoBackButton from "components/utils/common/GoBackButton";
 
 const Verification = () => {
+  // State
+  const [userData, setUserData] = useState<UserData | null>(null);
   const [name, setName] = useState<string>("");
   const [email, setEmail] = useState<string>("");
   const [message, setMessage] = useState<string>("");
   const [image, setImage] = useState<File | undefined>();
   const [preview, setPreview] = useState<string>("");
 
-  // 自分のユーザIDをログインユーザ情報から取得
+  // Id
   const { currentUser } = useContext(AuthContext);
   const myId = currentUser ? currentUser.id : null;
   const stringMyId = myId?.toString();
@@ -64,7 +71,6 @@ const Verification = () => {
     e: React.FormEvent<HTMLFormElement>
   ) => {
     e.preventDefault();
-
     const data = createFormData();
 
     if (stringMyId !== undefined) {
@@ -73,30 +79,23 @@ const Verification = () => {
         setImage(undefined);
       });
 
-      await sendMail(stringMyId, name, email, message, image).then(() => {});
+      const email = userData!.email;
+
+      await sendMail(stringMyId, email, image).then(() => { });
     }
   };
+
+  const handleGetUserData = async () => {
+    getEditUserData(stringMyId).then((res) => setUserData(res.data));
+  };
+
+  useEffect(() => {
+    handleGetUserData();
+  }, []);
 
   return (
     <>
       <form onSubmit={handleSendCertificateImage}>
-        <input
-          type="text"
-          value={name}
-          onChange={(e) => setName(e.target.value)}
-          placeholder="名前"
-        />
-        <input
-          type="email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          placeholder="メールアドレス"
-        />
-        <textarea
-          value={message}
-          onChange={(e) => setMessage(e.target.value)}
-          placeholder="メッセージ"
-        />
         <div>
           <input
             id="icon-button-file"
@@ -153,6 +152,8 @@ const Verification = () => {
           <img src={preview} alt="preview img" className="border" />
         </div>
       ) : null}
+      {/* 戻るボタン */}
+      <GoBackButton />
     </>
   );
 };

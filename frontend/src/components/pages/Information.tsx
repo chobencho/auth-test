@@ -1,17 +1,21 @@
 import { useEffect, useState } from "react"
 import { Link } from 'react-router-dom'
-
+// Function
 import { getInfos } from "lib/api/info"
+// Interface
 import { InfoData } from "interfaces/index"
 
 const Information = () => {
+  // State
   const [infos, setInfos] = useState<InfoData[]>([]);
 
+  // お知らせ情報を取得
+  const handleGetInfos = async () => {
+    getInfos().then((res) => setInfos(res.data))
+  };
+
   useEffect(() => {
-    const f = async () => {
-      getInfos().then((res) => setInfos(res.data))
-    };
-    f();
+    handleGetInfos();
   }, []);
 
   return (

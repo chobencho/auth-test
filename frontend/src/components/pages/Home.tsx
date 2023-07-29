@@ -1,11 +1,15 @@
-import React, { useEffect, useState, useContext, useCallback } from "react";
+import { useEffect, useState, useContext } from "react";
 import { AuthContext } from "App";
-import { getUsers } from "lib/api/user";
-import { UserData } from "interfaces/index";
+// Style
 import { makeStyles, Theme } from "@material-ui/core/styles";
 import Box from "@material-ui/core/Box";
-import UsersItem from "components/utils/UsersItem";
-import SearchButton from "components/utils/SearchButton";
+// Function
+import { getUsers } from "lib/api/user";
+// Interface
+import { UserData } from "interfaces/index";
+// Components
+import UsersItem from "components/utils/home/UsersItem";
+import SearchButton from "components/utils/home/SearchButton";
 
 const useStyles = makeStyles((theme: Theme) => ({
   flexbox: {
@@ -18,8 +22,7 @@ const useStyles = makeStyles((theme: Theme) => ({
 const Home = () => {
   // State
   const [users, setUsers] = useState<UserData[]>([]);
-  const [researchKeyword, setResearchKeyword] = useState<string>("");
-  const [body, setBody] = useState<string>("");
+  const [tags, setTags] = useState<string[]>([]);
   // Style
   const classes = useStyles();
   // Id
@@ -27,39 +30,25 @@ const Home = () => {
   const myId = currentUser ? currentUser.id : null;
   const stringMyId = myId?.toString();
 
-  // 検索条件に合ったユーザを取得
-  const handleGetSearchUsers = async () => {
-    // getMessages(id, chatPartnerId).then((res) => setMessages(res.data));
-  };
-
-  //  researchKeywordを設定するコールバック関数
-  const handleSetResearchKeyword = useCallback((newResearchKeyword: any) => {
-    setResearchKeyword(newResearchKeyword);
-  }, []);
-
-  const handleSetBody = useCallback((newBody: any) => {
-    setBody(newBody);
-  }, []);
-
-  const handleGetUsersData = async () => {
-    getUsers(stringMyId, researchKeyword).then((res) => setUsers(res.data));
-    setResearchKeyword("");
+  // ユーザ情報を取得
+  const handleGetUsersData = async (tags: string[]) => {
+    getUsers(stringMyId, tags).then((res) => setUsers(res.data));
   };
 
   useEffect(() => {
-    handleGetUsersData();
+    handleGetUsersData(tags);
   }, []);
 
   return (
     <>
       <Box className={classes.flexbox}>
+        {/* 検索ボタン */}
         <SearchButton
           handleGetUsersData={handleGetUsersData}
           stringMyId={stringMyId ?? ""}
-          handleSetResearchKeyword={handleSetResearchKeyword}
-          handleSetBody={handleSetBody}
+          tags={tags}
         />
-
+        {/* ユーザ情報表示 */}
         <UsersItem handleGetUsersData={handleGetUsersData} users={users} />
       </Box>
     </>

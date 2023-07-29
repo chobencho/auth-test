@@ -1,42 +1,35 @@
-import React, { useState, useContext } from "react"
-import Cookies from "js-cookie"
-import { useNavigate, Link } from "react-router-dom"
-import { AuthContext } from "App"
-import { deleteAccount } from "lib/api/auth"
+import { useState } from "react"
+// Components
+import ModalDeleteAccount from "components/utils/user/ModalDeleteAccount";
 
 const DeleteAccount = () => {
-  const navigate = useNavigate()
-  const { setIsSignedIn, setCurrentUser } = useContext(AuthContext)
+  const [showModal, setShowModal] = useState(false);
 
-  const handleDeleteAccount = async (e: React.MouseEvent<HTMLButtonElement>) => {
-    if (window.confirm("アカウントを削除すると元の状態に戻せませんがよろしいですか？")) {
-      try {
-        const res = await deleteAccount()
-        console.log(res)
+  // モーダル非表示
+  const handleClearModal = () => {
+    setShowModal(false); // モーダルを非表示にする
+  };
 
-        if (res.status === 200) {
-          // サインアウト時には各Cookieを削除
-          Cookies.remove("_access_token")
-          Cookies.remove("_client")
-          Cookies.remove("_uid")
-
-          setIsSignedIn(false)
-          navigate("/signin")
-
-          console.log("Succeeded in delete account")
-        } else {
-          console.log("Failed in delete account")
-        }
-      } catch (err) {
-        console.log(err)
-      }
-    }
-  }
+  // モーダル表示
+  const showModalWindow = () => {
+    setShowModal(true); // 画像が選択されたときにモーダルを表示
+  };
 
   return (
     <>
       <p>アカウントを削除します</p>
-      <button className="border" onClick={handleDeleteAccount}>アカウント削除</button>
+      <button className="border"
+        onClick={() => {
+          showModalWindow();
+        }}
+      >アカウント削除</button>
+
+      {/* メッセージ入力モーダル */}
+      {showModal ? (
+        <ModalDeleteAccount
+          onClose={handleClearModal}
+        />
+      ) : null}
     </>
   )
 }

@@ -1,17 +1,21 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
+import { AuthContext } from "App"
 import { useParams } from "react-router-dom";
-import { getUserData } from "lib/api/user";
-import { UserData } from "interfaces/index";
-import UserEditButton from "components/utils/UserEditButton";
-import { UserHobbyData } from "interfaces/index";
-import { UserInterestData } from "interfaces/index";
-import { UserTagData } from "interfaces/index";
+// Function
 import { getEditUserData } from "lib/api/user";
 import { getEditUserHobbyData } from "lib/api/user";
 import { getEditUserInterestData } from "lib/api/user";
 import { getEditUserResearchTagData } from "lib/api/user";
+// Interface
+import { UserData } from "interfaces/index";
+import { UserHobbyData } from "interfaces/index";
+import { UserInterestData } from "interfaces/index";
+import { UserTagData } from "interfaces/index";
+// Components
+import UserEditButton from "components/utils/user/UserEditButton";
 
 const User = () => {
+  // State
   const [userData, setUserData] = useState<UserData | null>(null);
   const [userHobbyData, setUserHobbyData] = useState<UserHobbyData[]>([]);
   const [userInterestData, setUserInterestData] = useState<UserInterestData[]>(
@@ -20,22 +24,27 @@ const User = () => {
   const [userResearchTagData, setUserResearchTagData] = useState<UserTagData[]>(
     []
   );
+  // Id
+  const { currentUser } = useContext(AuthContext);
+  const myId = currentUser ? currentUser.id : null;
+  const stringMyId = myId?.toString();
 
   // 閲覧先のユーザIDを取得
   const { id } = useParams<{ id: string }>();
 
+  // ユーザ情報を取得
   const handleGetUserData = async () => {
     getEditUserData(id).then((res) => setUserData(res.data));
   };
-
+  // ユーザ趣味情報を取得
   const handleGetUserHobbyData = async () => {
     getEditUserHobbyData(id).then((res) => setUserHobbyData(res.data));
   };
-
+  // ユーザ興味情報を取得
   const handleGetUserInterestData = async () => {
     getEditUserInterestData(id).then((res) => setUserInterestData(res.data));
   };
-
+  // ユーザ研究タグ情報取得
   const handleGetUserResearchTagData = async () => {
     getEditUserResearchTagData(id).then((res) =>
       setUserResearchTagData(res.data)
@@ -94,7 +103,7 @@ const User = () => {
               </p>
             ))}
           </div>
-          <UserEditButton userId={id || ""} />
+          <UserEditButton userId={id || ""} myId={stringMyId || ""} />
         </>
       )}
     </>

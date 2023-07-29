@@ -1,18 +1,14 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
+// Style
 import { makeStyles, Theme } from "@material-ui/core/styles";
-
+import { Typography } from "@material-ui/core";
 import DrawIcon from "@mui/icons-material/Draw";
+import Box from "@material-ui/core/Box";
 import FolderSharedIcon from "@mui/icons-material/FolderShared";
 import CampaignIcon from "@mui/icons-material/Campaign";
 import AppSettingsAltIcon from "@mui/icons-material/AppSettingsAlt";
 import AssignmentIndIcon from "@mui/icons-material/AssignmentInd";
 import VolunteerActivismIcon from "@mui/icons-material/VolunteerActivism";
-
-import { useParams } from "react-router-dom";
-
-import Box from "@material-ui/core/Box";
-import { Typography } from "@material-ui/core";
 
 const useStyles = makeStyles((theme: Theme) => ({
   link: {
@@ -33,6 +29,7 @@ const useStyles = makeStyles((theme: Theme) => ({
 
 const MyPage = () => {
   const classes = useStyles();
+  // Id
   const { id } = useParams<{ id: string }>();
 
   return (
