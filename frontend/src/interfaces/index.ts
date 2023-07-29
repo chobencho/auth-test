@@ -81,6 +81,17 @@ export interface BoardData {
   updatedAt: Date;
 }
 
+export interface CommentData {
+  id: number;
+  name: string
+  image?: {
+    url: string;
+  };
+  boardId: string;
+  userId: string;
+  comment: string;
+}
+
 // インフォメーション
 export interface InfoData {
   id: number;

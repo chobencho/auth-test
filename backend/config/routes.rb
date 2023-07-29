@@ -25,12 +25,14 @@ Rails.application.routes.draw do
       get '/boards' => 'boards#index'
 
       # board
+      get '/board/comments' => 'boards#getComments'
       get '/board/:id' => 'boards#show'
       get '/board/:id/getLike' => 'boards#getLike'
       get '/message/exist' => 'messages#exist'
       get '/board/:id/:edit' => 'boards#showEdit'
       post '/board/create' => 'boards#create'
       post '/board/createLike' => 'boards#createLike'
+      post '/board/comment' => 'boards#createComment'
       post '/board/:id/:edit' => 'boards#edit'
       delete '/board/:id/deleteLike' => 'boards#deleteLike'
 

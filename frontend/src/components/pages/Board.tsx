@@ -3,17 +3,22 @@ import { AuthContext } from "App";
 import { useParams } from "react-router-dom";
 // Function
 import { getBoardData } from "lib/api/board";
+import { getBoardComment } from "lib/api/board";
 // Interface
 import { BoardData } from "interfaces/index";
+import { CommentData } from "interfaces/index"
 // Components
 import BoardEditButton from "components/utils/board/BoardEditButton";
 import LikeButton from "components/utils/board/LikeButton";
 import GoBackButton from "components/utils/common/GoBackButton";
 import BoardContent from "components/utils/board/BoardContent";
+import CommentItem from "components/utils/board/CommentItem";
+import CommentForm from "components/utils/board/CommentForm";
 
 const Board = () => {
   // State
   const [board, setBoard] = useState<BoardData | null>(null);
+  const [comments, setComments] = useState<CommentData[]>([])
   // Id
   const { id } = useParams<{ id: string }>();
   const { currentUser } = useContext(AuthContext);
@@ -25,8 +30,14 @@ const Board = () => {
     getBoardData(id).then((res) => setBoard(res.data));
   };
 
+  // コメント情報を取得
+  const handleGetBoardComment = async () => {
+    getBoardComment(id).then((res) => setComments(res.data));
+  };
+
   useEffect(() => {
     handleGetBoardData();
+    handleGetBoardComment();
   }, []);
 
   return (
@@ -50,6 +61,13 @@ const Board = () => {
           />
           {/* 戻るボタン */}
           <GoBackButton />
+          {/* コメント欄 */}
+          {comments.map((comment: CommentData) => (
+            <CommentItem comment={comment} />
+          ))}
+
+          {/* コメントフォーム */}
+          <CommentForm boardId={id} userId={stringMyId} handleGetBoardComment={handleGetBoardComment} />
         </>
       )}
     </>

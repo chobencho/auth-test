@@ -31,6 +31,12 @@ class Api::V1::BoardsController < ApplicationController
         render json: @like
     end
 
+    def getComments
+        @comments = BoardComment.joins(:user).select('board_comments.comment, board_comments.user_id, board_comments.created_at, users.name, users.image').where(board_id: params[:id])
+
+        render json: @comments
+    end
+
     def create
         @board = Board.new(board_params)  
         @board.save
@@ -46,6 +52,11 @@ class Api::V1::BoardsController < ApplicationController
         render json: false
     end
 
+    def createComment
+        @comment = BoardComment.new(comment_params)
+        @comment.save
+    end
+
     def mypage
         @boards = Board.joins(:user).select("boards.*, boards.id AS board_id, boards.user_id, users.name, boards.title, boards.body AS board_body, boards.image AS url, users.image AS user_image").where(users: {id: params[:id]})
         render json: @boards
@@ -59,6 +70,10 @@ class Api::V1::BoardsController < ApplicationController
     private
 
     def board_params
-      params.permit(:user_id, :title, :image, :body)
+        params.permit(:user_id, :title, :image, :body)
+    end
+
+    def comment_params
+        params.permit(:user_id, :board_id, :comment)
     end
 end

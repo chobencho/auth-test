@@ -7,9 +7,9 @@ export const getUsers = (id: string | undefined, keywords: string[]) => {
   return client.get<UserData[]>("/users", { params: { id, keywords } });
 };
 
-export const getUserData = (id: string | undefined) => {
-  return client.get<UserData>(`/user/${id}`);
-};
+// export const getUserData = (id: string | undefined) => {
+//   return client.get<UserData>(`/user/${id}`);
+// };
 
 // ユーザ情報取得
 export const getEditUserData = (id: string | undefined) => {
