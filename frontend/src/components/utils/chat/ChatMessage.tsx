@@ -1,5 +1,8 @@
+import { useState } from "react"
 // Interface
 import { MessageData } from "interfaces/index";
+
+import ModalImage from "components/utils/common/ModalImage";
 
 interface MessageItemProps {
   message: MessageData;
@@ -7,6 +10,17 @@ interface MessageItemProps {
 }
 
 const ChatMessage = ({ message, stringUserId }: MessageItemProps) => {
+  const [showModal, setShowModal] = useState<boolean>(false)
+
+  const handleExpansionImage = () => {
+    setShowModal(true)
+  }
+
+  // プレビュークリア機能
+  const handleClearPreview = () => {
+    setShowModal(false); // モーダルを非表示にする
+  };
+
   return (
     <>
       {message.userId == stringUserId ? (
@@ -16,6 +30,7 @@ const ChatMessage = ({ message, stringUserId }: MessageItemProps) => {
               src={message.image.url}
               alt="boardData image"
               className="w-1/2 ml-auto"
+              onClick={() => handleExpansionImage()}
             />
           ) : null}
           <p className="whitespace-pre-wrap">{message.body}</p>
@@ -32,6 +47,13 @@ const ChatMessage = ({ message, stringUserId }: MessageItemProps) => {
           <p className="whitespace-pre-wrap">{message.body}</p>
         </div>
       )}
+      {/* 画像拡大モーダル */}
+      {message.image?.url && showModal ? (
+        <ModalImage
+          onClose={handleClearPreview}
+          image={message.image.url}
+        />
+      ) : null}
     </>
   );
 };

@@ -28,6 +28,7 @@ const Message = () => {
     const handleGetMessages = async () => {
         getMessages(id, chatPartnerId).then((res) => setMessages(res.data))
     }
+
     useEffect(() => {
         handleGetMessages()
     }, [])

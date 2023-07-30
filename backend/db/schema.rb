@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_07_29_065839) do
+ActiveRecord::Schema[7.0].define(version: 2023_07_30_050632) do
   create_table "board_comments", force: :cascade do |t|
     t.integer "board_id", null: false
     t.string "comment", null: false
@@ -55,6 +55,36 @@ ActiveRecord::Schema[7.0].define(version: 2023_07_29_065839) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "image"
+  end
+
+  create_table "communities", force: :cascade do |t|
+    t.integer "category_id"
+    t.string "title"
+    t.string "body"
+    t.string "image"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "community_categories", force: :cascade do |t|
+    t.string "community_code"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "community_comments", force: :cascade do |t|
+    t.integer "community_id"
+    t.integer "user_id"
+    t.string "comment"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "community_users", force: :cascade do |t|
+    t.integer "community_id"
+    t.integer "user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "genders", force: :cascade do |t|

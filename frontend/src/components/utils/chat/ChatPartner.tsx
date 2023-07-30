@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react"
 import { useNavigate } from "react-router-dom"
 // Style
-import { SlArrowLeft } from "react-icons/sl";
+import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 // Function
 import { getChatPartner } from "lib/api/chat"
 // Interface
@@ -28,7 +28,7 @@ const ChatPartner = ({ chatPartnerId }: ChatPartnerProps) => {
   return (
     <>
       <div className="border flex">
-        <span onClick={() => (navigate("/messages"))}><SlArrowLeft className="text-xl my-3 mx-5" /></span>
+        <span onClick={() => (navigate("/messages"))}><ArrowBackIosNewIcon className="text-xl my-3 mx-5" /></span>
         {partner &&
           <>
             <p>{partner.name}</p>

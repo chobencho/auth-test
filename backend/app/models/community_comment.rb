@@ -1,0 +1,2 @@
+class CommunityComment < ApplicationRecord
+end

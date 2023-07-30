@@ -14,6 +14,8 @@ import Board from "components/pages/Board";
 import Boards from "components/pages/Boards";
 import BoardCreate from "components/pages/BoardCreate";
 import BoardEdit from "components/pages/BoardEdit";
+import Communities from "components/pages/Communities";
+import Community from "components/pages/Community";
 import Messages from "components/pages/Messages";
 import Message from "components/pages/Message";
 import User from "components/pages/User";
@@ -140,6 +142,23 @@ const App = () => {
                 </Private>
               }
             />
+            <Route
+              path="/communities"
+              element={
+                <Private>
+                  <Communities />
+                </Private>
+              }
+            />
+            <Route
+              path="/community/:id"
+              element={
+                <Private>
+                  <Community />
+                </Private>
+              }
+            />
+
             <Route
               path="/messages"
               element={

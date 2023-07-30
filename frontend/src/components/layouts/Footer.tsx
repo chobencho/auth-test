@@ -7,6 +7,7 @@ import PersonSearchIcon from '@mui/icons-material/PersonSearch';
 import AssignmentIcon from '@mui/icons-material/Assignment';
 import MessageIcon from '@mui/icons-material/Message';
 import AccountBoxIcon from '@mui/icons-material/AccountBox';
+import GroupsIcon from '@mui/icons-material/Groups';
 
 import { createTheme } from '@mui/material/styles';
 import { ThemeProvider } from "@material-ui/styles";
@@ -58,6 +59,9 @@ const Footer = () => {
             </Link>
             <Link to="/boards">
               <AssignmentIcon fontSize="large" className={classes.icon} />
+            </Link>
+            <Link to="/communities">
+              <GroupsIcon fontSize="large" className={classes.icon} />
             </Link>
             <Link to="/messages">
               <MessageIcon fontSize="large" className={classes.icon} />
