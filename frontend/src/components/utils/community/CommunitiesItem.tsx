@@ -1,19 +1,16 @@
 import { Link } from 'react-router-dom'
+import { CommunityData } from "interfaces/index";
 
-const CommunitiesItem = () => {
+type CommunityProps = {
+  community: CommunityData;
+};
+
+const CommunitiesItem = ({ community }: CommunityProps) => {
   return (
     <>
-      <Link to="/community/1" className="inline-block w-11/12 border p-2 m-2">
+      <Link to={`/community/${community.id}`} className="inline-block w-11/12 border p-2 m-2">
         <img src="" alt="" />
-        <h4>コミュニティ1</h4>
-      </Link>
-      <Link to="/community/2" className="inline-block w-11/12 border p-2 m-2">
-        <img src="" alt="" />
-        <h4>コミュニティ2</h4>
-      </Link>
-      <Link to="/community/3" className="inline-block w-11/12 border p-2 m-2">
-        <img src="" alt="" />
-        <h4>コミュニティ3</h4>
+        <h4>{community.title}</h4>
       </Link>
     </>
   )

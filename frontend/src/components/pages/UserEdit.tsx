@@ -40,6 +40,7 @@ const UserEdit = () => {
   const handleGetUserInterestData = async () => {
     getEditUserInterestData(id).then((res) => setUserInterestData(res.data));
   };
+
   // ユーザ研究タグ情報取得
   const handleGetUserResearchTagData = async () => {
     getEditUserResearchTagData(id).then((res) =>

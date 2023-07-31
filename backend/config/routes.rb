@@ -40,6 +40,12 @@ Rails.application.routes.draw do
       get '/messages' => 'messages#index'
       post '/chatCreate' => 'messages#chatCreate'
 
+      # community
+      get '/communities' => 'communities#index'
+      get '/category' => 'communities#getCategory'
+      get '/popularCommunity' => 'communities#getPopularCommunity'
+      get '/newCommunity' => 'communities#getNewCommunity'
+
       # message
       get '/message' => 'messages#chatPartner'
       get '/message/:id' => 'messages#show'

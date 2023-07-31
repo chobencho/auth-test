@@ -123,3 +123,22 @@ export interface MessageData {
     url: string;
   };
 }
+
+export interface CommunityCategoryData {
+  id: string;
+  communityCode: string;
+}
+
+export interface CommunityData {
+  id: string;
+  communityId: string
+  userId: string
+  categoryId: string;
+  title: string
+  body: string
+  image?: {
+    url: string;
+  };
+  createdAt: Date;
+  updatedAt: Date;
+}
