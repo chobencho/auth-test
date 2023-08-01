@@ -82,8 +82,6 @@ const ModalChatForm = ({
     const data = createFormData();
 
     await createMessage(data).then(() => {
-      setModalRoomId("");
-      setUserId("");
       setModalBody("");
       handleGetMessages();
     });

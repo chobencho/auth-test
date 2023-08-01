@@ -42,9 +42,12 @@ Rails.application.routes.draw do
 
       # community
       get '/communities' => 'communities#index'
+      get '/community/:id' => 'communities#show'
+      get '/community/:id/comments' => 'communities#showComments'
       get '/category' => 'communities#getCategory'
       get '/popularCommunity' => 'communities#getPopularCommunity'
       get '/newCommunity' => 'communities#getNewCommunity'
+      post '/communityComment' => 'communities#create'
 
       # message
       get '/message' => 'messages#chatPartner'

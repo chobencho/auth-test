@@ -142,3 +142,15 @@ export interface CommunityData {
   createdAt: Date;
   updatedAt: Date;
 }
+
+export interface CommunityCommentData {
+  id: string;
+  communityId: string
+  userId: string
+  comment: string;
+  image?: {
+    url: string;
+  };
+  createdAt: Date;
+  updatedAt: Date;
+}
