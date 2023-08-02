@@ -1,12 +1,17 @@
 class Api::V1::CommunitiesController < ApplicationController
 
   def index
-    @community = Community.joins(:community_users).select("*, community_users.user_id AS user_id").where(community_users: {user_id: params[:id]})
+    @community = Community.joins(:community_users).select("*, community_users.community_id AS id, community_users.user_id AS user_id").where(community_users: {user_id: params[:id]})
     render json: @community
   end
 
   def show
-    @community = Community.find_by(id: params[:id])
+    @community =  Community.joins(:community_category).select('communities.*, community_categories.community_code').find_by(id: params[:id])
+    render json: @community
+  end
+
+  def getSubscribed
+    @community = CommunityUser.where(community_id: params[:community_id], user_id: params[:id]).present?
     render json: @community
   end
   
@@ -15,14 +20,24 @@ class Api::V1::CommunitiesController < ApplicationController
     render json: @comments
   end
 
-  def getCategory
-    @category = CommunityCategory.all
-    render json: @category
+  def getAllCommunity
+    @community = Community.joins(:community_category).select('communities.*, community_categories.community_code')
+    render json: @community
   end
 
   def getPopularCommunity
-    @community = Community.order(created_at: :desc).limit(3)
-    render json: @community
+    # @community = Community.order(updated_at: :asc).limit(3)
+
+    # 最新のコメントの更新順に、対応するcommunity_idを3つ取得
+    latest_community_ids = CommunityComment.order(updated_at: :desc).pluck(:community_id)
+
+    uniq_latest_community_ids = latest_community_ids.uniq.take(3)
+
+    # latest_community_idsを使ってCommunityテーブルからデータを取得
+    latest_communities = Community.where(id: uniq_latest_community_ids)
+
+
+    render json: latest_communities
   end
 
   def getNewCommunity
@@ -32,7 +47,20 @@ class Api::V1::CommunitiesController < ApplicationController
 
   def create
     comment = CommunityComment.new(comment_params)  
-    comment.save
+    if comment.save
+      render json: {status: 200, message: "success community comment!"}
+    else
+      render json: {status: 200, message: "failed community comment!"}
+    end
+  end
+
+  def subscribeCommunity
+    community = CommunityUser.new(subscribe_params)
+    if community.save
+      render json: {status: 200, message: "success subscribe community!"}
+    else
+      render json: {status: 200, message: "failed subscribe community!"}
+    end
   end
 
   private
@@ -40,4 +68,9 @@ class Api::V1::CommunitiesController < ApplicationController
   def comment_params
     params.permit(:community_id, :user_id, :comment, :image)
   end
+
+  def subscribe_params
+    params.permit(:community_id, :user_id)
+  end
+
 end

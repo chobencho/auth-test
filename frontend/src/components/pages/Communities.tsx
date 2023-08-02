@@ -4,7 +4,7 @@ import { AuthContext } from "App";
 import { CommunityCategoryData } from "interfaces/index";
 import { CommunityData } from "interfaces/index";
 // Function
-import { getCommunityCategoryData } from "lib/api/community";
+import { getAllCommunityData } from "lib/api/community";
 import { getPopularCommunityData } from "lib/api/community";
 import { getNewCommunityData } from "lib/api/community";
 import { getMyCommunityData } from "lib/api/community";
@@ -13,10 +13,10 @@ import CommunitiesBranchSearch from "components/utils/community/CommunitiesBranc
 import CommunitiesBranchJoin from "components/utils/community/CommunitiesBranchJoin";
 
 const Communities = () => {
-  const [communityCategory, setCommunityCategory] = useState<CommunityCategoryData[]>([])
-  const [popularCommunity, setPopularCommunity] = useState<CommunityData[]>([])
-  const [newCommunity, setNewCommunity] = useState<CommunityData[]>([])
-  const [myCommunity, setMyCommunity] = useState<CommunityData[]>([])
+  const [allCommunity, setAllCommunity] = useState<CommunityData[]>([]);
+  const [popularCommunity, setPopularCommunity] = useState<CommunityData[]>([]);
+  const [newCommunity, setNewCommunity] = useState<CommunityData[]>([]);
+  const [myCommunity, setMyCommunity] = useState<CommunityData[]>([]);
   const [searchButtonActive, setSearchButtonActive] = useState(true);
   const [joinButtonActive, setJoinButtonActive] = useState(false);
 
@@ -36,9 +36,9 @@ const Communities = () => {
     setJoinButtonActive(true);
   };
 
-  // コミュニティカテゴリ取得
-  const handleGetCommunityCategoryData = async () => {
-    getCommunityCategoryData().then((res) => setCommunityCategory(res.data));
+  // 人気コミュニティ取得
+  const handleGetAllCommunityData = async () => {
+    getAllCommunityData().then((res) => setAllCommunity(res.data));
   };
 
   // 人気コミュニティ取得
@@ -57,7 +57,7 @@ const Communities = () => {
   };
 
   useEffect(() => {
-    handleGetCommunityCategoryData();
+    handleGetAllCommunityData();
     handleGetPopularCommunityData();
     handleGetNewCommunityData();
     handleGetMyCommunityData();
@@ -67,31 +67,33 @@ const Communities = () => {
     <>
       <div className="flex justify-between w-2/3 m-auto">
         <button
-          className={`border p-2 m-2 ${searchButtonActive ? "border-red-500" : ""}`}
+          className={`border p-2 m-2 ${
+            searchButtonActive ? "border-red-500" : ""
+          }`}
           onClick={handleSearchClick}
         >
           コミュニティを探す
         </button>
         <button
-          className={`border p-2 m-2 ${joinButtonActive ? "border-red-500" : ""}`}
+          className={`border p-2 m-2 ${
+            joinButtonActive ? "border-red-500" : ""
+          }`}
           onClick={handleJoinClick}
         >
           参加中のコミュニティ
         </button>
       </div>
-      {searchButtonActive ?
+      {searchButtonActive ? (
         <CommunitiesBranchSearch
-          communityCategory={communityCategory}
+          allCommunity={allCommunity}
           popularCommunity={popularCommunity}
           newCommunity={newCommunity}
         />
-        :
-        <CommunitiesBranchJoin
-          myCommunity={myCommunity}
-        />
-      }
+      ) : (
+        <CommunitiesBranchJoin myCommunity={myCommunity} />
+      )}
     </>
-  )
-}
+  );
+};
 
-export default Communities
+export default Communities;

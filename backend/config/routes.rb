@@ -43,11 +43,13 @@ Rails.application.routes.draw do
       # community
       get '/communities' => 'communities#index'
       get '/community/:id' => 'communities#show'
+      get '/community/:id/subscribed' => 'communities#getSubscribed'
       get '/community/:id/comments' => 'communities#showComments'
-      get '/category' => 'communities#getCategory'
+      get '/allCommunity' => 'communities#getAllCommunity'
       get '/popularCommunity' => 'communities#getPopularCommunity'
       get '/newCommunity' => 'communities#getNewCommunity'
       post '/communityComment' => 'communities#create'
+      post '/community/newSubscribed' => 'communities#subscribeCommunity'
 
       # message
       get '/message' => 'messages#chatPartner'

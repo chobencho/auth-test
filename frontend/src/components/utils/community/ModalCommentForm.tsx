@@ -50,7 +50,6 @@ const ModalChatForm = ({
   // State
   const [modalComment, setModalComment] = useState<string>("");
   const [modalPreview, setModalPreview] = useState<string>(preview);
-  const [modalCommunityId, setModalCommunityId] = useState<string>(communityId);
   const [userId, setUserId] = useState<string>("");
 
   // プレビュークリア機能
@@ -77,7 +76,9 @@ const ModalChatForm = ({
     return formData;
   };
 
-  const handleCreateCommunityComment = async (e: React.FormEvent<HTMLFormElement>) => {
+  const handleCreateCommunityComment = async (
+    e: React.FormEvent<HTMLFormElement>
+  ) => {
     e.preventDefault();
     const data = createFormData();
 

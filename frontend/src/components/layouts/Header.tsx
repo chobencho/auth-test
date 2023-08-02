@@ -1,85 +1,57 @@
-import React, { useContext } from "react"
-import { useNavigate, Link } from "react-router-dom"
-import Cookies from "js-cookie"
+import React, { useContext } from "react";
+import { useNavigate, Link } from "react-router-dom";
+import Cookies from "js-cookie";
 
-import { makeStyles, Theme } from "@material-ui/core/styles"
+import { makeStyles, Theme } from "@material-ui/core/styles";
 
-import AppBar from "@material-ui/core/AppBar"
-import Toolbar from "@material-ui/core/Toolbar"
-import Typography from "@material-ui/core/Typography"
-import Button from "@material-ui/core/Button"
-import IconButton from "@material-ui/core/IconButton"
-import MenuIcon from "@material-ui/icons/Menu"
+import AppBar from "@material-ui/core/AppBar";
+import Toolbar from "@material-ui/core/Toolbar";
+import Typography from "@material-ui/core/Typography";
+import Button from "@material-ui/core/Button";
 
-import { signOut } from "lib/api/auth"
-import { deleteAccount } from "lib/api/auth"
+import { signOut } from "lib/api/auth";
+import { deleteAccount } from "lib/api/auth";
 
-import { AuthContext } from "App"
+import { AuthContext } from "App";
 
 const useStyles = makeStyles((theme: Theme) => ({
-  iconButton: {
-    marginRight: theme.spacing(2),
-  },
   title: {
     flexGrow: 1,
     textDecoration: "none",
-    color: "inherit"
+    color: "inherit",
   },
   linkBtn: {
-    textTransform: "none"
-  }
-}))
+    textTransform: "none",
+  },
+}));
 
 const Header = () => {
-  const { loading, isSignedIn, setIsSignedIn } = useContext(AuthContext)
-  const classes = useStyles()
-  const navigate = useNavigate()
+  const { loading, isSignedIn, setIsSignedIn } = useContext(AuthContext);
+  const classes = useStyles();
+  const navigate = useNavigate();
 
   const handleSignOut = async (e: React.MouseEvent<HTMLButtonElement>) => {
     try {
-      const res = await signOut()
-      console.log(res)
+      const res = await signOut();
+      console.log(res);
 
       if (res.data.success === true) {
         // サインアウト時には各Cookieを削除
-        Cookies.remove("_access_token")
-        Cookies.remove("_client")
-        Cookies.remove("_uid")
+        Cookies.remove("_access_token");
+        Cookies.remove("_client");
+        Cookies.remove("_uid");
 
-        setIsSignedIn(false)
-        navigate("/signin")
+        setIsSignedIn(false);
+        navigate("/signin");
 
-        console.log("Succeeded in sign out")
+        console.log("Succeeded in sign out");
       } else {
-        console.log("Failed in sign out")
+        console.log("Failed in sign out");
       }
     } catch (err) {
-      console.log(err)
+      console.log(err);
     }
-  }
-
-  // const handleDelete = async (e: React.MouseEvent<HTMLButtonElement>) => {
-  //   try {
-  //     const res = await deleteAccount()
-  //     console.log(res)
-
-  //     if (res.status === 200) {
-  //       // サインアウト時には各Cookieを削除
-  //       Cookies.remove("_access_token")
-  //       Cookies.remove("_client")
-  //       Cookies.remove("_uid")
-
-  //       setIsSignedIn(false)
-  //       navigate("/signin")
-
-  //       console.log("Succeeded in delete account")
-  //     } else {
-  //       console.log("Failed in delete account")
-  //     }
-  //   } catch (err) {
-  //     console.log(err)
-  //   }
-  // }
+  };
 
   const AuthButtons = () => {
     if (!loading) {
@@ -93,16 +65,8 @@ const Header = () => {
             >
               Sign out
             </Button>
-            {/* <Button
-              color="inherit"
-              className={classes.linkBtn}
-              onClick={handleDelete}
-            >
-              Delete Account
-            </Button> */}
           </>
-
-        )
+        );
       } else {
         return (
           <>
@@ -123,24 +87,17 @@ const Header = () => {
               Sign Up
             </Button>
           </>
-        )
+        );
       }
     } else {
-      return <></>
+      return <></>;
     }
-  }
+  };
 
   return (
     <>
       <AppBar position="static">
         <Toolbar>
-          <IconButton
-            edge="start"
-            className={classes.iconButton}
-            color="inherit"
-          >
-            <MenuIcon />
-          </IconButton>
           <Typography
             component={Link}
             to="/"
@@ -153,7 +110,7 @@ const Header = () => {
         </Toolbar>
       </AppBar>
     </>
-  )
-}
+  );
+};
 
-export default Header
+export default Header;

@@ -21,7 +21,7 @@ export interface UserData {
   email: string;
   name: string;
   age: string;
-  tags: string[]
+  tags: string[];
   image?: {
     url: string;
   };
@@ -43,7 +43,7 @@ export interface UserData {
 // 趣味情報
 export interface UserTagData {
   id: number;
-  userId: string
+  userId: string;
   tagId: string;
   tagName: string;
 }
@@ -83,7 +83,7 @@ export interface BoardData {
 
 export interface CommentData {
   id: number;
-  name: string
+  name: string;
   image?: {
     url: string;
   };
@@ -131,11 +131,12 @@ export interface CommunityCategoryData {
 
 export interface CommunityData {
   id: string;
-  communityId: string
-  userId: string
+  communityId: string;
+  communityCode: string;
+  userId: string;
   categoryId: string;
-  title: string
-  body: string
+  title: string;
+  body: string;
   image?: {
     url: string;
   };
@@ -145,8 +146,8 @@ export interface CommunityData {
 
 export interface CommunityCommentData {
   id: string;
-  communityId: string
-  userId: string
+  communityId: string;
+  userId: string;
   comment: string;
   image?: {
     url: string;

@@ -9,6 +9,12 @@ import Header from "components/layouts/Header";
 import Footer from "components/layouts/Footer";
 
 const useStyles = makeStyles(() => ({
+  header: {
+    position: "fixed",
+    top: 0,
+    width: "100%",
+    zIndex: 999,
+  },
   container: {
     marginTop: "3rem",
   },
@@ -24,7 +30,7 @@ const CommonLayout = ({ children }: CommonLayoutProps) => {
 
   return (
     <>
-      <header className="fixed top-0 w-full">
+      <header className={classes.header}>
         <Header />
       </header>
       <main className="pt-14 pb-32">

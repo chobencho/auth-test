@@ -1,18 +1,45 @@
-import React, { useState, useCallback } from 'react'
+import React, { useState, useCallback } from "react";
 // Function
 import { createCommunityComment } from "lib/api/community";
 // Components
 import ModalCommentForm from "components/utils/community/ModalCommentForm";
 import PhotoCameraBackIcon from "@mui/icons-material/PhotoCameraBack";
+// Style
+import { makeStyles, Theme } from "@material-ui/core/styles";
 
 export interface CommunityCommentFormProps {
-  handleGetCommunityCommentData: Function
-  id: string
-  stringMyId: string
+  handleGetCommunityCommentData: Function;
+  id: string;
+  stringMyId: string;
 }
 
-const CommunityForm = ({ handleGetCommunityCommentData, id, stringMyId }: CommunityCommentFormProps) => {
-  const [comment, setComment] = useState<string>("")
+const useStyles = makeStyles((theme) => ({
+  form: {
+    position: "fixed",
+    bottom: 55,
+    left: 0,
+    display: "flex",
+    border: "1px solid #eee",
+    justifyContent: "space-between",
+    width: "100%",
+    background: "#fff",
+    // boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
+    // zIndex: 100,
+  },
+  textarea: {
+    width: "100%",
+    border: "1px solid #ddd",
+    padding: "5px",
+  },
+}));
+
+const CommunityForm = ({
+  handleGetCommunityCommentData,
+  id,
+  stringMyId,
+}: CommunityCommentFormProps) => {
+  const classes = useStyles();
+  const [comment, setComment] = useState<string>("");
   const [image, setImage] = useState<File | null>(null);
   const [preview, setPreview] = useState<string>("");
   // モーダルを制御するstate
@@ -55,7 +82,9 @@ const CommunityForm = ({ handleGetCommunityCommentData, id, stringMyId }: Commun
     return formData;
   };
 
-  const handleCreateCommunityComment = async (e: React.FormEvent<HTMLFormElement>) => {
+  const handleCreateCommunityComment = async (
+    e: React.FormEvent<HTMLFormElement>
+  ) => {
     e.preventDefault();
     const data = createFormData();
 
@@ -69,46 +98,47 @@ const CommunityForm = ({ handleGetCommunityCommentData, id, stringMyId }: Commun
     <>
       <form
         onSubmit={handleCreateCommunityComment}
-        className="border flex justify-between"
+        className={`${classes.form}`}
       >
+        <div className="w-full">
+          <div className="flex justify-between p-1">
+            <div>
+              <input
+                id="icon-button-file"
+                type="file"
+                className="hidden"
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                  uploadImage(e);
+                  previewImage(e);
+                }}
+              />
+              <label
+                className="flex flex-col items-center justify-center w-full  cursor-pointer"
+                htmlFor="icon-button-file"
+              >
+                <PhotoCameraBackIcon className="text-sm" />
+              </label>
+            </div>
 
-        <div>
-          <input
-            id="icon-button-file"
-            type="file"
-            className="hidden"
-            onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-              uploadImage(e);
-              previewImage(e);
-            }}
-          />
-          <label
-            className="flex flex-col items-center justify-center w-full  border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-bray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600"
-            htmlFor="icon-button-file"
-          >
-            <PhotoCameraBackIcon />
-          </label>
-        </div>
-
-        <b>内容</b>
-        <textarea
-          placeholder="Hello World"
-          // className→whitespace-pre-wrapで改行している
-          className="border w-4/5 p-2"
-          value={comment}
-          onChange={(e) => {
-            setComment(e.target.value);
-          }}
-        ></textarea>
-
-        <div>
-          <button
-            type="submit"
-            disabled={!comment || comment.length < 0}
-            className="border bg-gray-600 text-white px-2"
-          >
-            送信
-          </button>
+            <button
+              type="submit"
+              disabled={!comment || comment.length < 0}
+              className="border bg-gray-600 text-white px-2 text-xs"
+            >
+              送信
+            </button>
+          </div>
+          <div className="text-center px-1">
+            <textarea
+              placeholder="Hello World"
+              // className→whitespace-pre-wrapで改行している
+              className={`${classes.textarea}`}
+              value={comment}
+              onChange={(e) => {
+                setComment(e.target.value);
+              }}
+            ></textarea>
+          </div>
         </div>
       </form>
       {/* メッセージ入力モーダル */}
@@ -122,9 +152,8 @@ const CommunityForm = ({ handleGetCommunityCommentData, id, stringMyId }: Commun
           handleGetCommunityCommentData={handleGetCommunityCommentData}
         />
       ) : null}
-
     </>
-  )
-}
+  );
+};
 
-export default CommunityForm
+export default CommunityForm;

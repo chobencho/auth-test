@@ -1,49 +1,89 @@
-import { Link } from 'react-router-dom'
+import { useState } from "react";
 import CommunityCreate from "components/utils/community/CommunityCreate";
 // Interface
-import { CommunityCategoryData } from "interfaces/index";
 import { CommunityData } from "interfaces/index";
+// Components
+import CommunitiesItem from "components/utils/community/CommunitiesItem";
+import ModalCategoryCommunity from "components/utils/community/ModalCategoryCommunity";
+
+import Category from "common/category";
 
 type CommunityProps = {
-  communityCategory: CommunityCategoryData[];
+  allCommunity: CommunityData[];
   popularCommunity: CommunityData[];
   newCommunity: CommunityData[];
 };
 
+const CommunitiesBranchSearch = ({
+  allCommunity,
+  popularCommunity,
+  newCommunity,
+}: CommunityProps) => {
+  // モーダルを制御するstate
+  const [showModal, setShowModal] = useState(false);
+  const [selectedCategory, setSelectedCategory] = useState("");
+  const [selectedCategoryData, setSelectedCategoryData] = useState<
+    CommunityData[]
+  >([]);
 
-const CommunitiesBranchSearch = ({ communityCategory, popularCommunity, newCommunity }: CommunityProps) => {
+  const handleDisplayCategoryCommunity = (value: string) => {
+    setSelectedCategory(value); // 選択されたカテゴリをセット
+    const categoryData = allCommunity.filter(
+      (com) => String(com.categoryId) === value
+    );
+    setSelectedCategoryData(categoryData);
+    setShowModal(true);
+  };
+
+  // プレビュークリア機能
+  const handleClearPreview = () => {
+    setShowModal(false); // モーダルを非表示にする
+  };
+
   return (
     <>
       <h5>カテゴリから探す</h5>
       <div className="border p-2 m-2 flex flex-wrap">
-        {communityCategory.map((category) => (
-          <p className="border p-2 m-2 w-1/4 text-center">{category.communityCode}</p>
-        ))}
+        {Category.CAT_OPTIONS.map((option) => {
+          const stringValue = String(option[0]);
+          return (
+            <button
+              key={option[0]}
+              value={option[0]}
+              className="border p-2 m-2 w-1/4 text-center"
+              onClick={() => handleDisplayCategoryCommunity(stringValue)}
+            >
+              {option[1]}
+            </button>
+          );
+        })}
       </div>
 
       <h5>人気コミュニティ</h5>
 
       <div className="border p-2 m-2">
         {popularCommunity.map((popCom) => (
-          <Link to={`/community/${popCom.id}`} className="inline-block w-11/12 border p-2 m-2">
-            <img src="" alt="" />
-            <h4>{popCom.title}</h4>
-          </Link>
+          <CommunitiesItem community={popCom} />
         ))}
       </div>
 
       <h5>新着コミュニティ</h5>
       <div className="border p-2 m-2">
         {newCommunity.map((newCom) => (
-          <Link to={`/community/${newCom.id}`} className="inline-block w-11/12 border p-2 m-2">
-            <img src="" alt="" />
-            <h4>{newCom.title}</h4>
-          </Link>
+          <CommunitiesItem community={newCom} />
         ))}
       </div>
       <CommunityCreate />
+      {/* メッセージ入力モーダル */}
+      {showModal ? (
+        <ModalCategoryCommunity
+          showModal={showModal}
+          onClose={handleClearPreview}
+          selectedCategoryData={selectedCategoryData}
+        />
+      ) : null}
     </>
-  )
-}
+  );
+};
 
-export default CommunitiesBranchSearch
+export default CommunitiesBranchSearch;
