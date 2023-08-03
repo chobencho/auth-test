@@ -7,7 +7,6 @@ import { makeStyles, Theme } from "@material-ui/core/styles";
 import CommunitiesItem from "components/utils/community/CommunitiesItem";
 
 interface ModalCategoryCommunityProps {
-  showModal: boolean;
   onClose: Function;
   selectedCategoryData: CommunityData[];
 }
@@ -39,23 +38,13 @@ const useStyles = makeStyles((theme: Theme) => ({
 }));
 
 const ModalCategoryCommunity = ({
-  showModal,
   onClose,
   selectedCategoryData,
 }: ModalCategoryCommunityProps) => {
   const classes = useStyles();
-  const [modalPreview, setModalPreview] = useState<boolean>(showModal);
 
   // プレビュークリア機能
   const handleClearPreview = () => {
-    setModalPreview(false);
-    // プレビューをクリアすると同時に、inputタグの内容もクリア
-    const fileInput = document.getElementById(
-      "icon-button-file"
-    ) as HTMLInputElement;
-    if (fileInput) {
-      fileInput.value = "";
-    }
     onClose();
   };
 

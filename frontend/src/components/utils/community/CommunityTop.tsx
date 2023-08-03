@@ -2,6 +2,8 @@ import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 // Interface
 import { CommunityData } from "interfaces/index";
+// Function
+import { withdrawCommunity } from "lib/api/community";
 // Style
 import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
 import TocIcon from "@mui/icons-material/Toc";
@@ -9,6 +11,8 @@ import { makeStyles, Theme } from "@material-ui/core/styles";
 
 export interface CommunityProps {
   community: CommunityData;
+  community_id: string | undefined;
+  user_id: string | undefined;
 }
 
 const useStyles = makeStyles((theme) => ({
@@ -49,13 +53,19 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const CommunityTop = ({ community }: CommunityProps) => {
+const CommunityTop = ({ community, community_id, user_id }: CommunityProps) => {
   const [showSlideUpContent, setShowSlideUpContent] = useState(false);
   const navigate = useNavigate();
   const classes = useStyles();
 
   const handleToggleSlideUpContent = () => {
     setShowSlideUpContent((prev) => !prev);
+  };
+
+  const handleWithdrawCommunity = async () => {
+    withdrawCommunity(community_id, user_id).then(() =>
+      navigate("/communities")
+    );
   };
 
   return (
@@ -84,7 +94,10 @@ const CommunityTop = ({ community }: CommunityProps) => {
         <h4 className="mt-5">カテゴリ</h4>
         <p>{community.communityCode}</p>
         <h4 className="mt-5">退会</h4>
-        <button className="border text-white bg-gray-600 p-1 text-sm">
+        <button
+          className="border text-white bg-gray-600 p-1 text-sm"
+          onClick={() => handleWithdrawCommunity()}
+        >
           このコミュニティを退会する
         </button>
       </div>

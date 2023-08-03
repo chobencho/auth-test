@@ -49,3 +49,25 @@ export const getSubscribedCommunity = (
 export const subscribeCommunity = (data: FormData): AxiosPromise => {
   return client.post(`/community/newSubscribed`, data);
 };
+
+export const withdrawCommunity = (
+  community_id: string | undefined,
+  user_id: string | undefined
+) => {
+  return client.delete(`/withdrawCommunity`, {
+    params: { community_id, user_id },
+  });
+};
+
+// 管理者にメール送信
+export const sendMailApplyNewCommunity = (
+  stringMyId: string,
+  title: string,
+  body: string
+) => {
+  return client.post(`/community/sendMailApplyNewCommunity`, {
+    stringMyId,
+    title,
+    body,
+  });
+};

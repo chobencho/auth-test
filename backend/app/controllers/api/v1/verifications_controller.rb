@@ -14,7 +14,7 @@ class Api::V1::VerificationsController < ApplicationController
     end
 
     def sendMail
-        id = params[:stringMyId]
+        id = params[:string_my_id]
         name = params[:name]
         email = params[:email]
         message = params[:message]

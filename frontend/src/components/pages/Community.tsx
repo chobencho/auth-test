@@ -53,7 +53,11 @@ const Community = () => {
     <>
       {community && (
         <>
-          <CommunityTop community={community} />
+          <CommunityTop
+            community={community}
+            community_id={id || undefined}
+            user_id={stringMyId || undefined}
+          />
           <div className="my-20">
             {comments.map((comment) => (
               <CommunityItem

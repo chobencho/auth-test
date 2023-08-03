@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_08_01_134443) do
+ActiveRecord::Schema[7.0].define(version: 2023_08_03_075819) do
   create_table "board_comments", force: :cascade do |t|
     t.integer "board_id", null: false
     t.string "comment", null: false
@@ -51,7 +51,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_01_134443) do
 
   create_table "check_ages", force: :cascade do |t|
     t.integer "user_id", null: false
-    t.integer "check_age", default: 0, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "image"
@@ -203,17 +202,10 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_01_134443) do
     t.integer "prefecture_id", default: 1, null: false
     t.integer "grade_id", default: 1, null: false
     t.integer "subject_id", default: 1, null: false
-    t.integer "hobby_id_1", default: 1
-    t.integer "hobby_id_2", default: 1
-    t.integer "hobby_id_3", default: 1
-    t.integer "hobby_id_4", default: 1
-    t.integer "hobby_id_5", default: 1
-    t.integer "interest_id_1", default: 1
-    t.integer "interest_id_2", default: 1
-    t.integer "interest_id_3", default: 1
     t.text "tokens"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "check_age", default: 0, null: false
     t.index ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true

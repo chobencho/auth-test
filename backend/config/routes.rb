@@ -50,6 +50,8 @@ Rails.application.routes.draw do
       get '/newCommunity' => 'communities#getNewCommunity'
       post '/communityComment' => 'communities#create'
       post '/community/newSubscribed' => 'communities#subscribeCommunity'
+      post '/community/sendMailApplyNewCommunity' => 'communities#sendMailApplyNewCommunity'
+      delete '/withdrawCommunity' => 'communities#withdrawCommunity'
 
       # message
       get '/message' => 'messages#chatPartner'

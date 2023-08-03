@@ -14,7 +14,7 @@ import { deleteAccount } from "lib/api/auth";
 
 import { AuthContext } from "App";
 
-const useStyles = makeStyles((theme: Theme) => ({
+const useStyles = makeStyles((theme) => ({
   title: {
     flexGrow: 1,
     textDecoration: "none",

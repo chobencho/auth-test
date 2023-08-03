@@ -1,4 +1,6 @@
 import { Link } from "react-router-dom";
+import React, { useContext } from "react";
+import { AuthContext } from "App";
 
 import { makeStyles, Theme } from "@material-ui/core/styles";
 
@@ -14,9 +16,6 @@ import { ThemeProvider } from "@material-ui/styles";
 
 import Box from "@material-ui/core/Box";
 
-import React, { useContext } from "react";
-import { AuthContext } from "App";
-
 const theme = createTheme({
   palette: {
     primary: {
@@ -28,7 +27,7 @@ const theme = createTheme({
   },
 });
 
-const useStyles = makeStyles((theme: Theme) => ({
+const useStyles = makeStyles((theme) => ({
   linkBtn: {
     textTransform: "none",
   },
@@ -45,6 +44,7 @@ const useStyles = makeStyles((theme: Theme) => ({
   },
   transitionButton: {
     width: "15%",
+    textAlign: "center",
   },
 }));
 

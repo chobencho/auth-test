@@ -63,6 +63,25 @@ class Api::V1::CommunitiesController < ApplicationController
     end
   end
 
+  def withdrawCommunity
+    @community = CommunityUser.find_by(community_id: params[:community_id], user_id: params[:user_id])
+    if @community.delete
+      render json: {stutas: 200, message: "success withdraw community!"}
+    else
+      render json: {stutas: 400, message: "failed withdraw community!"}
+    end
+  end
+
+  def sendMailApplyNewCommunity
+    id = params[:string_my_id]
+    title = params[:title]
+    body = params[:body]
+
+    ContactMailer.apply_email(id, title, body).deliver_now
+
+    render json: {status: 200, message: "新規コミュニティの申請に成功しました。"}
+end
+
   private
 
   def comment_params

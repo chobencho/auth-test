@@ -77,7 +77,6 @@ const CommunitiesBranchSearch = ({
       {/* メッセージ入力モーダル */}
       {showModal ? (
         <ModalCategoryCommunity
-          showModal={showModal}
           onClose={handleClearPreview}
           selectedCategoryData={selectedCategoryData}
         />

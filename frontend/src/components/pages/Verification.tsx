@@ -13,9 +13,6 @@ import GoBackButton from "components/utils/common/GoBackButton";
 const Verification = () => {
   // State
   const [userData, setUserData] = useState<UserData | null>(null);
-  const [name, setName] = useState<string>("");
-  const [email, setEmail] = useState<string>("");
-  const [message, setMessage] = useState<string>("");
   const [image, setImage] = useState<File | undefined>();
   const [preview, setPreview] = useState<string>("");
 
@@ -81,7 +78,7 @@ const Verification = () => {
 
       const email = userData!.email;
 
-      await sendMail(stringMyId, email, image).then(() => { });
+      await sendMail(stringMyId, email, image).then(() => {});
     }
   };
 
@@ -138,7 +135,7 @@ const Verification = () => {
           </label>
         </div>
         <button type="submit" className="border text-white bg-gray-600 p-2 m-2">
-          変更する
+          送信する
         </button>
       </form>
       {preview ? (
