@@ -1,7 +1,7 @@
 import client from "lib/api/client";
 import clientImage from "lib/api/clientImage";
 import { CommunityData } from "interfaces/index";
-import { CommunityCommentData } from "interfaces/index";
+import { MessageItemsData } from "interfaces/index";
 import { AxiosPromise } from "axios";
 
 export const getAllCommunityData = () => {
@@ -28,7 +28,7 @@ export const getCommunityCommentData = (
   id: string | undefined,
   stringMyId: string | undefined
 ) => {
-  return client.get<CommunityCommentData[]>(`/community/${id}/comments`, {
+  return client.get<MessageItemsData[]>(`/community/${id}/comments`, {
     params: { stringMyId },
   });
 };

@@ -28,6 +28,7 @@ import Info from "components/pages/Info";
 import Information from "components/pages/Information";
 
 import { getCurrentUser } from "lib/api/auth";
+import { checkAge } from "lib/api/common";
 import { UserData } from "interfaces/index";
 import ChangePassword from "components/pages/ChangePassword";
 import Terms from "components/pages/Terms";
@@ -43,6 +44,7 @@ export const AuthContext = createContext(
     setIsSignedIn: React.Dispatch<React.SetStateAction<boolean>>;
     currentUser: UserData | undefined;
     setCurrentUser: React.Dispatch<React.SetStateAction<UserData | undefined>>;
+    verifiedAge: boolean;
   }
 );
 
@@ -50,6 +52,7 @@ const App = () => {
   const [loading, setLoading] = useState<boolean>(true);
   const [isSignedIn, setIsSignedIn] = useState<boolean>(false);
   const [currentUser, setCurrentUser] = useState<UserData | undefined>();
+  const [verifiedAge, setVerifiedAge] = useState<boolean>(false);
 
   const handleGetCurrentUser = async () => {
     try {
@@ -70,9 +73,20 @@ const App = () => {
     setLoading(false);
   };
 
+  const handleCheckAge = () => {
+    if (currentUser !== undefined) {
+      const stringMyId = currentUser.id.toString();
+      checkAge(stringMyId).then((res) => setVerifiedAge(res.data));
+    }
+  };
+
   useEffect(() => {
     handleGetCurrentUser();
   }, [setCurrentUser]);
+
+  useEffect(() => {
+    handleCheckAge();
+  }, [currentUser]);
 
   const Private = ({ children }: { children: React.ReactElement }) => {
     if (!loading) {
@@ -96,6 +110,7 @@ const App = () => {
           setIsSignedIn,
           currentUser,
           setCurrentUser,
+          verifiedAge
         }}
       >
         <CommonLayout>

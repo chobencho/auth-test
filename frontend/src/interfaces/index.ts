@@ -89,7 +89,7 @@ export interface CommentData {
   };
   boardId: string;
   userId: string;
-  comment: string;
+  body: string;
 }
 
 // インフォメーション
@@ -148,7 +148,21 @@ export interface CommunityCommentData {
   id: string;
   communityId: string;
   userId: string;
-  comment: string;
+  body: string;
+  image?: {
+    url: string;
+  };
+  createdAt: Date;
+  updatedAt: Date;
+}
+
+
+export interface MessageItemsData {
+  id: string;
+  communityId: string;
+  userId: string;
+  roomId: string;
+  body: string;
   image?: {
     url: string;
   };

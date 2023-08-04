@@ -13,7 +13,7 @@ import LikeButton from "components/utils/board/LikeButton";
 import GoBackButton from "components/utils/common/GoBackButton";
 import BoardContent from "components/utils/board/BoardContent";
 import CommentItem from "components/utils/board/CommentItem";
-import CommentForm from "components/utils/board/CommentForm";
+import CommonMessageForms from "components/utils/common/CommonMessageForms";
 
 const Board = () => {
   // State
@@ -57,7 +57,7 @@ const Board = () => {
           <BoardEditButton
             userId={board.userId || ""}
             myId={stringMyId || ""}
-            boardId={board.id.toString()}
+            generalId={board.id.toString()}
           />
           {/* 戻るボタン */}
           <GoBackButton />
@@ -67,7 +67,14 @@ const Board = () => {
           ))}
 
           {/* コメントフォーム */}
-          <CommentForm boardId={id} userId={stringMyId} handleGetBoardComment={handleGetBoardComment} />
+
+          <CommonMessageForms
+            handleGetData={handleGetBoardComment}
+            id={id ?? ""}
+            stringMyId={stringMyId ?? ""}
+            discrimination={"board"}
+          />
+
         </>
       )}
     </>

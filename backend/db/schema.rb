@@ -10,10 +10,10 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_08_03_075819) do
+ActiveRecord::Schema[7.0].define(version: 2023_08_04_084235) do
   create_table "board_comments", force: :cascade do |t|
     t.integer "board_id", null: false
-    t.string "comment", null: false
+    t.string "body", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "user_id"
@@ -74,7 +74,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_03_075819) do
   create_table "community_comments", force: :cascade do |t|
     t.integer "community_id"
     t.integer "user_id"
-    t.string "comment"
+    t.string "body"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "image"

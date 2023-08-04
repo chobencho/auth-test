@@ -1,7 +1,7 @@
 import client from "lib/api/client"
 import { AxiosPromise } from "axios"
 import { ChatUserData } from "interfaces/index"
-import { MessageData } from "interfaces/index"
+import { MessageItemsData } from "interfaces/index"
 
 // 自分がやりとりしてるルーム情報を取得
 export const getChatRooms = (id: string | undefined) => {
@@ -20,7 +20,7 @@ export const createChatRoom = (id: string | undefined, stringMyId: string | unde
 
 // ルーム内のメッセージ情報を取得
 export const getMessages = (id: string | undefined, partnerId: string | undefined) => {
-  return client.get<MessageData[]>(`/message/${id}`, { params: { partnerId } });
+  return client.get<MessageItemsData[]>(`/message/${id}`, { params: { partnerId } });
 }
 
 // メッセージを作成する
@@ -29,7 +29,7 @@ export const createMessage = (data: FormData): AxiosPromise => {
 }
 
 // ルームを削除する
-export const deleteChatRoom = (room_id: string): AxiosPromise => {
+export const deleteChatRoom = (room_id: string | undefined): AxiosPromise => {
   return client.delete(`/message/${room_id}`)
 }
 

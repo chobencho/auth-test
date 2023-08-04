@@ -23,7 +23,7 @@ const CommentItem = ({ comment }: CommentItemProps) => {
           <h6>{comment.name}</h6>
         </Link>
 
-        <p>{comment.comment}</p>
+        <p>{comment.body}</p>
       </div>
 
     </>

@@ -6,11 +6,13 @@ interface ModalSearchFormProps {
   handleGetUsersData: Function;
   stringMyId: string;
   tags: string[];
+  verifiedAge: boolean
 }
 
 const SearchButton = ({
   handleGetUsersData,
   stringMyId,
+  verifiedAge
 }: ModalSearchFormProps) => {
   // State
   const [showModal, setShowModal] = useState(false);
@@ -27,14 +29,19 @@ const SearchButton = ({
 
   return (
     <div className="w-full text-center">
-      <button
-        className="border text-white bg-gray-600 p-2 m-auto w-1/2"
-        onClick={() => {
-          showModalWindow();
-        }}
-      >
+
+      <div className={"relative border bg-gray-600 text-white p-2 m-auto w-1/2"}>
         検索
-      </button>
+        {!verifiedAge && (
+          <span
+            className="absolute top-0 left-0 w-full h-full flex justify-center items-center cursor-pointer"
+            style={{ backgroundColor: "rgba(0, 0, 0, 0.5)" }}
+          >
+            年齢確認が完了していません
+          </span>
+        )}
+        {verifiedAge && (<button className="absolute top-0 left-0 w-full h-full opacity-0" onClick={showModalWindow} />)}
+      </div>
 
       {/* 検索モーダル */}
       {showModal ? (

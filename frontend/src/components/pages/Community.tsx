@@ -3,20 +3,20 @@ import { useParams } from "react-router-dom";
 import { AuthContext } from "App";
 // Interface
 import { CommunityData } from "interfaces/index";
-import { CommunityCommentData } from "interfaces/index";
+import { MessageItemsData } from "interfaces/index";
 // Function
 import { getCommunityData } from "lib/api/community";
 import { getCommunityCommentData } from "lib/api/community";
 import { getSubscribedCommunity } from "lib/api/community";
 // Components
 import CommunityTop from "components/utils/community/CommunityTop";
-import CommunityItem from "components/utils/community/CommunityItem";
-import CommunityForm from "components/utils/community/CommunityForm";
+import CommonMessageItems from "components/utils/common/CommonMessageItems";
+import CommonMessageForms from "components/utils/common/CommonMessageForms";
 import ModalSubscribeCommunity from "components/utils/community/ModalSubscribeCommunity";
 
 const Community = () => {
   const [community, setCommunity] = useState<CommunityData | null>(null);
-  const [comments, setComments] = useState<CommunityCommentData[]>([]);
+  const [comments, setComments] = useState<MessageItemsData[]>([]);
   const [subscribed, setSubscribed] = useState<boolean>(false);
 
   const { id } = useParams();
@@ -59,22 +59,23 @@ const Community = () => {
             user_id={stringMyId || undefined}
           />
           <div className="my-20">
-            {comments.map((comment) => (
-              <CommunityItem
-                comment={comment}
+            {comments.map((message) => (
+              <CommonMessageItems
+                message={message}
                 stringMyId={stringMyId || undefined}
               />
             ))}
           </div>
-          <CommunityForm
-            handleGetCommunityCommentData={handleGetCommunityCommentData}
+          <CommonMessageForms
+            handleGetData={handleGetCommunityCommentData}
             id={id ?? ""}
             stringMyId={stringMyId ?? ""}
+            discrimination={"community"}
           />
         </>
       )}
 
-      {/* 画像拡大モーダル */}
+      {/* コミュニティ登録画面 */}
       {subscribed ? null : (
         <ModalSubscribeCommunity
           community_id={id}

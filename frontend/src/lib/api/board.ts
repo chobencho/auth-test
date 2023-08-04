@@ -46,3 +46,7 @@ export const createComment = (data: FormData): AxiosPromise => {
 export const getBoardComment = (id: string | undefined) => {
   return client.get<CommentData[]>(`/board/comments`, { params: { id } });
 };
+
+export const deleteBoard = (id: string | undefined) => {
+  return client.delete(`/board/${id}`);
+};

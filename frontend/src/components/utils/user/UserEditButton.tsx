@@ -3,18 +3,20 @@ import { AuthContext } from "App"
 import { Link, useNavigate } from 'react-router-dom'
 // Function
 import { createChatRoom } from "lib/api/chat"
-import { getCommonRoomId } from "lib/api/chat"
+
 
 type UserEditButtonProps = {
   userId: string;
-  myId: string
+  myId: string;
+  verifiedAge: boolean;
+  common_room_id: string;
 };
 
-const EditButton = ({ userId, myId }: UserEditButtonProps) => {
+const EditButton = ({ userId, myId, verifiedAge, common_room_id }: UserEditButtonProps) => {
   const { currentUser } = useContext(AuthContext)
   const navigate = useNavigate();
   // State
-  const [commonRoomId, setCommonRoomId] = useState<string | null>(null)
+
 
   // 新しいチャットルームを作成する
   const handleCreateChat = () => {
@@ -22,33 +24,25 @@ const EditButton = ({ userId, myId }: UserEditButtonProps) => {
     )
   }
 
-  // 自分と相手のチャットルームがすでに存在するか確認する関数
-  const handleGetCommonRoomId = () => {
-    getCommonRoomId(userId, myId).then((res) => setCommonRoomId(res.data))
-  }
-
-  useEffect(() => {
-    handleGetCommonRoomId();
-  }, []);
-
-
   return (
     <>
-      {
-        userId == myId ? (
-          <Link to={`/user/${myId}/edit`} className="border bg-gray-600 text-white p-2">編集</Link>
+      <div className={"relative border bg-gray-400 text-white p-2 m-auto w-1/2 h-20"}>
+        {common_room_id ? ("メッセージを見る") : ("新規メッセージ")}
+        {!verifiedAge && (
+          <span
+            className="absolute top-0 left-0 w-full h-full flex justify-center items-center cursor-pointer"
+            style={{ backgroundColor: "rgba(0, 0, 0, 0.5)" }}
+
+          >
+            年齢確認が完了していません
+          </span>
+        )}
+        {verifiedAge && common_room_id ? (
+          <Link to={`/message/${common_room_id}?partnerId=${userId}`} className="absolute top-0 left-0 w-full h-full opacity-0"></Link>
         ) : (
-          commonRoomId ? (
-            <Link to={`/message/${commonRoomId}?partnerId=${userId}`} className="border bg-gray-600 text-white p-2">
-              メッセージを見る
-            </Link>
-          ) : (
-            <button className="border bg-gray-600 text-white p-2" onClick={() => handleCreateChat()}>
-              新しくメッセージを送る
-            </button>
-          )
-        )
-      }
+          <button className="absolute top-0 left-0 w-full h-full opacity-0" onClick={() => handleCreateChat()} disabled={!verifiedAge} />
+        )}
+      </div>
     </>
   )
 }

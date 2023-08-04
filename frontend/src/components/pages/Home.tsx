@@ -29,6 +29,7 @@ const Home = () => {
   const { currentUser } = useContext(AuthContext);
   const myId = currentUser ? currentUser.id : null;
   const stringMyId = myId?.toString();
+  const { verifiedAge } = useContext(AuthContext);
 
   // ユーザ情報を取得
   const handleGetUsersData = async (tags: string[]) => {
@@ -47,6 +48,7 @@ const Home = () => {
           handleGetUsersData={handleGetUsersData}
           stringMyId={stringMyId ?? ""}
           tags={tags}
+          verifiedAge={verifiedAge}
         />
         {/* ユーザ情報表示 */}
         <UsersItem handleGetUsersData={handleGetUsersData} users={users} />

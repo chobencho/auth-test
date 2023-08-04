@@ -85,7 +85,7 @@ end
   private
 
   def comment_params
-    params.permit(:community_id, :user_id, :comment, :image)
+    params.permit(:community_id, :user_id, :body, :image)
   end
 
   def subscribe_params

@@ -6,6 +6,7 @@ import { getEditUserData } from "lib/api/user";
 import { getEditUserHobbyData } from "lib/api/user";
 import { getEditUserInterestData } from "lib/api/user";
 import { getEditUserResearchTagData } from "lib/api/user";
+import { getCommonRoomId } from "lib/api/chat"
 // Interface
 import { UserData } from "interfaces/index";
 import { UserHobbyData } from "interfaces/index";
@@ -24,6 +25,7 @@ const User = () => {
   const [userResearchTagData, setUserResearchTagData] = useState<UserTagData[]>(
     []
   );
+  const [commonRoomId, setCommonRoomId] = useState<string | null>(null)
   // Id
   const { currentUser } = useContext(AuthContext);
   const myId = currentUser ? currentUser.id : null;
@@ -31,6 +33,7 @@ const User = () => {
 
   // 閲覧先のユーザIDを取得
   const { id } = useParams<{ id: string }>();
+  const { verifiedAge } = useContext(AuthContext);
 
   // ユーザ情報を取得
   const handleGetUserData = async () => {
@@ -51,12 +54,19 @@ const User = () => {
     );
   };
 
+  // 自分と相手のチャットルームがすでに存在するか確認する関数
+  const handleGetCommonRoomId = () => {
+    getCommonRoomId(id, stringMyId).then((res) => setCommonRoomId(res.data))
+  }
+
   useEffect(() => {
     handleGetUserData();
     handleGetUserHobbyData();
     handleGetUserInterestData();
     handleGetUserResearchTagData();
+    handleGetCommonRoomId();
   }, []);
+
 
   return (
     <>
@@ -103,7 +113,7 @@ const User = () => {
               </p>
             ))}
           </div>
-          <UserEditButton userId={id || ""} myId={stringMyId || ""} />
+          <UserEditButton userId={id || ""} myId={stringMyId || ""} verifiedAge={verifiedAge} common_room_id={commonRoomId || ""} />
         </>
       )}
     </>

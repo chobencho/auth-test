@@ -32,7 +32,7 @@ class Api::V1::BoardsController < ApplicationController
     end
 
     def getComments
-        @comments = BoardComment.joins(:user).select('board_comments.comment, board_comments.user_id, board_comments.created_at, users.name, users.image').where(board_id: params[:id])
+        @comments = BoardComment.joins(:user).select('board_comments.body, board_comments.user_id, board_comments.created_at, users.name, users.image').where(board_id: params[:id])
 
         render json: @comments
     end
@@ -45,6 +45,26 @@ class Api::V1::BoardsController < ApplicationController
     def createLike
         @like = BoardLike.create(user_id: params[:user_id], board_id: params[:board_id])
         render json: true
+    end
+
+    def delete
+
+
+
+
+        ActiveRecord::Base.transaction do
+            begin
+                @board = Board.find_by(id: params[:id]).delete
+                @boardLikes = BoardLike.where(board_id: params[:id]).destroy_all
+                @boardComments = BoardComment.where(board_id: params[:id]).destroy_all
+
+                render json: {status: 200, message: "success delete board!"}
+            rescue ActiveRecord::RecordInvalid => e
+              render json: {status: 400, message: "failed delete board!"}
+            end
+        end
+
+
     end
 
     def deleteLike
@@ -74,6 +94,6 @@ class Api::V1::BoardsController < ApplicationController
     end
 
     def comment_params
-        params.permit(:user_id, :board_id, :comment)
+        params.permit(:user_id, :board_id, :body)
     end
 end

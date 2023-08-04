@@ -10,11 +10,14 @@ Rails.application.routes.draw do
         resources :sessions, only: %i[index]
       end
 
+ 
+
       # users
       get '/users' => 'users#index'
 
       # user
       get '/user/:id' => 'users#show'
+      get '/checkAge/:id' => 'users#checkAge'
       get '/user/:id/edit' => 'users#show'
       get '/user/:id/editHobby' => 'users#showEditHobby'
       get '/user/:id/editInterest' => 'users#showEditInterest'
@@ -34,6 +37,7 @@ Rails.application.routes.draw do
       post '/board/createLike' => 'boards#createLike'
       post '/board/comment' => 'boards#createComment'
       post '/board/:id/:edit' => 'boards#edit'
+      delete '/board/:id' => 'boards#delete'
       delete '/board/:id/deleteLike' => 'boards#deleteLike'
 
       # chat

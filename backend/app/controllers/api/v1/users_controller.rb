@@ -23,6 +23,15 @@ class Api::V1::UsersController < ApplicationController
       render json: @user  
   end
 
+  def checkAge 
+    user = User.find_by(id: params[:id])
+    if user.check_age == 1
+      render json: true
+    else
+      render json: false
+    end
+  end
+
   def showEditHobby
     @hobbies = UserHobby.joins(:hobby).select('user_hobbies.id', 'user_hobbies.user_id', 'user_hobbies.hobby_id', 'hobbies.hobby_code', 'user_hobbies.created_at', 'user_hobbies.updated_at').where(user_id: params[:id])
     render json: @hobbies
