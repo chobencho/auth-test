@@ -2,9 +2,9 @@ import { useState, useEffect } from "react"
 // Style
 import { FaHeart } from "react-icons/fa6";
 // Function
-import { getLike } from "lib/api/like"
-import { createLike } from "lib/api/like"
-import { deleteLike } from "lib/api/like"
+import { getLike } from "lib/api/boardLike"
+import { createLike } from "lib/api/boardLike"
+import { deleteLike } from "lib/api/boardLike"
 
 interface LikeFormProps {
     boardId: string

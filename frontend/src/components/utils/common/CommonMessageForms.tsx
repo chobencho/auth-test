@@ -3,9 +3,9 @@ import { AuthContext } from "App"
 // Style
 import { makeStyles, Theme } from "@material-ui/core/styles";
 // Function
-import { createCommunityComment } from "lib/api/community";
+import { createCommunityComment } from "lib/api/community_chats";
 import { createMessage } from "lib/api/chat";
-import { createComment } from "lib/api/board";
+import { createComment } from "lib/api/boardComment";
 // Components
 import ModalCommonMessageForm from "components/utils/common/ModalCommonMessageForm";
 import PhotoCameraBackIcon from "@mui/icons-material/PhotoCameraBack";

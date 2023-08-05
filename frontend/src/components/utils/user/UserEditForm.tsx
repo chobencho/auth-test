@@ -9,7 +9,7 @@ import Subject from "common/subject";
 import Interest from "common/interest";
 import Hobby from "common/hobby";
 // Function
-import { editUserData } from "lib/api/user";
+import { updateUserData } from "lib/api/user";
 // Interface
 import { UserData } from "interfaces/index";
 import { UserTagData } from "interfaces/index";
@@ -18,9 +18,9 @@ import { UserInterestData } from "interfaces/index";
 
 interface UserEditFormProps {
   handleGetUserData: Function;
-  handleGetUserHobbyData: Function;
-  handleGetUserInterestData: Function;
-  handleGetUserResearchTagData: Function;
+  handleGetHobbyData: Function;
+  handleGetInterestData: Function;
+  handleGetResearchTagData: Function;
   userData: UserData;
   userHobbyData: UserHobbyData[];
   userInterestData: UserInterestData[];
@@ -38,9 +38,9 @@ const useStyles = makeStyles((theme: Theme) => ({
 
 const UserEditForm = ({
   handleGetUserData,
-  handleGetUserHobbyData,
-  handleGetUserInterestData,
-  handleGetUserResearchTagData,
+  handleGetHobbyData,
+  handleGetInterestData,
+  handleGetResearchTagData,
   userData,
   userResearchTagData,
 }: UserEditFormProps) => {
@@ -184,11 +184,11 @@ const UserEditForm = ({
     e.preventDefault();
     const data = createFormData();
 
-    await editUserData(id, data).then(() => {
+    await updateUserData(id, data).then(() => {
       handleGetUserData();
-      handleGetUserHobbyData();
-      handleGetUserInterestData();
-      handleGetUserResearchTagData();
+      handleGetHobbyData();
+      handleGetInterestData();
+      handleGetResearchTagData();
     });
 
     handleClearPreview();

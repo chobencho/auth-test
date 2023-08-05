@@ -7,47 +7,25 @@ class Api::V1::UsersController < ApplicationController
     else
       # 二重配列をフラットな配列に変換
       keywords = params[:keywords].flatten
-
       # 複数のキーワードに対して部分一致の条件を作成し、それをORで結合する
       conditions = keywords.map { |keyword| "tag_name LIKE '%#{keyword}%'" }.join(" OR ")
-
       user_ids = UserResearchtagTagging.where(conditions).pluck(:user_id).uniq
       @users = User.joins(:prefecture, :subject, :gender, :grade).where(id: user_ids).where.not(id: params[:id])
     end
-    
     render json: @users
   end
 
   def show
-      @user = User.joins(:prefecture, :subject, :gender, :grade).select("*, users.id AS id").find_by(id: params[:id])
-      render json: @user  
-  end
-
-  def checkAge 
-    user = User.find_by(id: params[:id])
-    if user.check_age == 1
-      render json: true
-    else
-      render json: false
-    end
-  end
-
-  def showEditHobby
-    @hobbies = UserHobby.joins(:hobby).select('user_hobbies.id', 'user_hobbies.user_id', 'user_hobbies.hobby_id', 'hobbies.hobby_code', 'user_hobbies.created_at', 'user_hobbies.updated_at').where(user_id: params[:id])
-    render json: @hobbies
-  end
-
-  def showEditInterest
-    @interests = UserInterest.joins(:interest).select('user_interests.id','user_interests.user_id', 'user_interests.interest_id', 'interests.interest_code', 'user_interests.created_at', 'user_interests.updated_at').where(user_id: params[:id])
-    render json: @interests
-  end
-
-  def showEditResearchTag
-    @tags = UserResearchtagTagging.where(user_id: params[:id])
-    render json: @tags
+    @user = User.joins(:prefecture, :subject, :gender, :grade).select("*, users.id AS id").find_by(id: params[:id])
+    render json: @user  
   end
 
   def edit
+    @user = User.joins(:prefecture, :subject, :gender, :grade).select("*, users.id AS id").find_by(id: params[:id])
+    render json: @user  
+  end
+  
+  def update
     user_id = params[:id]
     hobby_ids = params[:hobby_ids]
     interest_ids = params[:interest_ids]
@@ -75,8 +53,7 @@ class Api::V1::UsersController < ApplicationController
           @hobbies = Hobby.where(id: hobby_ids)
           @user.hobbies << @hobbies
         end
-
-
+        
         # 既存のタグデータを削除
         # tagsが空の場合はデータもデータを削除するため、unlessの外に出している
         @deleteResearchTags = UserResearchtagTagging.where( user_id: user_id).destroy_all
@@ -94,6 +71,21 @@ class Api::V1::UsersController < ApplicationController
         render json: { userData_edit: false, message: "失敗" }
       end
     end
+  end
+
+  def hobby
+    @hobbies = UserHobby.joins(:hobby).select('user_hobbies.id', 'user_hobbies.user_id', 'user_hobbies.hobby_id', 'hobbies.hobby_code', 'user_hobbies.created_at', 'user_hobbies.updated_at').where(user_id: params[:id])
+    render json: @hobbies
+  end
+
+  def interest
+    @interests = UserInterest.joins(:interest).select('user_interests.id','user_interests.user_id', 'user_interests.interest_id', 'interests.interest_code', 'user_interests.created_at', 'user_interests.updated_at').where(user_id: params[:id])
+    render json: @interests
+  end
+
+  def researchTag
+    @tags = UserResearchtagTagging.where(user_id: params[:id])
+    render json: @tags
   end
 
   private
@@ -114,7 +106,8 @@ class Api::V1::UsersController < ApplicationController
     )
   end
 
-
+  
 end
+
 
 

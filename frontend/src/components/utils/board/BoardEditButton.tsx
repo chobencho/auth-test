@@ -2,8 +2,8 @@ import { useEffect, useState, useContext } from "react";
 import { AuthContext } from "App"
 import { Link, useNavigate } from 'react-router-dom'
 // Function
-import { getCommonRoomId } from "lib/api/chat"
-import { createChatRoom } from "lib/api/chat"
+import { getCommonRoomId } from "lib/api/common"
+import { createChatRoom } from "lib/api/message"
 // Components
 import CommonDeleteButton from "components/utils/common/CommonDeleteButton";
 

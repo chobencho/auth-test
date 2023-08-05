@@ -3,7 +3,6 @@ import { AuthContext } from "App";
 import { v4 as uuidv4 } from "uuid";
 // Function
 import { sendCertificateImage } from "lib/api/verification";
-import { sendMail } from "lib/api/verification";
 import { getEditUserData } from "lib/api/user";
 // Interface
 import { UserData } from "interfaces/index";
@@ -26,7 +25,7 @@ const Verification = () => {
     const file = e.target.files?.[0];
     if (file) {
       // ファイル名をUUIDでユニークに変更
-      const uniqueFileName = uuidv4() + "-" + file.name;
+      const uniqueFileName = uuidv4() + ".jpg";
       // ファイル名を変更したファイルをstateにセット
       setImage(new File([file], uniqueFileName, { type: file.type }));
     }
@@ -58,7 +57,6 @@ const Verification = () => {
     const formData = new FormData();
 
     formData.append("user_id", stringMyId ? stringMyId : "");
-    formData.append("check_age", "0");
     if (image) formData.append("image", image);
 
     return formData;
@@ -70,15 +68,14 @@ const Verification = () => {
     e.preventDefault();
     const data = createFormData();
 
+    const email = userData!.email;
+
     if (stringMyId !== undefined) {
-      await sendCertificateImage(stringMyId, data).then(() => {
+
+      await sendCertificateImage(stringMyId, email, data).then(() => {
         setPreview("");
         setImage(undefined);
       });
-
-      const email = userData!.email;
-
-      await sendMail(stringMyId, email, image).then(() => {});
     }
   };
 

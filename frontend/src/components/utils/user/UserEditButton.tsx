@@ -2,7 +2,7 @@ import { useContext, useEffect, useState } from "react"
 import { AuthContext } from "App"
 import { Link, useNavigate } from 'react-router-dom'
 // Function
-import { createChatRoom } from "lib/api/chat"
+import { createChatRoom } from "lib/api/message"
 
 
 type UserEditButtonProps = {
@@ -23,6 +23,8 @@ const EditButton = ({ userId, myId, verifiedAge, common_room_id }: UserEditButto
     createChatRoom(userId, myId).then(() => { navigate("/messages") }
     )
   }
+
+  console.log(common_room_id)
 
   return (
     <>

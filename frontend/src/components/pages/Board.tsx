@@ -3,7 +3,7 @@ import { AuthContext } from "App";
 import { useParams } from "react-router-dom";
 // Function
 import { getBoardData } from "lib/api/board";
-import { getBoardComment } from "lib/api/board";
+import { getBoardComment } from "lib/api/boardComment";
 // Interface
 import { BoardData } from "interfaces/index";
 import { CommentData } from "interfaces/index"

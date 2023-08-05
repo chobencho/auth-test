@@ -2,11 +2,11 @@ import { useEffect, useState, useContext } from "react";
 import { AuthContext } from "App"
 import { useParams } from "react-router-dom";
 // Function
-import { getEditUserData } from "lib/api/user";
-import { getEditUserHobbyData } from "lib/api/user";
-import { getEditUserInterestData } from "lib/api/user";
-import { getEditUserResearchTagData } from "lib/api/user";
-import { getCommonRoomId } from "lib/api/chat"
+import { getUserData } from "lib/api/user";
+import { getHobbyData } from "lib/api/user";
+import { getInterestData } from "lib/api/user";
+import { getResearchTagData } from "lib/api/user";
+import { getCommonRoomId } from "lib/api/common"
 // Interface
 import { UserData } from "interfaces/index";
 import { UserHobbyData } from "interfaces/index";
@@ -18,11 +18,11 @@ import UserEditButton from "components/utils/user/UserEditButton";
 const User = () => {
   // State
   const [userData, setUserData] = useState<UserData | null>(null);
-  const [userHobbyData, setUserHobbyData] = useState<UserHobbyData[]>([]);
-  const [userInterestData, setUserInterestData] = useState<UserInterestData[]>(
+  const [hobbyData, setHobbyData] = useState<UserHobbyData[]>([]);
+  const [interestData, setInterestData] = useState<UserInterestData[]>(
     []
   );
-  const [userResearchTagData, setUserResearchTagData] = useState<UserTagData[]>(
+  const [researchTagData, setResearchTagData] = useState<UserTagData[]>(
     []
   );
   const [commonRoomId, setCommonRoomId] = useState<string | null>(null)
@@ -37,20 +37,20 @@ const User = () => {
 
   // ユーザ情報を取得
   const handleGetUserData = async () => {
-    getEditUserData(id).then((res) => setUserData(res.data));
+    getUserData(id).then((res) => setUserData(res.data));
   };
   // ユーザ趣味情報を取得
-  const handleGetUserHobbyData = async () => {
-    getEditUserHobbyData(id).then((res) => setUserHobbyData(res.data));
+  const handleGetHobbyData = async () => {
+    getHobbyData(id).then((res) => setHobbyData(res.data));
   };
   // ユーザ興味情報を取得
-  const handleGetUserInterestData = async () => {
-    getEditUserInterestData(id).then((res) => setUserInterestData(res.data));
+  const handleGetInterestData = async () => {
+    getInterestData(id).then((res) => setInterestData(res.data));
   };
   // ユーザ研究タグ情報取得
-  const handleGetUserResearchTagData = async () => {
-    getEditUserResearchTagData(id).then((res) =>
-      setUserResearchTagData(res.data)
+  const handleGetResearchTagData = async () => {
+    getResearchTagData(id).then((res) =>
+      setResearchTagData(res.data)
     );
   };
 
@@ -61,9 +61,9 @@ const User = () => {
 
   useEffect(() => {
     handleGetUserData();
-    handleGetUserHobbyData();
-    handleGetUserInterestData();
-    handleGetUserResearchTagData();
+    handleGetHobbyData();
+    handleGetInterestData();
+    handleGetResearchTagData();
     handleGetCommonRoomId();
   }, []);
 
@@ -83,7 +83,7 @@ const User = () => {
           <p className="border m-2 p-2">専攻分野:{userData.subjectCode}</p>
           <p className="m-2">研究キーワード:</p>
           <div className="flex border m-2 p-2">
-            {userResearchTagData.map((tag) => (
+            {researchTagData.map((tag) => (
               <p className="border bg-yellow-200 rounded py-1 px-2 m-1">
                 {tag.tagName}
               </p>
@@ -99,7 +99,7 @@ const User = () => {
           ) : null}
           <p className="m-2">趣味:</p>
           <div className="flex border m-2 p-2">
-            {userHobbyData.map((hobby) => (
+            {hobbyData.map((hobby) => (
               <p className="border bg-yellow-200 rounded py-1 px-2 m-1">
                 {hobby.hobbyCode}
               </p>
@@ -107,7 +107,7 @@ const User = () => {
           </div>
           <p className="m-2">興味分野:</p>
           <div className="flex border m-2 p-2">
-            {userInterestData.map((interest) => (
+            {interestData.map((interest) => (
               <p className="border bg-yellow-200 rounded py-1 px-2 m-1">
                 {interest.interestCode}
               </p>

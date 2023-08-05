@@ -2,7 +2,7 @@ import { useContext, useEffect, useState } from "react"
 import { Link } from 'react-router-dom'
 import { AuthContext } from "App"
 // Function
-import { getChatRooms } from "lib/api/chat"
+import { getChatRooms } from "lib/api/message"
 // Interface
 import { ChatUserData } from "interfaces/index"
 

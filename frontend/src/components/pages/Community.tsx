@@ -5,9 +5,9 @@ import { AuthContext } from "App";
 import { CommunityData } from "interfaces/index";
 import { MessageItemsData } from "interfaces/index";
 // Function
-import { getCommunityData } from "lib/api/community";
-import { getCommunityCommentData } from "lib/api/community";
-import { getSubscribedCommunity } from "lib/api/community";
+import { getCommunityData } from "lib/api/community_chats";
+import { getCommunityCommentData } from "lib/api/community_chats";
+import { getSubscribedCommunity } from "lib/api/community_chats";
 // Components
 import CommunityTop from "components/utils/community/CommunityTop";
 import CommonMessageItems from "components/utils/common/CommonMessageItems";

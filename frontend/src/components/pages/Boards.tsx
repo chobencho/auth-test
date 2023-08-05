@@ -26,13 +26,17 @@ const Boards = () => {
     <>
       <CreateNewBoardButton verifiedAge={verifiedAge} />
 
-      {
-        boards.map((board) => (
-          <BoardsItem
-            board={board}
-          />
-        ))
-      }
+      {boards && (
+        <>
+          {
+            boards.map((board) => (
+              <BoardsItem
+                board={board}
+              />
+            ))
+          }
+        </>
+      )}
     </>
   )
 }

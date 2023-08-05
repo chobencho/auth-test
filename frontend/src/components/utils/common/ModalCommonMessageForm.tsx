@@ -2,7 +2,7 @@ import React, { useState } from "react";
 // Style
 import { makeStyles, Theme } from "@material-ui/core/styles";
 // Function
-import { createCommunityComment } from "lib/api/community";
+import { createCommunityComment } from "lib/api/community_chats";
 import { createMessage } from "lib/api/chat";
 
 interface ModalCommonMessageFormProps {

@@ -1,62 +1,38 @@
 import client from "lib/api/client";
-import clientImage from "lib/api/clientImage";
 import { CommunityData } from "interfaces/index";
-import { MessageItemsData } from "interfaces/index";
 import { AxiosPromise } from "axios";
 
+// コミュニティ一覧を取得
 export const getAllCommunityData = () => {
-  return client.get<CommunityData[]>("/allCommunity");
+  return client.get<CommunityData[]>(`/communities`);
 };
 
+// 人気コミュニティを取得
 export const getPopularCommunityData = () => {
-  return client.get<CommunityData[]>("/popularCommunity");
+  return client.get<CommunityData[]>("/communities/popular");
 };
 
+// 新規コミュニティを取得
 export const getNewCommunityData = () => {
-  return client.get<CommunityData[]>("/newCommunity");
+  return client.get<CommunityData[]>("/communities/latest");
 };
 
+// 参加済みコミュニティを取得
 export const getMyCommunityData = (id: string | undefined) => {
-  return client.get<CommunityData[]>("/communities", { params: { id } });
+  return client.get<CommunityData[]>(`/communities/${id}`);
 };
 
-export const getCommunityData = (id: string | undefined) => {
-  return client.get<CommunityData>(`/community/${id}`);
-};
-
-export const getCommunityCommentData = (
-  id: string | undefined,
-  stringMyId: string | undefined
-) => {
-  return client.get<MessageItemsData[]>(`/community/${id}/comments`, {
-    params: { stringMyId },
-  });
-};
-
-export const createCommunityComment = (data: FormData): AxiosPromise => {
-  return client.post(`/communityComment`, data);
-};
-
-export const getSubscribedCommunity = (
-  id: string | undefined,
-  community_id: string | undefined
-) => {
-  return client.get(`/community/${id}/subscribed`, {
-    params: { community_id },
-  });
-};
-
+// コミュニティに参加する
 export const subscribeCommunity = (data: FormData): AxiosPromise => {
-  return client.post(`/community/newSubscribed`, data);
+  return client.post(`/communities`, data);
 };
 
+// コミュニティを退会する
 export const withdrawCommunity = (
-  community_id: string | undefined,
+  id: string | undefined,
   user_id: string | undefined
 ) => {
-  return client.delete(`/withdrawCommunity`, {
-    params: { community_id, user_id },
-  });
+  return client.delete(`/communities/${id}`, { params: { user_id }, });
 };
 
 // 管理者にメール送信
@@ -65,7 +41,7 @@ export const sendMailApplyNewCommunity = (
   title: string,
   body: string
 ) => {
-  return client.post(`/community/sendMailApplyNewCommunity`, {
+  return client.post(`/communities/sendMail`, {
     stringMyId,
     title,
     body,
