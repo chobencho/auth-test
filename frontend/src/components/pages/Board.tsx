@@ -44,9 +44,6 @@ const Board = () => {
     <>
       {board && (
         <>
-
-          <p>test</p>
-
           {/* いいねボタン */}
           <LikeButton
             handleGetBoardData={handleGetBoardData}
