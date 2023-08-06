@@ -5,12 +5,14 @@ import moment from 'moment';
 import { getInfoData } from "lib/api/info"
 // Interface
 import { InfoData } from "interfaces/index"
+import { useAuthData } from "components/utils/common/useAuthData";
+
 
 const Info = () => {
   // State
   const [info, setInfo] = useState<InfoData | null>(null);
   // Id
-  const { id } = useParams<{ id: string }>();
+  const { id } = useAuthData();
 
   // お知らせ情報を取得
   const handleGetInfoData = async () => {

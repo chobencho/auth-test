@@ -8,6 +8,7 @@ const CommunityCreate = () => {
   const [showModal, setShowModal] = useState(false);
   const { verifiedAge } = useContext(AuthContext);
 
+  // モーダル表示
   const handleModalApplyNewCommunity = () => {
     setShowModal(true);
   };

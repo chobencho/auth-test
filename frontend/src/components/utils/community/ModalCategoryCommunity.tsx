@@ -1,4 +1,3 @@
-import { useState } from "react";
 // Interface
 import { CommunityData } from "interfaces/index";
 // Style
@@ -43,11 +42,6 @@ const ModalCategoryCommunity = ({
 }: ModalCategoryCommunityProps) => {
   const classes = useStyles();
 
-  // プレビュークリア機能
-  const handleClearPreview = () => {
-    onClose();
-  };
-
   return (
     <>
       <div className={`${classes.modal}`}>
@@ -59,7 +53,7 @@ const ModalCategoryCommunity = ({
           ))}
         </p>
         <button
-          onClick={() => handleClearPreview()}
+          onClick={() => onClose()}
           className="border text-2xl text-white bg-gray-600 px-3 py-1"
         >
           ×

@@ -1,19 +1,17 @@
-import { AuthContext } from "App"
-import { useState, useEffect, useContext } from "react"
+import { useState, useEffect } from "react"
 // Function
 import { getMyFavBoards } from "lib/api/board"
 // Interface
 import { BoardData } from "interfaces/index"
 // Components
 import BoardsItem from 'components/utils/board/BoardsItem'
+import { useAuthData } from "components/utils/common/useAuthData";
 
 const MyFav = () => {
   // State
   const [boards, setBoards] = useState<BoardData[]>([])
   // Id
-  const { currentUser } = useContext(AuthContext)
-  const myId = currentUser ? currentUser.id : null
-  const stringMyId = myId?.toString()
+  const { stringMyId } = useAuthData();
 
   // 自分がいいねした掲示板情報を取得
   const handleGetMyFavBoardData = async () => {
@@ -26,13 +24,10 @@ const MyFav = () => {
 
   return (
     <>
-      {
-        boards.map((board) => (
-          <BoardsItem
-            board={board}
-          />
-        ))
-      }
+      <BoardsItem
+        boards={boards}
+        handleGetBoardData={handleGetMyFavBoardData}
+      />
     </>
   )
 }

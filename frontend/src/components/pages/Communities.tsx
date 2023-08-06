@@ -1,7 +1,5 @@
-import { useContext, useEffect, useState } from "react";
-import { AuthContext } from "App";
+import { useEffect, useState } from "react";
 // Interface
-import { CommunityCategoryData } from "interfaces/index";
 import { CommunityData } from "interfaces/index";
 // Function
 import { getAllCommunityData } from "lib/api/community";
@@ -11,6 +9,7 @@ import { getMyCommunityData } from "lib/api/community";
 // Components
 import CommunitiesBranchSearch from "components/utils/community/CommunitiesBranchSearch";
 import CommunitiesBranchJoin from "components/utils/community/CommunitiesBranchJoin";
+import { useAuthData } from "components/utils/common/useAuthData";
 
 const Communities = () => {
   const [allCommunity, setAllCommunity] = useState<CommunityData[]>([]);
@@ -20,9 +19,7 @@ const Communities = () => {
   const [searchButtonActive, setSearchButtonActive] = useState(true);
   const [joinButtonActive, setJoinButtonActive] = useState(false);
 
-  const { currentUser } = useContext(AuthContext);
-  const myId = currentUser ? currentUser.id : null;
-  const stringMyId = myId?.toString();
+  const { stringMyId } = useAuthData();
 
   // コミュニティを探すボタンをクリックしたときの処理
   const handleSearchClick = () => {
@@ -36,48 +33,39 @@ const Communities = () => {
     setJoinButtonActive(true);
   };
 
-  // 人気コミュニティ取得
-  const handleGetAllCommunityData = async () => {
-    getAllCommunityData().then((res) => setAllCommunity(res.data));
-  };
+  // コミュニティ情報一括取得
+  const handleGetCommunityData = async () => {
+    // Promise.allを使ってすべての非同期処理が完了するのを待つ
+    const [allCommunityRes, popularCommunityRes, newCommunityRes, myCommunityRes] = await Promise.all([
+      getAllCommunityData(),
+      getPopularCommunityData(),
+      getNewCommunityData(),
+      getMyCommunityData(stringMyId),
+    ])
 
-  // 人気コミュニティ取得
-  const handleGetPopularCommunityData = async () => {
-    getPopularCommunityData().then((res) => setPopularCommunity(res.data));
-  };
-
-  // 新着コミュニティ取得
-  const handleGetNewCommunityData = async () => {
-    getNewCommunityData().then((res) => setNewCommunity(res.data));
-  };
-
-  // 参加中のコミュニティ取得
-  const handleGetMyCommunityData = async () => {
-    getMyCommunityData(stringMyId).then((res) => setMyCommunity(res.data));
-  };
+    setAllCommunity(allCommunityRes.data);
+    setPopularCommunity(popularCommunityRes.data);
+    setNewCommunity(newCommunityRes.data);
+    setMyCommunity(myCommunityRes.data);
+  }
 
   useEffect(() => {
-    handleGetAllCommunityData();
-    handleGetPopularCommunityData();
-    handleGetNewCommunityData();
-    handleGetMyCommunityData();
+    handleGetCommunityData();
   }, []);
+
+
 
   return (
     <>
       <div className="flex justify-between w-2/3 m-auto">
         <button
-          className={`border p-2 m-2 ${
-            searchButtonActive ? "border-red-500" : ""
-          }`}
+          className={`border p-2 m-2 ${searchButtonActive ? "border-red-500" : ""}`}
           onClick={handleSearchClick}
         >
           コミュニティを探す
         </button>
         <button
-          className={`border p-2 m-2 ${
-            joinButtonActive ? "border-red-500" : ""
-          }`}
+          className={`border p-2 m-2 ${joinButtonActive ? "border-red-500" : ""}`}
           onClick={handleJoinClick}
         >
           参加中のコミュニティ

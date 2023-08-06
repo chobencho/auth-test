@@ -2,9 +2,9 @@ import React, { useState, useContext } from "react";
 import { AuthContext } from "App";
 // Style
 import { makeStyles, Theme } from "@material-ui/core/styles";
-
 // Function
 import { sendMailApplyNewCommunity } from "lib/api/community";
+import { useAuthData } from "components/utils/common/useAuthData";
 
 export interface ModalApplyNewCommunityProps {
   onClose: Function;
@@ -38,26 +38,19 @@ const useStyles = makeStyles((theme: Theme) => ({
 
 const ModalApplyNewCommunity = ({ onClose }: ModalApplyNewCommunityProps) => {
   const classes = useStyles();
+  // State
   const [title, setTitle] = useState<string>("");
   const [body, setBody] = useState<string>("");
-
   // Id
-  const { currentUser } = useContext(AuthContext);
-  const myId = currentUser ? currentUser.id : null;
-  const stringMyId = myId?.toString();
+  const { stringMyId } = useAuthData();
 
-  // プレビュークリア機能
-  const handleClearPreview = () => {
-    onClose();
-  };
-
+  // 新規コミュニティ申請
   const handleApplyNewCommunity = async (
-    e: React.FormEvent<HTMLFormElement>
-  ) => {
+    e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     if (stringMyId !== undefined) {
-      await sendMailApplyNewCommunity(stringMyId, title, body).then(() => {});
+      await sendMailApplyNewCommunity(stringMyId, title, body).then(() => { });
     }
   };
 
@@ -93,7 +86,7 @@ const ModalApplyNewCommunity = ({ onClose }: ModalApplyNewCommunityProps) => {
             送信する
           </button>
           <button
-            onClick={() => handleClearPreview()}
+            onClick={() => onClose()}
             className="border text-2xl text-white bg-gray-600 px-3 py-1"
           >
             ×

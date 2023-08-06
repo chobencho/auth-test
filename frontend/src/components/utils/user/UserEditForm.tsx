@@ -13,17 +13,13 @@ import { updateUserData } from "lib/api/user";
 // Interface
 import { UserData } from "interfaces/index";
 import { UserTagData } from "interfaces/index";
-import { UserHobbyData } from "interfaces/index";
-import { UserInterestData } from "interfaces/index";
+import { clearPreview } from "lib/api/helper";
+import { uploadImage } from "lib/api/helper";
+import { previewImage } from "lib/api/helper";
 
 interface UserEditFormProps {
   handleGetUserData: Function;
-  handleGetHobbyData: Function;
-  handleGetInterestData: Function;
-  handleGetResearchTagData: Function;
   userData: UserData;
-  userHobbyData: UserHobbyData[];
-  userInterestData: UserInterestData[];
   userResearchTagData: UserTagData[];
 }
 
@@ -38,9 +34,6 @@ const useStyles = makeStyles((theme: Theme) => ({
 
 const UserEditForm = ({
   handleGetUserData,
-  handleGetHobbyData,
-  handleGetInterestData,
-  handleGetResearchTagData,
   userData,
   userResearchTagData,
 }: UserEditFormProps) => {
@@ -49,22 +42,12 @@ const UserEditForm = ({
   const [name, setName] = useState<string>(userData.name || "");
   const [body, setBody] = useState<string>(userData.body || "");
   const [age, setAge] = useState<string>(userData.age || "");
-  const [tags, setTags] = useState<string[]>([
-    ...userResearchTagData.map((tag) => tag.tagName),
-  ]);
+  const [tags, setTags] = useState<string[]>([...userResearchTagData.map((tag) => tag.tagName)]);
   const [tag, setTag] = useState<string>("");
-  const [gender, setGender] = useState<string>(
-    userData.genderId ? userData.genderId.toString() : ""
-  );
-  const [grade, setGrade] = useState<string>(
-    userData.gradeId ? userData.gradeId.toString() : ""
-  );
-  const [subject, setSubject] = useState<string>(
-    userData.subjectId ? userData.subjectId.toString() : ""
-  );
-  const [prefecture, setPrefecture] = useState<string>(
-    userData.prefectureId ? userData.prefectureId.toString() : ""
-  );
+  const [gender, setGender] = useState<string>(userData.genderId ? userData.genderId.toString() : "");
+  const [grade, setGrade] = useState<string>(userData.gradeId ? userData.gradeId.toString() : "");
+  const [subject, setSubject] = useState<string>(userData.subjectId ? userData.subjectId.toString() : "");
+  const [prefecture, setPrefecture] = useState<string>(userData.prefectureId ? userData.prefectureId.toString() : "");
   const [image, setImage] = useState<File | undefined>();
   const [preview, setPreview] = useState<string>("");
   const [showInterestOptions, setShowInterestOptions] = useState(false);
@@ -73,6 +56,8 @@ const UserEditForm = ({
   const [selectedInterests, setSelectedInterests] = useState<string[]>([]);
   // Id
   const { id } = useParams<{ id: string }>();
+
+  console.log(userResearchTagData)
 
   // 趣味チェック機能
   type HobbyOption = [string, string, string];
@@ -115,32 +100,23 @@ const UserEditForm = ({
   };
 
   // 画像アップロード機能
-  const uploadImage = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    setImage(file);
-  }, []);
+  const handleUploadImage = useCallback(
+    (e: React.ChangeEvent<HTMLInputElement>) => uploadImage(e, setImage),
+    [setImage]
+  );
 
   // プレビュー機能
-  const previewImage = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (file) {
-      setPreview(window.URL.createObjectURL(file));
-    } else {
-      setPreview(""); // ファイルが選択されていない場合はプレビューをクリア
-    }
-  }, []);
+  const handlePreviewImage = useCallback(
+    (e: React.ChangeEvent<HTMLInputElement>) => previewImage(e, setPreview),
+    [setPreview]
+  );
 
-  // プレビュークリア機能
+  // プレビュー削除機能
   const handleClearPreview = () => {
-    setPreview("");
-    // プレビューをクリアすると同時に、inputタグの内容もクリア
-    const fileInput = document.getElementById(
-      "icon-button-file"
-    ) as HTMLInputElement;
-    if (fileInput) {
-      fileInput.value = "";
-    }
+    setPreview("")
+    clearPreview();
   };
+
 
   // FormData形式でデータを作成
   const createFormData = (): FormData => {
@@ -186,9 +162,6 @@ const UserEditForm = ({
 
     await updateUserData(id, data).then(() => {
       handleGetUserData();
-      handleGetHobbyData();
-      handleGetInterestData();
-      handleGetResearchTagData();
     });
 
     handleClearPreview();
@@ -243,7 +216,6 @@ const UserEditForm = ({
             }}
           />
         </div>
-
         <div className="border m-2 p-2">
           <b>研究タグ</b>
           <div className="flex">
@@ -288,8 +260,8 @@ const UserEditForm = ({
             type="file"
             className="hidden"
             onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-              uploadImage(e);
-              previewImage(e);
+              handleUploadImage(e);
+              handlePreviewImage(e);
             }}
           />
           <label

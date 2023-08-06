@@ -3,21 +3,24 @@ import { Link } from "react-router-dom";
 import { BoardData } from "interfaces/index";
 
 interface BoardItemProps {
-  board: BoardData;
+  boards: BoardData[];
+  handleGetBoardData: Function;
 }
 
-const BoardsItem = ({ board }: BoardItemProps) => {
+const BoardsItem = ({ boards }: BoardItemProps) => {
   return (
     <>
-      <Link to={`/board/${board.boardId}`} className="inline-block border m-2">
-        <p>掲示板ID:{board.boardId}</p>
-        <p>ユーザID:{board.userId}</p>
-        <p>タイトル:{board.title}</p>
-        {board.image?.url ? (
-          <img src={board.image.url} alt="boardData image" className="w-1/2" />
-        ) : null}
-        <p className="whitespace-pre-wrap">内容:{board.boardBody}</p>
-      </Link>
+      {boards.map((board) => (
+        <Link to={`/board/${board.boardId}`} className="inline-block border m-2">
+          <p>掲示板ID:{board.boardId}</p>
+          <p>ユーザID:{board.userId}</p>
+          <p>タイトル:{board.title}</p>
+          {board.image?.url ? (
+            <img src={board.image.url} alt="boardData image" className="w-1/2" />
+          ) : null}
+          <p className="whitespace-pre-wrap">内容:{board.boardBody}</p>
+        </Link>
+      ))}
     </>
   );
 };

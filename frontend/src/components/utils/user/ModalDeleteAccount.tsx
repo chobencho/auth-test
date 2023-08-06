@@ -34,14 +34,9 @@ interface ModalDeleteAccountProps {
 
 const ModalDeleteAccount = ({ onClose }: ModalDeleteAccountProps) => {
   const navigate = useNavigate()
-  const { setIsSignedIn, setCurrentUser } = useContext(AuthContext)
+  const { setIsSignedIn } = useContext(AuthContext)
   // Style
   const classes = useStyles();
-
-  // モーダル非表示
-  const handleClearModal = () => {
-    onClose();
-  };
 
   const handleDeleteAccount = async () => {
     try {
@@ -75,7 +70,7 @@ const ModalDeleteAccount = ({ onClose }: ModalDeleteAccountProps) => {
             削除する
           </button>
           <button
-            onClick={() => handleClearModal()}
+            onClick={() => onClose()}
             className="border text-2xl text-white bg-gray-600 px-3 py-1"
           >
             ×

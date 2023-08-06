@@ -4,7 +4,7 @@ import { AxiosPromise } from "axios";
 // 証明書登録
 export const sendCertificateImage = (
   id: string,
-  email: string,
+  email: string | null,
   data: FormData
 ): AxiosPromise => {
   return clientImage.post(`/verifications`, data, { params: { id, email } });

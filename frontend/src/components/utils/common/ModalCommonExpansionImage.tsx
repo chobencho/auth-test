@@ -34,9 +34,9 @@ const useStyles = makeStyles((theme: Theme) => ({
 const ModalCommonExpansionImage = ({ onClose, image }: ModalCommonExpansionImageProps) => {
   const classes = useStyles();
 
-  // モーダルの外側をクリックしても何もしないようにする関数
+  // モーダルをクリックしても何もしない関数
   const handleBackdropClick = (event: React.MouseEvent<HTMLDivElement>) => {
-    event.stopPropagation(); // クリックイベントが親要素に伝播しないようにする
+    event.stopPropagation();
   };
 
   return (

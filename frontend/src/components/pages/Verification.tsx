@@ -1,56 +1,41 @@
-import React, { useState, useCallback, useContext, useEffect } from "react";
-import { AuthContext } from "App";
+import React, { useState, useCallback, useEffect } from "react";
 import { v4 as uuidv4 } from "uuid";
 // Function
 import { sendCertificateImage } from "lib/api/verification";
 import { getEditUserData } from "lib/api/user";
+import { clearPreview } from "lib/api/helper";
+import { previewImage } from "lib/api/helper";
+import { uploadUniqeImage } from "lib/api/helper";
 // Interface
 import { UserData } from "interfaces/index";
 // Components
 import GoBackButton from "components/utils/common/GoBackButton";
+import { useAuthData } from "components/utils/common/useAuthData";
 
 const Verification = () => {
   // State
   const [userData, setUserData] = useState<UserData | null>(null);
   const [image, setImage] = useState<File | undefined>();
   const [preview, setPreview] = useState<string>("");
-
   // Id
-  const { currentUser } = useContext(AuthContext);
-  const myId = currentUser ? currentUser.id : null;
-  const stringMyId = myId?.toString();
+  const { stringMyId, myEmail } = useAuthData();
 
   // 画像アップロード機能
-  const uploadImage = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (file) {
-      // ファイル名をUUIDでユニークに変更
-      const uniqueFileName = uuidv4() + ".jpg";
-      // ファイル名を変更したファイルをstateにセット
-      setImage(new File([file], uniqueFileName, { type: file.type }));
-    }
-  }, []);
+  const handleUploadImage = useCallback(
+    (e: React.ChangeEvent<HTMLInputElement>) => uploadUniqeImage(e, setImage),
+    [setImage]
+  );
 
   // プレビュー機能
-  const previewImage = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (file) {
-      setPreview(window.URL.createObjectURL(file));
-    } else {
-      setPreview(""); // ファイルが選択されていない場合はプレビューをクリア
-    }
-  }, []);
+  const handlePreviewImage = useCallback(
+    (e: React.ChangeEvent<HTMLInputElement>) => previewImage(e, setPreview),
+    [setPreview]
+  );
 
   // プレビュークリア機能
   const handleClearPreview = () => {
-    setPreview("");
-    // プレビューをクリアすると同時に、inputタグの内容もクリア
-    const fileInput = document.getElementById(
-      "icon-button-file"
-    ) as HTMLInputElement;
-    if (fileInput) {
-      fileInput.value = "";
-    }
+    setPreview("")
+    clearPreview();
   };
 
   const createFormData = (): FormData => {
@@ -68,24 +53,13 @@ const Verification = () => {
     e.preventDefault();
     const data = createFormData();
 
-    const email = userData!.email;
-
     if (stringMyId !== undefined) {
-
-      await sendCertificateImage(stringMyId, email, data).then(() => {
+      await sendCertificateImage(stringMyId, myEmail, data).then(() => {
         setPreview("");
         setImage(undefined);
       });
     }
   };
-
-  const handleGetUserData = async () => {
-    getEditUserData(stringMyId).then((res) => setUserData(res.data));
-  };
-
-  useEffect(() => {
-    handleGetUserData();
-  }, []);
 
   return (
     <>
@@ -96,8 +70,8 @@ const Verification = () => {
             type="file"
             className="hidden"
             onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-              uploadImage(e);
-              previewImage(e);
+              handleUploadImage(e);
+              handlePreviewImage(e);
             }}
           />
           <label
@@ -153,3 +127,4 @@ const Verification = () => {
 };
 
 export default Verification;
+

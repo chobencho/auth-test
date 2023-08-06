@@ -1,9 +1,11 @@
-import { useContext, useState, useCallback } from "react";
-import { AuthContext } from "App";
-
+import { useState, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 // Function
 import { createBoardData } from "lib/api/board";
+import { useAuthData } from "components/utils/common/useAuthData";
+import { clearPreview } from "lib/api/helper";
+import { uploadImage } from "lib/api/helper";
+import { previewImage } from "lib/api/helper";
 
 const BoardCreateForm = () => {
   const navigate = useNavigate();
@@ -13,36 +15,24 @@ const BoardCreateForm = () => {
   const [image, setImage] = useState<File | undefined>();
   const [preview, setPreview] = useState<string>("");
   // Id
-  const { currentUser } = useContext(AuthContext);
-  const myId = currentUser ? currentUser.id : null;
-  const stringMyId = myId?.toString();
+  const { stringMyId } = useAuthData();
 
   // 画像アップロード機能
-  const uploadImage = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    setImage(file);
-  }, []);
+  const handleUploadImage = useCallback(
+    (e: React.ChangeEvent<HTMLInputElement>) => uploadImage(e, setImage),
+    [setImage]
+  );
 
   // プレビュー機能
-  const previewImage = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (file) {
-      setPreview(window.URL.createObjectURL(file));
-    } else {
-      setPreview(""); // ファイルが選択されていない場合はプレビューをクリア
-    }
-  }, []);
+  const handlePreviewImage = useCallback(
+    (e: React.ChangeEvent<HTMLInputElement>) => previewImage(e, setPreview),
+    [setPreview]
+  );
 
-  // プレビュークリア機能
+  // プレビュー削除機能
   const handleClearPreview = () => {
-    setPreview("");
-    // プレビューをクリアすると同時に、inputタグの内容もクリア
-    const fileInput = document.getElementById(
-      "icon-button-file"
-    ) as HTMLInputElement;
-    if (fileInput) {
-      fileInput.value = "";
-    }
+    setPreview("")
+    clearPreview();
   };
 
   // FormData形式でデータを作成
@@ -63,13 +53,8 @@ const BoardCreateForm = () => {
     const data = createFormData();
 
     await createBoardData(data).then(() => {
-      setTitle("");
-      setPreview("");
-      setImage(undefined);
-      setBody("");
+      navigate("/boards");
     });
-
-    navigate("/boards");
   };
 
   return (
@@ -92,8 +77,8 @@ const BoardCreateForm = () => {
             type="file"
             className="hidden"
             onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-              uploadImage(e);
-              previewImage(e);
+              handleUploadImage(e);
+              handlePreviewImage(e);
             }}
           />
           <label

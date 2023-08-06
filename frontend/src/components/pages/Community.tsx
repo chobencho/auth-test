@@ -1,6 +1,4 @@
-import { useContext, useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
-import { AuthContext } from "App";
+import { useEffect, useState } from "react";
 // Interface
 import { CommunityData } from "interfaces/index";
 import { MessageItemsData } from "interfaces/index";
@@ -13,16 +11,14 @@ import CommunityTop from "components/utils/community/CommunityTop";
 import CommonMessageItems from "components/utils/common/CommonMessageItems";
 import CommonMessageForms from "components/utils/common/CommonMessageForms";
 import ModalSubscribeCommunity from "components/utils/community/ModalSubscribeCommunity";
+import { useAuthData } from "components/utils/common/useAuthData";
 
 const Community = () => {
   const [community, setCommunity] = useState<CommunityData | null>(null);
   const [comments, setComments] = useState<MessageItemsData[]>([]);
   const [subscribed, setSubscribed] = useState<boolean>(false);
 
-  const { id } = useParams();
-  const { currentUser } = useContext(AuthContext);
-  const myId = currentUser ? currentUser.id : null;
-  const stringMyId = myId?.toString();
+  const { stringMyId, id } = useAuthData();
 
   // コミュニティ情報取得
   const handleGetCommunityData = async () => {

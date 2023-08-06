@@ -1,18 +1,21 @@
 import { useState } from "react"
 // Components
 import ModalDeleteAccount from "components/utils/user/ModalDeleteAccount";
+import { openModal } from "lib/api/helper";
+import { clearModal } from "lib/api/helper";
+
 
 const DeleteAccount = () => {
   const [showModal, setShowModal] = useState(false);
 
-  // モーダル非表示
-  const handleClearModal = () => {
-    setShowModal(false); // モーダルを非表示にする
+  // モーダル表示
+  const handleShowModal = () => {
+    openModal(setShowModal);
   };
 
-  // モーダル表示
-  const showModalWindow = () => {
-    setShowModal(true); // 画像が選択されたときにモーダルを表示
+  // モーダル非表示
+  const handleCloseModal = () => {
+    clearModal(setShowModal);
   };
 
   return (
@@ -20,14 +23,14 @@ const DeleteAccount = () => {
       <p>アカウントを削除します</p>
       <button className="border"
         onClick={() => {
-          showModalWindow();
+          handleShowModal();
         }}
       >アカウント削除</button>
 
       {/* メッセージ入力モーダル */}
       {showModal ? (
         <ModalDeleteAccount
-          onClose={handleClearModal}
+          onClose={handleCloseModal}
         />
       ) : null}
     </>

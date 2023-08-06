@@ -5,8 +5,10 @@ import { CommunityData } from "interfaces/index";
 // Components
 import CommunitiesItem from "components/utils/community/CommunitiesItem";
 import ModalCategoryCommunity from "components/utils/community/ModalCategoryCommunity";
-
+// Style
 import Category from "common/category";
+// Function
+import { clearModal } from "lib/api/helper";
 
 type CommunityProps = {
   allCommunity: CommunityData[];
@@ -35,9 +37,9 @@ const CommunitiesBranchSearch = ({
     setShowModal(true);
   };
 
-  // プレビュークリア機能
-  const handleClearPreview = () => {
-    setShowModal(false); // モーダルを非表示にする
+  // モーダルクリア機能
+  const handleCloseModal = () => {
+    clearModal(setShowModal); // handleClearPreviewを使うように変更
   };
 
   return (
@@ -77,7 +79,7 @@ const CommunitiesBranchSearch = ({
       {/* メッセージ入力モーダル */}
       {showModal ? (
         <ModalCategoryCommunity
-          onClose={handleClearPreview}
+          onClose={handleCloseModal}
           selectedCategoryData={selectedCategoryData}
         />
       ) : null}

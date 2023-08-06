@@ -42,15 +42,9 @@ const LikeButton = ({ boardId, myId, handleGetBoardData }: LikeFormProps) => {
     }, []);
 
     return (
-        <>
-            {
-                like ? (
-                    <button onClick={handleDeleteLike} ><FaHeart className="text-xl text-red-400 my-3" /></button>
-                ) : (
-                    <button onClick={handleCreateLike} ><FaHeart className="text-xl my-3" /></button>
-                )
-            }
-        </>
+        <button onClick={like ? handleDeleteLike : handleCreateLike}>
+            <FaHeart className={`text-xl my-3 ${like ? "text-red-400" : ""}`} />
+        </button>
     )
 }
 

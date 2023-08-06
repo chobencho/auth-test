@@ -58,10 +58,12 @@ const CommunityTop = ({ community, community_id, user_id }: CommunityProps) => {
   const navigate = useNavigate();
   const classes = useStyles();
 
+  // コミュニティ概要表示・非表示機能
   const handleToggleSlideUpContent = () => {
     setShowSlideUpContent((prev) => !prev);
   };
 
+  // コミュニティ退会機能
   const handleWithdrawCommunity = async () => {
     withdrawCommunity(community_id, user_id).then(() =>
       navigate("/communities")
@@ -78,17 +80,13 @@ const CommunityTop = ({ community, community_id, user_id }: CommunityProps) => {
           <p className={`${classes.title}`}>{community.title}</p>
           <img src="" alt="" />
         </>
-
         <TocIcon
           className={`${classes.menuButton}`}
           onClick={handleToggleSlideUpContent}
         />
       </div>
       <div
-        className={`${classes.slideUpContent} ${
-          showSlideUpContent ? classes.slideUpContentActive : ""
-        }`}
-      >
+        className={`${classes.slideUpContent} ${showSlideUpContent ? classes.slideUpContentActive : ""}`}>
         <h4 className="mt-5">概要</h4>
         <p>{community.body}</p>
         <h4 className="mt-5">カテゴリ</h4>

@@ -19,41 +19,33 @@ const UserEdit = () => {
   // State
   const [userData, setUserData] = useState<UserData | null>(null);
   const [hobbyData, setHobbyData] = useState<UserHobbyData[]>([]);
-  const [interestData, setInterestData] = useState<UserInterestData[]>(
-    []
-  );
-  const [researchTagData, setResearchTagData] = useState<UserTagData[]>(
-    []
-  );
+  const [interestData, setInterestData] = useState<UserInterestData[]>([]);
+  const [researchTagData, setResearchTagData] = useState<UserTagData[]>([]);
   // Id
   const { id } = useParams<{ id: string }>();
 
   // ユーザ情報取得
   const handleGetUserData = async () => {
-    getEditUserData(id).then((res) => setUserData(res.data));
-  };
-  // ユーザ趣味情報取得
-  const handleGetHobbyData = async () => {
-    getHobbyData(id).then((res) => setHobbyData(res.data));
-  };
-  // ユーザ興味情報取得
-  const handleGetInterestData = async () => {
-    getInterestData(id).then((res) => setInterestData(res.data));
-  };
+    // Promise.allを使ってすべての非同期処理が完了するのを待つ
+    const [userDataRes, hobbyDataRes, interestDataRes, researchTagDataRes] = await Promise.all([
+      getEditUserData(id),
+      getHobbyData(id),
+      getInterestData(id),
+      getResearchTagData(id),
+    ]);
 
-  // ユーザ研究タグ情報取得
-  const handleGetResearchTagData = async () => {
-    getResearchTagData(id).then((res) =>
-      setResearchTagData(res.data)
-    );
+    setUserData(userDataRes.data);
+    setHobbyData(hobbyDataRes.data);
+    setInterestData(interestDataRes.data);
+    setResearchTagData(researchTagDataRes.data);
   };
 
   useEffect(() => {
-    handleGetUserData();
-    handleGetHobbyData();
-    handleGetInterestData();
-    handleGetResearchTagData();
-  }, []);
+    // 初回のみデータを取得するようにする
+    if (userData === null) {
+      handleGetUserData();
+    }
+  }, [userData]);
 
   return (
     <>
@@ -62,12 +54,7 @@ const UserEdit = () => {
           {/* ユーザ編集フォーム */}
           <UserEditForm
             handleGetUserData={handleGetUserData}
-            handleGetHobbyData={handleGetHobbyData}
-            handleGetInterestData={handleGetInterestData}
-            handleGetResearchTagData={handleGetResearchTagData}
             userData={userData}
-            userHobbyData={hobbyData}
-            userInterestData={interestData}
             userResearchTagData={researchTagData}
           />
           {/* ユーザプレビュー */}
@@ -84,3 +71,4 @@ const UserEdit = () => {
 };
 
 export default UserEdit;
+

@@ -10,7 +10,7 @@ interface ModalCommonMessageFormProps {
   onClose: Function;
   generalId: string;
   stringMyId: string;
-  image: File | null;
+  image: File | undefined;
   handleGetData: Function;
   discrimination: string
 }
@@ -53,7 +53,6 @@ const ModalCommonMessageForm = ({
   const classes = useStyles();
   // State
   const [modalBody, setModalBody] = useState<string>("");
-  const [modalPreview, setModalPreview] = useState<string>(preview);
 
   const createFormData = (general_id: string): FormData => {
     const formData = new FormData();

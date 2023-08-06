@@ -1,5 +1,4 @@
-import { useEffect, useState, useContext } from "react";
-import { AuthContext } from "App";
+import { useEffect, useState } from "react";
 // Style
 import { makeStyles, Theme } from "@material-ui/core/styles";
 import Box from "@material-ui/core/Box";
@@ -10,6 +9,7 @@ import { UserData } from "interfaces/index";
 // Components
 import UsersItem from "components/utils/home/UsersItem";
 import SearchButton from "components/utils/home/SearchButton";
+import { useAuthData } from "components/utils/common/useAuthData";
 
 const useStyles = makeStyles((theme: Theme) => ({
   flexbox: {
@@ -26,10 +26,7 @@ const Home = () => {
   // Style
   const classes = useStyles();
   // Id
-  const { currentUser } = useContext(AuthContext);
-  const myId = currentUser ? currentUser.id : null;
-  const stringMyId = myId?.toString();
-  const { verifiedAge } = useContext(AuthContext);
+  const { stringMyId, verifiedAge } = useAuthData();
 
   // ユーザ情報を取得
   const handleGetUsersData = async (tags: string[]) => {

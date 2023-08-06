@@ -1,10 +1,10 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 // Interface
-import { CommunityCommentData } from "interfaces/index";
 import { MessageItemsData } from "interfaces/index";
 // Function
-
 import ModalCommonExpansionImage from "components/utils/common/ModalCommonExpansionImage";
+import { clearModal } from "lib/api/helper";
+import { expansionImage } from "lib/api/helper";
 
 export interface CommunityCommentProps {
   message: MessageItemsData;
@@ -12,16 +12,17 @@ export interface CommunityCommentProps {
 }
 
 const CommonMessageItems = ({ message, stringMyId }: CommunityCommentProps) => {
-
+  // State
   const [showModal, setShowModal] = useState<boolean>(false);
 
+  // 画像拡大機能
   const handleExpansionImage = () => {
-    setShowModal(true);
+    expansionImage(setShowModal)
   };
 
-  // プレビュークリア機能
-  const handleClearPreview = () => {
-    setShowModal(false); // モーダルを非表示にする
+  // モーダルクリア機能
+  const handleCloseModal = () => {
+    clearModal(setShowModal);
   };
 
   return (
@@ -54,7 +55,7 @@ const CommonMessageItems = ({ message, stringMyId }: CommunityCommentProps) => {
 
       {message.image?.url && showModal ? (
         <ModalCommonExpansionImage
-          onClose={handleClearPreview}
+          onClose={handleCloseModal}
           image={message.image.url}
         />
       ) : null}

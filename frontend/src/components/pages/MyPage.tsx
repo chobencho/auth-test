@@ -1,4 +1,5 @@
-import { Link, useParams } from "react-router-dom";
+import { Link } from "react-router-dom";
+import { useAuthData } from "components/utils/common/useAuthData";
 // Style
 import { makeStyles, Theme } from "@material-ui/core/styles";
 import { Typography } from "@material-ui/core";
@@ -30,7 +31,7 @@ const useStyles = makeStyles((theme: Theme) => ({
 const MyPage = () => {
   const classes = useStyles();
   // Id
-  const { id } = useParams<{ id: string }>();
+  const { id } = useAuthData();
 
   return (
     <Box textAlign="center" className={classes.box}>

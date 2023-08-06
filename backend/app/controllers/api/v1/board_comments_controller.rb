@@ -8,4 +8,11 @@ class Api::V1::BoardCommentsController < ApplicationController
     @comment = BoardComment.new(comment_params)
     @comment.save
   end
+
+  private
+
+  def comment_params
+    params.permit(:board_id, :user_id, :body)
+  end
+
 end

@@ -2,7 +2,6 @@ import { Link } from "react-router-dom";
 // Interface
 import { CommentData } from "interfaces/index"
 
-
 interface CommentItemProps {
   comment: CommentData;
 }
@@ -22,7 +21,6 @@ const CommentItem = ({ comment }: CommentItemProps) => {
           ) : null}
           <h6>{comment.name}</h6>
         </Link>
-
         <p>{comment.body}</p>
       </div>
 

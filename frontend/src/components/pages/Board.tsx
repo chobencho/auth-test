@@ -1,44 +1,53 @@
-import { useContext, useEffect, useState } from "react";
-import { AuthContext } from "App";
-import { useParams } from "react-router-dom";
+import { useEffect, useState } from "react";
 // Function
 import { getBoardData } from "lib/api/board";
 import { getBoardComment } from "lib/api/boardComment";
+import { getCommonRoomId } from "lib/api/common"
 // Interface
 import { BoardData } from "interfaces/index";
 import { CommentData } from "interfaces/index"
 // Components
-import BoardEditButton from "components/utils/board/BoardEditButton";
+import CommonEditButton from "components/utils/common/CommonEditButton";
 import LikeButton from "components/utils/board/LikeButton";
 import GoBackButton from "components/utils/common/GoBackButton";
 import BoardContent from "components/utils/board/BoardContent";
 import CommentItem from "components/utils/board/CommentItem";
 import CommonMessageForms from "components/utils/common/CommonMessageForms";
+import { useAuthData } from "components/utils/common/useAuthData";
 
 const Board = () => {
   // State
   const [board, setBoard] = useState<BoardData | null>(null);
   const [comments, setComments] = useState<CommentData[]>([])
+  const [commonRoomId, setCommonRoomId] = useState<string | null>(null)
   // Id
-  const { id } = useParams<{ id: string }>();
-  const { currentUser } = useContext(AuthContext);
-  const myId = currentUser ? currentUser.id : null;
-  const stringMyId = myId?.toString();
+  const { stringMyId, id, verifiedAge } = useAuthData();
 
   // 掲示板情報を取得
   const handleGetBoardData = async () => {
-    getBoardData(id).then((res) => setBoard(res.data));
+    getBoardData(id).then((res) => {
+      setBoard(res.data);
+      handleGetCommonRoomId(res.data.userId);
+    });
   };
-
   // コメント情報を取得
   const handleGetBoardComment = async () => {
     getBoardComment(id).then((res) => setComments(res.data));
   };
 
+  // 自分と相手のチャットルームがすでに存在するか確認する関数
+  const handleGetCommonRoomId = (userId: string) => {
+    getCommonRoomId(userId, stringMyId).then((res) => setCommonRoomId(res.data));
+  };
+
+
   useEffect(() => {
     handleGetBoardData();
+  }, [id]);
+
+  useEffect(() => {
     handleGetBoardComment();
-  }, []);
+  }, [board]);
 
   return (
     <>
@@ -54,27 +63,29 @@ const Board = () => {
           <BoardContent board={board} />
 
           {/* チャット開始ボタン || 掲示板編集ボタン */}
-          <BoardEditButton
+          <CommonEditButton
             userId={board.userId || ""}
             myId={stringMyId || ""}
-            generalId={board.id.toString()}
+            generalId={id || ""}
+            verifiedAge={verifiedAge}
+            commonRoomId={commonRoomId || ""}
           />
+
           {/* 戻るボタン */}
           <GoBackButton />
+
           {/* コメント欄 */}
           {comments.map((comment: CommentData) => (
             <CommentItem comment={comment} />
           ))}
 
           {/* コメントフォーム */}
-
           <CommonMessageForms
             handleGetData={handleGetBoardComment}
             id={id ?? ""}
             stringMyId={stringMyId ?? ""}
             discrimination={"board"}
           />
-
         </>
       )}
     </>

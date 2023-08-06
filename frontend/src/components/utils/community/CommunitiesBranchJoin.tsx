@@ -11,7 +11,6 @@ const CommunitiesBranchJoin = ({ myCommunity }: CommunityProps) => {
       {myCommunity.map((community) => (
         <CommunitiesItem community={community} />
       ))}
-
     </>
   )
 }

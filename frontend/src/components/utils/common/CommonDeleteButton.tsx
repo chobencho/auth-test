@@ -10,6 +10,7 @@ export interface CommonDeleteButtonProps {
 const CommonDeleteButton = ({ generalId, discrimination }: CommonDeleteButtonProps) => {
   const navigate = useNavigate()
 
+  // 削除機能(掲示板,チャット)
   const handleDeleteData = async () => {
     if (discrimination == "board") {
       if (window.confirm("削除すると元の状態に戻せませんがよろしいですか？")) {

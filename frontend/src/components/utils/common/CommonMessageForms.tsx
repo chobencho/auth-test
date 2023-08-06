@@ -1,14 +1,17 @@
-import React, { useEffect, useState, useContext, useCallback } from "react";
-import { AuthContext } from "App"
+import React, { useState, useCallback } from "react";
 // Style
 import { makeStyles, Theme } from "@material-ui/core/styles";
 // Function
 import { createCommunityComment } from "lib/api/community_chats";
 import { createMessage } from "lib/api/chat";
 import { createComment } from "lib/api/boardComment";
+import { clearPreview } from "lib/api/helper";
+import { uploadImage } from "lib/api/helper";
+import { previewImage } from "lib/api/helper";
 // Components
 import ModalCommonMessageForm from "components/utils/common/ModalCommonMessageForm";
 import PhotoCameraBackIcon from "@mui/icons-material/PhotoCameraBack";
+import { useAuthData } from "components/utils/common/useAuthData";
 
 export interface CommonMessageFormProps {
   handleGetData: Function;
@@ -42,42 +45,28 @@ const CommonMessageForms = ({
   discrimination
 }: CommonMessageFormProps) => {
   const classes = useStyles();
-  const { verifiedAge } = useContext(AuthContext);
   const [body, setBody] = useState<string>("");
-  const [image, setImage] = useState<File | null>(null);
+  const [image, setImage] = useState<File | undefined>();
   const [preview, setPreview] = useState<string>("");
-  const [showModal, setShowModal] = useState(false);
+
+  const { verifiedAge } = useAuthData();
 
   // 画像アップロード機能
-  const uploadImage = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (file) {
-      setImage(file);
-    }
-  }, []);
+  const handleUploadImage = useCallback(
+    (e: React.ChangeEvent<HTMLInputElement>) => uploadImage(e, setImage),
+    [setImage]
+  );
 
   // プレビュー機能
-  const previewImage = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (file) {
-      setPreview(window.URL.createObjectURL(file));
-      setShowModal(true); // 画像が選択されたときにモーダルを表示
-    } else {
-      setPreview(""); // ファイルが選択されていない場合はプレビューをクリア
-      setShowModal(false); // モーダルを非表示にする
-    }
-  }, []);
+  const handlePreviewImage = useCallback(
+    (e: React.ChangeEvent<HTMLInputElement>) => previewImage(e, setPreview),
+    [setPreview]
+  );
 
-  // プレビュークリア機能
+  // プレビュー削除機能
   const handleClearPreview = () => {
-    setPreview("");
-    // プレビューをクリアすると同時に、inputタグの内容もクリア
-    const fileInput = document.getElementById(
-      "icon-button-file"
-    ) as HTMLInputElement;
-    if (fileInput) {
-      fileInput.value = "";
-    }
+    setPreview("")
+    clearPreview();
   };
 
   // 送信用フォームデータ作成関数
@@ -137,8 +126,8 @@ const CommonMessageForms = ({
                     type="file"
                     className="hidden"
                     onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                      uploadImage(e);
-                      previewImage(e);
+                      handleUploadImage(e);
+                      handlePreviewImage(e);
                     }}
                   />
                   <label
@@ -183,7 +172,7 @@ const CommonMessageForms = ({
       </form >
       {/* メッセージ入力モーダル */}
       {
-        preview && showModal ? (
+        preview ? (
           <ModalCommonMessageForm
             preview={preview}
             onClose={handleClearPreview}

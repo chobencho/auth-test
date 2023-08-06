@@ -10,6 +10,7 @@ export interface ModalSubscribeProps {
   user_id: string | undefined;
   handleGetSubscribedCommunity: Function;
 }
+
 const useStyles = makeStyles((theme: Theme) => ({
   modal: {
     position: "fixed",
@@ -49,8 +50,7 @@ const ModalSubscribeCommunity = ({
   };
 
   const handleSubscribeCommunity = async (
-    e: React.FormEvent<HTMLFormElement>
-  ) => {
+    e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const data = createFormData();
 

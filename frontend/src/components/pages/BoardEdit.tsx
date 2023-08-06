@@ -1,5 +1,4 @@
 import { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
 // Function
 import { getEditBoardData } from "lib/api/board";
 // Interface
@@ -8,12 +7,13 @@ import { BoardData } from "interfaces/index";
 import BoardEditForm from "components/utils/board/BoardEditForm";
 import BoardEditItem from "components/utils/board/BoardEditItem";
 import GoBackButton from "components/utils/common/GoBackButton";
+import { useAuthData } from "components/utils/common/useAuthData";
 
 const BoardEdit = () => {
   // State
   const [boardData, setBoardData] = useState<BoardData | null>(null);
   // Id
-  const { id } = useParams<{ id: string }>();
+  const { id } = useAuthData();
 
   // 掲示板情報を取得
   const handleGetBoardData = async () => {
@@ -30,6 +30,7 @@ const BoardEdit = () => {
         <>
           {/* 掲示板編集フォーム */}
           <BoardEditForm
+            id={id || ""}
             handleGetBoardData={handleGetBoardData}
             boardData={boardData}
           />

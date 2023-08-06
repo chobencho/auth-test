@@ -40,16 +40,11 @@ const ModalSearchForm = ({
   // Style
   const classes = useStyles();
 
-  // モーダル非表示
-  const handleClearModal = () => {
-    onClose();
-  };
-
   // ユーザ検索関数
   const handleSearchUsers = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     handleGetUsersData(tags);
-    handleClearModal();
+    onClose();
   };
 
   // 検索キーワード追加
@@ -120,7 +115,7 @@ const ModalSearchForm = ({
                 この条件で検索
               </button>
               <button
-                onClick={() => handleClearModal()}
+                onClick={() => onClose()}
                 className="border text-2xl text-white bg-gray-600 px-3 py-1"
               >
                 ×

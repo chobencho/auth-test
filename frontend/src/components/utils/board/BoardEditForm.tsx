@@ -1,16 +1,20 @@
 import React, { useState, useCallback } from "react";
-import { useParams } from "react-router-dom";
 // Function
 import { editBoardData } from "lib/api/board";
 // Interface
 import { BoardData } from "interfaces/index";
+import { clearPreview } from "lib/api/helper";
+import { uploadImage } from "lib/api/helper";
+import { previewImage } from "lib/api/helper";
 
 interface BoardEditFormProps {
+  id: string;
   boardData: BoardData;
   handleGetBoardData: Function;
 }
 
 const BoardEditForm = ({
+  id,
   boardData,
   handleGetBoardData,
 }: BoardEditFormProps) => {
@@ -19,35 +23,23 @@ const BoardEditForm = ({
   const [body, setBody] = useState<string>(boardData.body || "");
   const [image, setImage] = useState<File | undefined>();
   const [preview, setPreview] = useState<string>("");
-  // Id
-  const { id } = useParams<{ id: string }>();
 
   // 画像アップロード機能
-  const uploadImage = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    setImage(file);
-  }, []);
+  const handleUploadImage = useCallback(
+    (e: React.ChangeEvent<HTMLInputElement>) => uploadImage(e, setImage),
+    [setImage]
+  );
 
   // プレビュー機能
-  const previewImage = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (file) {
-      setPreview(window.URL.createObjectURL(file));
-    } else {
-      setPreview(""); // ファイルが選択されていない場合はプレビューをクリア
-    }
-  }, []);
+  const handlePreviewImage = useCallback(
+    (e: React.ChangeEvent<HTMLInputElement>) => previewImage(e, setPreview),
+    [setPreview]
+  );
 
-  // プレビュークリア機能
+  // プレビュー削除機能
   const handleClearPreview = () => {
-    setPreview("");
-    // プレビューをクリアすると同時に、inputタグの内容もクリア
-    const fileInput = document.getElementById(
-      "icon-button-file"
-    ) as HTMLInputElement;
-    if (fileInput) {
-      fileInput.value = "";
-    }
+    setPreview("")
+    clearPreview();
   };
 
   // FormData形式でデータを作成
@@ -68,9 +60,8 @@ const BoardEditForm = ({
 
     await editBoardData(id, data).then(() => {
       handleGetBoardData();
+      handleClearPreview();
     });
-
-    handleClearPreview();
   };
 
   return (
@@ -92,8 +83,8 @@ const BoardEditForm = ({
             type="file"
             className="hidden"
             onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-              uploadImage(e);
-              previewImage(e);
+              handleUploadImage(e);
+              handlePreviewImage(e);
             }}
           />
           <label
