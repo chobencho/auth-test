@@ -32,20 +32,25 @@ const CommonEditButton = ({ userId, myId, generalId, verifiedAge, commonRoomId }
           />
         </>
       ) : (
-        <div className={"relative border bg-gray-400 text-white p-2 m-auto w-1/2 h-20"}>
-          {commonRoomId ? ("メッセージを見る") : ("新規メッセージ")}
+        <div
+          className={`relative border border-blue-600 text-blue-600 p-3 my-3 mx-auto w-3/5 rounded-3xl ${commonRoomId ? "bg-blue-600" : "bg-white"}`}>
+          {commonRoomId ? (<p className="text-white text-center">メッセージを送る</p>) : (<p className="text-blue-600 text-center">メッセージを始める</p>)}
           {!verifiedAge && (
             <span
-              className="absolute top-0 left-0 w-full h-full flex justify-center items-center cursor-pointer"
-              style={{ backgroundColor: "rgba(0, 0, 0, 0.5)" }}
+              className="absolute top-0 left-0 w-full h-full flex justify-center items-center cursor-pointer rounded-3xl text-white"
+              style={{ backgroundColor: "rgba(0, 0, 0, 0.7)" }}
             >
               年齢確認が完了していません
             </span>
           )}
           {verifiedAge && commonRoomId ? (
+
             <Link to={`/message/${commonRoomId}?buddyId=${userId}`} className="absolute top-0 left-0 w-full h-full opacity-0"></Link>
+
           ) : (
+
             <button className="absolute top-0 left-0 w-full h-full opacity-0" onClick={() => handleCreateChat()} disabled={!verifiedAge} />
+
           )}
         </div>
       )}

@@ -70,13 +70,13 @@ const Header = () => {
       if (isSignedIn) {
         return (
           <>
-            {/* <Button
+            <Button
               color="inherit"
               className={classes.linkBtn}
               onClick={handleSignOut}
             >
               Sign out
-            </Button> */}
+            </Button>
           </>
         );
       } else {

@@ -78,7 +78,7 @@ const ModalSearchForm = ({
               <HighlightOffIcon />
             </button>
             <div className="p-3">
-              <p className="text-xs text-center">
+              <p className="text-xs text-center my-2">
                 キーワードを追加してユーザ検索してみよう
               </p>
               <input
@@ -111,25 +111,24 @@ const ModalSearchForm = ({
                 追加
               </button>
               {/* 追加されたタグを表示 */}
-              <div className="border m-2 p-2 flex flex-wrap">
-                <b>追加されたタグ：</b>
+              <div className=" p-2 flex flex-wrap my-2">
                 {tags.map((tag, index) => (
-                  <p key={index} className="border p-1 m-1 bg-blue-100 w-1/8">
+                  <p key={index} className="bg-blue-600 text-white rounded-2xl py-1 px-2 mr-1 mb-1">
                     {tag}
                     <button
-                      className="my-1 mx-2 px-2 text-xl bg-gray-600 text-white"
+                      className="text-xl text-white ml-1"
                       onClick={(
                         e: React.MouseEvent<HTMLButtonElement, MouseEvent>
                       ) => handleRemoveTag(e, tag)}
                     >
-                      ×
+                      <HighlightOffIcon />
                     </button>
                   </p>
                 ))}
               </div>
               <div>
-                <button className="border text-white bg-gray-600 p-2 m-2">
-                  この条件で検索
+                <button className="border text-white bg-gray-400 w-full py-2 my-2">
+                  この条件でユーザー検索
                 </button>
               </div>
             </div>
