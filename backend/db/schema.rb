@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_08_04_084235) do
+ActiveRecord::Schema[7.0].define(version: 2023_08_09_151159) do
   create_table "board_comments", force: :cascade do |t|
     t.integer "board_id", null: false
     t.string "body", null: false
@@ -43,7 +43,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_04_084235) do
   create_table "boards", force: :cascade do |t|
     t.integer "user_id", null: false
     t.string "title", null: false
-    t.string "image"
+    t.text "image"
     t.text "body", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -194,7 +194,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_04_084235) do
     t.datetime "confirmation_sent_at"
     t.string "unconfirmed_email"
     t.string "name", default: "NO NAME", null: false
-    t.string "image", default: "no-image.jpg", null: false
+    t.text "image", default: "no-image.jpg", null: false
     t.string "email"
     t.string "body", default: "よろしくお願いします！", null: false
     t.integer "age", default: 99, null: false
@@ -213,6 +213,3 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_04_084235) do
   end
 
 end
-
-
-User.joins(:user_researchtag_taggings).select('users.*, user_researchtag_taggings.tag_id, user_researchtag_taggings.tag_name')

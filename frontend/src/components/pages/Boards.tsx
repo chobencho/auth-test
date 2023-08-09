@@ -42,12 +42,15 @@ const Boards = () => {
 
   return (
     <>
-      <CreateNewBoardButton verifiedAge={verifiedAge} />
-      {boards && (
-        <>
-          <BoardsItem boards={boards} handleGetBoardData={handleGetBoardData} />
-        </>
-      )}
+      <div className="pb-16">
+        <p className="text-center p-3">掲示板一覧</p>
+        {boards && (
+          <>
+            <BoardsItem boards={boards} handleGetBoardData={handleGetBoardData} />
+          </>
+        )}
+        <CreateNewBoardButton verifiedAge={verifiedAge} />
+      </div>
     </>
   );
 };

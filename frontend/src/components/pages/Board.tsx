@@ -53,14 +53,15 @@ const Board = () => {
     <>
       {board && (
         <>
+          {/* 掲示板表示 */}
+          <BoardContent board={board} />
+
           {/* いいねボタン */}
           <LikeButton
             handleGetBoardData={handleGetBoardData}
             boardId={board.id.toString()}
             myId={stringMyId || ""}
           />
-          {/* 掲示板表示 */}
-          <BoardContent board={board} />
 
           {/* チャット開始ボタン || 掲示板編集ボタン */}
           <CommonEditButton

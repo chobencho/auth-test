@@ -72,13 +72,12 @@ export interface BoardData {
   image?: {
     url: string;
   };
-  boardImage?: {
-    url: string;
-  };
+  userImage: string
   body: string;
   boardBody: string;
   createdAt: Date;
   updatedAt: Date;
+  name: string
 }
 
 export interface CommentData {

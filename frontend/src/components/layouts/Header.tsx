@@ -20,6 +20,7 @@ const useStyles = makeStyles((theme) => ({
   linkBtn: {
     textTransform: "none",
     backgroundColor: "black",
+    fontSize: "10px"
   },
   imageContainer: {
     width: "100%",

@@ -60,21 +60,23 @@ const User = () => {
 
   return (
     <>
-      {userData && (
-        <UserItem
-          userData={userData}
-          hobbyData={hobbyData}
-          interestData={interestData}
-          researchTagData={researchTagData}
+      <div className="pb-16">
+        {userData && (
+          <UserItem
+            userData={userData}
+            hobbyData={hobbyData}
+            interestData={interestData}
+            researchTagData={researchTagData}
+          />
+        )}
+        <CommonEditButton
+          userId={id || ""}
+          myId={stringMyId || ""}
+          generalId={id || ""}
+          verifiedAge={verifiedAge}
+          commonRoomId={commonRoomId || ""}
         />
-      )}
-      <CommonEditButton
-        userId={id || ""}
-        myId={stringMyId || ""}
-        generalId={id || ""}
-        verifiedAge={verifiedAge}
-        commonRoomId={commonRoomId || ""}
-      />
+      </div>
     </>
   );
 };

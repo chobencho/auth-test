@@ -25,7 +25,11 @@ const CommonEditButton = ({ userId, myId, generalId, verifiedAge, commonRoomId }
     <>
       {userId == myId ? (
         <>
-          <Link to={`/board/${generalId}/edit`} className="border bg-gray-600 text-white p-2">編集</Link>
+          <div className="relative border bg-gray-600 text-blue-600 p-3 my-3 mx-auto w-3/5 rounded-3xl">
+            <Link to={`/board/${generalId}/edit`}
+              className="text-white text-center w-full block">編集</Link>
+          </div>
+
           <CommonDeleteButton
             generalId={generalId}
             discrimination={"board"}
@@ -49,8 +53,8 @@ const CommonEditButton = ({ userId, myId, generalId, verifiedAge, commonRoomId }
 
           ) : (
 
-            <button className="absolute top-0 left-0 w-full h-full opacity-0" onClick={() => handleCreateChat()} disabled={!verifiedAge} />
-
+            <button className="absolute top-0 left-0 w-full h-full opacity-0"
+              onClick={() => handleCreateChat()} disabled={!verifiedAge} />
           )}
         </div>
       )}
