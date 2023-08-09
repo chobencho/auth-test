@@ -1,7 +1,7 @@
 import { useState } from "react";
 // Style
 import { makeStyles, Theme } from "@material-ui/core/styles";
-
+import HighlightOffIcon from "@mui/icons-material/HighlightOff";
 
 const useStyles = makeStyles((theme: Theme) => ({
   modal: {
@@ -20,7 +20,7 @@ const useStyles = makeStyles((theme: Theme) => ({
     maxWidth: "80%",
     maxHeight: "80%",
     background: "#fff",
-    padding: "20px",
+    padding: "5px",
   },
 }));
 
@@ -74,52 +74,64 @@ const ModalSearchForm = ({
       >
         <div className={`${classes.modal}`}>
           <div className={`${classes.modalContent}`}>
-            <h3>検索画面</h3>
-            <p>研究キーワード</p>
-            <input
-              type="text"
-              placeholder="researchKeyword"
-              className="border p-2 m-2"
-              value={tag}
-              onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                setTag(e.target.value);
-              }}
-            />
-            <button
-              className="border text-white bg-gray-600 p-2 m-2"
-              onClick={(e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
-                handleAddTag(e);
-              }}
-            >
-              追加
+            <button onClick={() => onClose()} className="">
+              <HighlightOffIcon />
             </button>
-            {/* 追加されたタグを表示 */}
-            <div className="border m-2 p-2 flex flex-wrap">
-              <b>追加されたタグ：</b>
-              {tags.map((tag, index) => (
-                <p key={index} className="border p-1 m-1 bg-blue-100 w-1/8">
-                  {tag}
-                  <button
-                    className="my-1 mx-2 px-2 text-xl bg-gray-600 text-white"
-                    onClick={(
-                      e: React.MouseEvent<HTMLButtonElement, MouseEvent>
-                    ) => handleRemoveTag(e, tag)}
-                  >
-                    ×
-                  </button>
-                </p>
-              ))}
-            </div>
-            <div>
-              <button className="border text-white bg-gray-600 p-2 m-2">
-                この条件で検索
-              </button>
+            <div className="p-3">
+              <p className="text-xs text-center">
+                キーワードを追加してユーザ検索してみよう
+              </p>
+              <input
+                type="text"
+                placeholder="キーワード"
+                className="border py-1 px-2 m-2 rounded-md"
+                value={tag}
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                  setTag(e.target.value);
+                }}
+                onKeyPress={(e) => {
+                  if (e.key === "Enter") {
+                    e.preventDefault();
+                    const addButton = document.getElementById("addBtn");
+                    if (addButton) {
+                      addButton.click();
+                    }
+                  }
+                }}
+              />
               <button
-                onClick={() => onClose()}
-                className="border text-2xl text-white bg-gray-600 px-3 py-1"
+                id="addBtn"
+                className="border rounded-md py-1 px-2 border-blue-600 text-blue-600"
+                onClick={(
+                  e: React.MouseEvent<HTMLButtonElement, MouseEvent>
+                ) => {
+                  handleAddTag(e);
+                }}
               >
-                ×
+                追加
               </button>
+              {/* 追加されたタグを表示 */}
+              <div className="border m-2 p-2 flex flex-wrap">
+                <b>追加されたタグ：</b>
+                {tags.map((tag, index) => (
+                  <p key={index} className="border p-1 m-1 bg-blue-100 w-1/8">
+                    {tag}
+                    <button
+                      className="my-1 mx-2 px-2 text-xl bg-gray-600 text-white"
+                      onClick={(
+                        e: React.MouseEvent<HTMLButtonElement, MouseEvent>
+                      ) => handleRemoveTag(e, tag)}
+                    >
+                      ×
+                    </button>
+                  </p>
+                ))}
+              </div>
+              <div>
+                <button className="border text-white bg-gray-600 p-2 m-2">
+                  この条件で検索
+                </button>
+              </div>
             </div>
           </div>
         </div>

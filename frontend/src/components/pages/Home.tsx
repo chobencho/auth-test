@@ -17,6 +17,14 @@ const useStyles = makeStyles((theme: Theme) => ({
     width: "100%",
     flexWrap: "wrap",
   },
+  home: {
+    padding: "5px 10px",
+  },
+  userComponent: {
+    width: "100%",
+    display: "flex",
+    flexWrap: "wrap",
+  },
 }));
 
 const Home = () => {
@@ -39,7 +47,7 @@ const Home = () => {
 
   return (
     <>
-      <Box className={classes.flexbox}>
+      <Box className={`${classes.flexbox} ${classes.home}`}>
         {/* 検索ボタン */}
         <SearchButton
           handleGetUsersData={handleGetUsersData}
@@ -47,8 +55,13 @@ const Home = () => {
           tags={tags}
           verifiedAge={verifiedAge}
         />
-        {/* ユーザ情報表示 */}
-        <UsersItem handleGetUsersData={handleGetUsersData} users={users} />
+
+        <Box className={`${classes.userComponent}`}>
+          {/* ユーザ情報表示 */}
+          {users.map((user) => (
+            <UsersItem handleGetUsersData={handleGetUsersData} user={user} />
+          ))}
+        </Box>
       </Box>
     </>
   );

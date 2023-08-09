@@ -213,3 +213,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_04_084235) do
   end
 
 end
+
+
+User.joins(:user_researchtag_taggings).select('users.*, user_researchtag_taggings.tag_id, user_researchtag_taggings.tag_name')

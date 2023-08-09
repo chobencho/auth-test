@@ -1,4 +1,10 @@
 import { useState, useCallback } from "react";
+// Style
+import { makeStyles, Theme } from "@material-ui/core/styles";
+import Box from "@material-ui/core/Box";
+import Typography from "@material-ui/core/Typography";
+import SearchIcon from "@mui/icons-material/Search";
+
 // Components
 import ModalSearchForm from "components/utils/home/ModalSearchForm";
 
@@ -6,13 +12,12 @@ interface ModalSearchFormProps {
   handleGetUsersData: Function;
   stringMyId: string;
   tags: string[];
-  verifiedAge: boolean
+  verifiedAge: boolean;
 }
 
 const SearchButton = ({
   handleGetUsersData,
   stringMyId,
-  verifiedAge
 }: ModalSearchFormProps) => {
   // State
   const [showModal, setShowModal] = useState(false);
@@ -28,21 +33,13 @@ const SearchButton = ({
   }, []);
 
   return (
-    <div className="w-full text-center">
-
-      <div className={"relative border bg-gray-600 text-white p-2 m-auto w-1/2"}>
-        検索
-        {!verifiedAge && (
-          <span
-            className="absolute top-0 left-0 w-full h-full flex justify-center items-center cursor-pointer"
-            style={{ backgroundColor: "rgba(0, 0, 0, 0.5)" }}
-          >
-            年齢確認が完了していません
-          </span>
-        )}
-        {verifiedAge && (<button className="absolute top-0 left-0 w-full h-full opacity-0" onClick={showModalWindow} />)}
+    <>
+      <div className="w-full h-full flex items-center justify-between">
+        <p className="text-xl">さがす</p>
+        <div className="relative text-black">
+          <SearchIcon fontSize="large" onClick={showModalWindow} />
+        </div>
       </div>
-
       {/* 検索モーダル */}
       {showModal ? (
         <ModalSearchForm
@@ -51,7 +48,7 @@ const SearchButton = ({
           stringMyId={stringMyId ?? ""}
         />
       ) : null}
-    </div>
+    </>
   );
 };
 

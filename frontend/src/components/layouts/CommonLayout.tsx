@@ -16,7 +16,9 @@ const useStyles = makeStyles(() => ({
     zIndex: 999,
   },
   container: {
-    marginTop: "3rem",
+    marginTop: "3.5rem",
+    marginBottom: "5rem",
+    padding: "0",
   },
 }));
 
@@ -33,7 +35,7 @@ const CommonLayout = ({ children }: CommonLayoutProps) => {
       <header className={classes.header}>
         <Header />
       </header>
-      <main className="pt-14 pb-32">
+      <main>
         <Container maxWidth="lg" className={classes.container}>
           {children}
         </Container>

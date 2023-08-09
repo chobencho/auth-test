@@ -6,22 +6,34 @@ import { makeStyles, Theme } from "@material-ui/core/styles";
 
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
-import Typography from "@material-ui/core/Typography";
+import Paper from "@material-ui/core/Paper";
 import Button from "@material-ui/core/Button";
 
 import { signOut } from "lib/api/auth";
-import { deleteAccount } from "lib/api/auth";
 
 import { AuthContext } from "App";
 
 const useStyles = makeStyles((theme) => ({
-  title: {
-    flexGrow: 1,
-    textDecoration: "none",
-    color: "inherit",
+  toolbar: {
+    backgroundColor: "white",
   },
   linkBtn: {
     textTransform: "none",
+    backgroundColor: "black",
+  },
+  imageContainer: {
+    width: "100%",
+    margin: "0 auto",
+    textAlign: "center",
+    elevation: 0,
+  },
+  image: {
+    width: "70%",
+    maxWidth: "100%",
+    margin: "0 auto",
+    textAlign: "center",
+    height: "auto",
+    elevation: 0,
   },
 }));
 
@@ -58,13 +70,13 @@ const Header = () => {
       if (isSignedIn) {
         return (
           <>
-            <Button
+            {/* <Button
               color="inherit"
               className={classes.linkBtn}
               onClick={handleSignOut}
             >
               Sign out
-            </Button>
+            </Button> */}
           </>
         );
       } else {
@@ -97,15 +109,16 @@ const Header = () => {
   return (
     <>
       <AppBar position="static">
-        <Toolbar>
-          <Typography
-            component={Link}
-            to="/"
-            variant="h6"
-            className={classes.title}
-          >
-            Sample
-          </Typography>
+        <Toolbar className={`${classes.toolbar}`}>
+          <Paper className={classes.imageContainer} elevation={0}>
+            <Link to={"/"}>
+              <img
+                src={`${process.env.PUBLIC_URL}/images/header/logo.png`}
+                alt="Description of the image"
+                className={classes.image}
+              />
+            </Link>
+          </Paper>
           <AuthButtons />
         </Toolbar>
       </AppBar>

@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import React, { useContext } from "react";
+import { useContext } from "react";
 import { AuthContext } from "App";
 
 import { makeStyles, Theme } from "@material-ui/core/styles";
@@ -10,6 +10,7 @@ import AssignmentIcon from "@mui/icons-material/Assignment";
 import MessageIcon from "@mui/icons-material/Message";
 import AccountBoxIcon from "@mui/icons-material/AccountBox";
 import GroupsIcon from "@mui/icons-material/Groups";
+import Typography from "@material-ui/core/Typography";
 
 import { createTheme } from "@mui/material/styles";
 import { ThemeProvider } from "@material-ui/styles";
@@ -31,8 +32,9 @@ const useStyles = makeStyles((theme) => ({
   linkBtn: {
     textTransform: "none",
   },
+  appbar: {},
   box: {
-    margin: "10px",
+    margin: "5px 10px",
     display: "flex",
     justifyContent: "space-evenly",
   },
@@ -40,11 +42,12 @@ const useStyles = makeStyles((theme) => ({
     margin: "auto",
   },
   text: {
-    fontSize: "10pt",
+    fontSize: "8pt",
   },
   transitionButton: {
-    width: "15%",
+    width: "20%",
     textAlign: "center",
+    fontSize: "20px",
   },
 }));
 
@@ -56,30 +59,37 @@ const Footer = () => {
   return (
     <>
       <ThemeProvider theme={theme}>
-        <AppBar component="footer" position="static" color="inherit">
+        <AppBar
+          component="footer"
+          position="static"
+          color="inherit"
+          className={`${classes.appbar}`}
+        >
           <Box textAlign="center" className={classes.box}>
             <Link to="/" className={`${classes.transitionButton}`}>
               <PersonSearchIcon fontSize="large" className={classes.icon} />
-              <p className={`${classes.text}`}>ユーザ検索</p>
+              <Typography className={`${classes.text}`}>ユーザ検索</Typography>
             </Link>
             <Link to="/boards" className={`${classes.transitionButton}`}>
               <AssignmentIcon fontSize="large" className={classes.icon} />
-              <p className={`${classes.text}`}>掲示板</p>
+              <Typography className={`${classes.text}`}>掲示板</Typography>
             </Link>
             <Link to="/communities" className={`${classes.transitionButton}`}>
               <GroupsIcon fontSize="large" className={classes.icon} />
-              <p className={`${classes.text}`}>コミュニティ</p>
+              <Typography className={`${classes.text}`}>
+                コミュニティ
+              </Typography>
             </Link>
             <Link to="/messages" className={`${classes.transitionButton}`}>
               <MessageIcon fontSize="large" className={classes.icon} />
-              <p className={`${classes.text}`}>チャット</p>
+              <Typography className={`${classes.text}`}>チャット</Typography>
             </Link>
             <Link
               to={`/myPage/${currentUser?.id}`}
               className={`${classes.transitionButton}`}
             >
               <AccountBoxIcon fontSize="large" className={classes.icon} />
-              <p className={`${classes.text}`}>マイページ</p>
+              <Typography className={`${classes.text}`}>マイページ</Typography>
             </Link>
           </Box>
         </AppBar>
