@@ -89,6 +89,8 @@ export interface CommentData {
   boardId: string;
   userId: string;
   body: string;
+  createdAt: Date;
+  updatedAt: Date;
 }
 
 // インフォメーション

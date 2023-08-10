@@ -22,19 +22,7 @@ export interface CommonMessageFormProps {
 
 const useStyles = makeStyles((theme) => ({
   form: {
-    position: "fixed",
-    bottom: 55,
-    left: 0,
-    display: "flex",
-    border: "1px solid #eee",
-    justifyContent: "space-between",
-    width: "100%",
-    background: "#fff",
-  },
-  textarea: {
-    width: "100%",
-    border: "1px solid #ddd",
-    padding: "5px",
+
   },
 }));
 
@@ -115,9 +103,9 @@ const CommonMessageForms = ({
         onSubmit={handleCreateCommonMessageForm}
         className={`${classes.form}`}
       >
-        <div className={"relative border p-2 m-auto w-full"}>
-          <div className="w-full">
-            <div className="flex justify-between p-1">
+        <div className="">
+          <div className="">
+            <div className="flex">
 
               {discrimination !== "board" &&
                 <div>
@@ -131,7 +119,7 @@ const CommonMessageForms = ({
                     }}
                   />
                   <label
-                    className="flex flex-col items-center justify-center w-full  cursor-pointer"
+                    className=""
                     htmlFor="icon-button-file"
                   >
                     <PhotoCameraBackIcon className="text-sm" />
@@ -139,34 +127,35 @@ const CommonMessageForms = ({
                 </div>
               }
 
-              <button
-                type="submit"
-                disabled={!body || body.length < 0}
-                className="border bg-gray-600 text-white px-2 text-xs"
-              >
-                送信
-              </button>
-            </div>
-            <div className="text-center px-1">
               <textarea
                 placeholder="Hello World"
                 // className→whitespace-pre-wrapで改行している
-                className={`${classes.textarea}`}
+                className="border h-8 py-1 px-2 w-full rounded text-sm"
                 value={body}
                 onChange={(e) => {
                   setBody(e.target.value);
                 }}
               ></textarea>
+
+
+              <button
+                type="submit"
+                disabled={!body || body.length < 0}
+                className="w-12 bg-blue-base text-white rounded mx-1 text-sm"
+              >
+                送信
+              </button>
             </div>
+
           </div>
-          {!verifiedAge && (
+          {/* {!verifiedAge && (
             <span
-              className="absolute top-0 left-0 w-full h-full flex justify-center items-center cursor-pointer"
+              className=""
               style={{ backgroundColor: "rgba(0, 0, 0, 0.5)" }}
             >
               年齢確認が完了していません
             </span>
-          )}
+          )} */}
 
         </div >
       </form >

@@ -49,7 +49,7 @@ const Message = () => {
             ))}
 
             {/* チャットフォーム */}
-            <div className={"relative border p-2 m-auto w-full"}>
+            <div className="fixed bottom-16 my-1 w-full">
                 <CommonMessageForms
                     handleGetData={handleGetMessages}
                     id={id ?? ""}

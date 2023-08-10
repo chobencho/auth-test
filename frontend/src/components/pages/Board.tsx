@@ -53,9 +53,15 @@ const Board = () => {
     <>
       {board && (
         <>
-          <div className="pb-24">
+          <div>
             {/* 掲示板表示 */}
-            <BoardContent board={board} handleGetBoardData={handleGetBoardData} boardId={board.id.toString()} myId={stringMyId || ""} />
+            <BoardContent
+              board={board}
+              handleGetBoardData={handleGetBoardData}
+              boardId={board.id.toString()}
+              myId={stringMyId || ""}
+              generalId={id || ""}
+            />
 
             {/* チャット開始ボタン || 掲示板編集ボタン */}
             <CommonEditButton
@@ -67,7 +73,19 @@ const Board = () => {
             />
 
             {/* 戻るボタン */}
-            <GoBackButton />
+            {/* <GoBackButton /> */}
+
+            {/* コメントフォーム */}
+            <div className="border-b border-t w-96 mx-auto py-2">
+              <p className="m-1">コメント</p>
+              <CommonMessageForms
+                handleGetData={handleGetBoardComment}
+                id={id ?? ""}
+                stringMyId={stringMyId ?? ""}
+                discrimination={"board"}
+              />
+            </div>
+
 
             {/* コメント欄 */}
             {comments.map((comment: CommentData) => (
@@ -75,14 +93,6 @@ const Board = () => {
             ))}
 
           </div>
-
-          {/* コメントフォーム */}
-          <CommonMessageForms
-            handleGetData={handleGetBoardComment}
-            id={id ?? ""}
-            stringMyId={stringMyId ?? ""}
-            discrimination={"board"}
-          />
         </>
       )}
     </>

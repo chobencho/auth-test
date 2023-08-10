@@ -20,7 +20,7 @@ export const getCommunityCommentData = (
 
 // 特定のコミュニティ情報を取得
 export const getCommunityData = (id: string | undefined) => {
-  return client.get<CommunityData>(`/community_chats/${id}`);
+  return client.get<CommunityData>(`/community_chats/${id}/communityData`);
 };
 
 // コミュニティに参加済みかどうかを確認

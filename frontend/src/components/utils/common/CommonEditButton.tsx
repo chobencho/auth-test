@@ -29,11 +29,6 @@ const CommonEditButton = ({ userId, myId, generalId, verifiedAge, commonRoomId }
             <Link to={`/board/${generalId}/edit`}
               className="text-white text-center w-full block">編集</Link>
           </div>
-
-          <CommonDeleteButton
-            generalId={generalId}
-            discrimination={"board"}
-          />
         </>
       ) : (
         <div

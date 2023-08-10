@@ -62,12 +62,15 @@ const Community = () => {
               />
             ))}
           </div>
-          <CommonMessageForms
-            handleGetData={handleGetCommunityCommentData}
-            id={id ?? ""}
-            stringMyId={stringMyId ?? ""}
-            discrimination={"community"}
-          />
+          <div className="fixed bottom-16 my-1 w-full">
+            <CommonMessageForms
+              handleGetData={handleGetCommunityCommentData}
+              id={id ?? ""}
+              stringMyId={stringMyId ?? ""}
+              discrimination={"community"}
+            />
+          </div>
+
         </>
       )}
 

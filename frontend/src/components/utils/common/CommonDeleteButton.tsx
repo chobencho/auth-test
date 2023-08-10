@@ -30,7 +30,7 @@ const CommonDeleteButton = ({ generalId, discrimination }: CommonDeleteButtonPro
   return (
     <>
       <button
-        className="border p-2 m-2 bg-gray-600 text-white"
+        className="underline text-xs text-right w-full"
         onClick={() => handleDeleteData()}
       >
         削除する
