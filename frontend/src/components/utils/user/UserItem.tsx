@@ -19,7 +19,7 @@ const useStyles = makeStyles((theme: Theme) => ({
   tr: {
     display: "block",
     borderBottom: "1px solid #eee",
-    margin: "10px 10px 0",
+    margin: "10px 0 0",
     paddingBottom: "5px"
   },
   trLeft: {
@@ -54,110 +54,112 @@ const UserItem = ({
           className="w-full"
         />
       ) : null}
-      <p className="text-center m-1 text-lg font-semibold">
-        {userData.name}
-      </p>
+      <div className="w-96 m-auto">
+        <p className="text-center m-1 text-lg font-semibold">
+          {userData.name}
+        </p>
 
-      <table className="w-full">
-        <tr className={`${classes.tr}`}>
-          <td className={`${classes.trLeft}`}>自己紹介</td>
-          <td className={`${classes.trRight}`}>{userData.body}</td>
-        </tr>
-        <tr className={`${classes.tr}`}>
-          <td className={`${classes.trLeft}`}>年齢</td>
-          <td className={`${classes.trRight}`}>{userData.age}歳</td>
-        </tr>
-        <tr className={`${classes.tr}`}>
-          <td className={`${classes.trLeft}`}>学年</td>
-          <td className={`${classes.trRight}`}>{userData.gradeCode}</td>
-        </tr>
-        <tr className={`${classes.tr}`}>
-          <td className={`${classes.trLeft}`}>性別</td>
-          <td className={`${classes.trRight}`}>{userData.genderCode}</td>
-        </tr>
-        <tr className={`${classes.tr}`}>
-          <td className={`${classes.trLeft}`}>専攻分野</td>
-          <td className={`${classes.trRight}`}>{userData.subjectCode}</td>
-        </tr>
-        <tr className={`${classes.tr}`}>
-          <td className={`${classes.trLeft}`}>居住地</td>
-          <td className={`${classes.trRight}`}>{userData.prefectureCode}</td>
-        </tr>
-        <tr className={`${classes.tr}`}>
-          <td className={`${classes.trLeft}`}>出身地</td>
-          <td className={`${classes.trRight}`}>{userData.prefectureCode}</td>
-        </tr>
-        <tr className={`${classes.tr}`}>
-          <td className={`${classes.trLeft}`}>研究タグ</td>
-          <td className={`${classes.trRight}`}>
+        <table className="w-full">
+          <tr className={`${classes.tr}`}>
+            <td className={`${classes.trLeft}`}>自己紹介</td>
+            <td className={`${classes.trRight}`}>{userData.body}</td>
+          </tr>
+          <tr className={`${classes.tr}`}>
+            <td className={`${classes.trLeft}`}>年齢</td>
+            <td className={`${classes.trRight}`}>{userData.age}歳</td>
+          </tr>
+          <tr className={`${classes.tr}`}>
+            <td className={`${classes.trLeft}`}>学年</td>
+            <td className={`${classes.trRight}`}>{userData.gradeCode}</td>
+          </tr>
+          <tr className={`${classes.tr}`}>
+            <td className={`${classes.trLeft}`}>性別</td>
+            <td className={`${classes.trRight}`}>{userData.genderCode}</td>
+          </tr>
+          <tr className={`${classes.tr}`}>
+            <td className={`${classes.trLeft}`}>専攻分野</td>
+            <td className={`${classes.trRight}`}>{userData.subjectCode}</td>
+          </tr>
+          <tr className={`${classes.tr}`}>
+            <td className={`${classes.trLeft}`}>居住地</td>
+            <td className={`${classes.trRight}`}>{userData.prefectureCode}</td>
+          </tr>
+          <tr className={`${classes.tr}`}>
+            <td className={`${classes.trLeft}`}>出身地</td>
+            <td className={`${classes.trRight}`}>{userData.prefectureCode}</td>
+          </tr>
+          <tr className={`${classes.tr}`}>
+            <td className={`${classes.trLeft}`}>研究タグ</td>
+            <td className={`${classes.trRight}`}>
+              <div className="flex flex-wrap">
+                {researchTagData.map((tag) => (
+                  <p className="bg-blue-base rounded-3xl text-white py-1 px-3 mr-1 mb-1">
+                    {tag.tagName}
+                  </p>
+                ))}
+              </div>
+            </td>
+          </tr>
+          <tr className={`${classes.tr}`}>
+            <td className={`${classes.trLeft}`}>趣味</td>
+            <td className={`${classes.trRight}`}></td>
             <div className="flex flex-wrap">
-              {researchTagData.map((tag) => (
-                <p className="bg-blue-600 rounded-3xl text-white py-1 px-3 mr-1 mb-1">
-                  {tag.tagName}
-                </p>
-              ))}
+              {hobbyData.map((hobby) => {
+                const hobbyOption = Hobby.HOB_OPTIONS.find(
+                  (option) => option[0] === hobby.hobbyId
+                );
+                if (hobbyOption) {
+                  const [, hobbyName, hobbyImage] = hobbyOption;
+                  return (
+                    <div key={hobby.hobbyId} className="w-1/5 p-1 relative">
+                      <div className="relative">
+                        <img
+                          src={`${process.env.PUBLIC_URL}/images/hobby/${hobbyImage}`}
+                          className="w-full h-auto rounded"
+                        />
+                        <div className="absolute inset-0 bg-black opacity-50 rounded"></div>
+                        <span className="absolute bottom-4 left-0 right-0 text-white text-sm text-center py-1">
+                          {hobbyName}
+                        </span>
+                      </div>
+                    </div>
+                  );
+                }
+                return null;
+              })}
             </div>
-          </td>
-        </tr>
-        <tr className={`${classes.tr}`}>
-          <td className={`${classes.trLeft}`}>趣味</td>
-          <td className={`${classes.trRight}`}></td>
-          <div className="flex flex-wrap">
-            {hobbyData.map((hobby) => {
-              const hobbyOption = Hobby.HOB_OPTIONS.find(
-                (option) => option[0] === hobby.hobbyId
-              );
-              if (hobbyOption) {
-                const [, hobbyName, hobbyImage] = hobbyOption;
-                return (
-                  <div key={hobby.hobbyId} className="w-1/5 p-1 relative">
-                    <div className="relative">
-                      <img
-                        src={`${process.env.PUBLIC_URL}/images/hobby/${hobbyImage}`}
-                        className="w-full h-auto rounded"
-                      />
-                      <div className="absolute inset-0 bg-black opacity-50 rounded"></div>
-                      <span className="absolute bottom-4 left-0 right-0 text-white text-sm text-center py-1">
-                        {hobbyName}
-                      </span>
-                    </div>
-                  </div>
+          </tr>
+          <tr className="mt-1 pb-1 block">
+            <td className={`${classes.trLeft}`}>興味分野</td>
+            <td className={`${classes.trRight}`}></td>
+            <div className="flex flex-wrap">
+              {interestData.map((interest) => {
+                const interestOption = Interest.INT_OPTIONS.find(
+                  (option) => option[0] === interest.interestId
                 );
-              }
-              return null;
-            })}
-          </div>
-        </tr>
-        <tr className="mt-1 mx-2 pb-1 block">
-          <td className={`${classes.trLeft}`}>興味分野</td>
-          <td className={`${classes.trRight}`}></td>
-          <div className="flex flex-wrap">
-            {interestData.map((interest) => {
-              const interestOption = Interest.INT_OPTIONS.find(
-                (option) => option[0] === interest.interestId
-              );
-              if (interestOption) {
-                const [, interestName, interestImage] = interestOption;
-                return (
-                  <div key={interest.interestId} className="w-1/5 p-1 relative">
-                    <div className="relative">
-                      <img
-                        src={`${process.env.PUBLIC_URL}/images/interest/${interestImage}`}
-                        className="w-full h-auto rounded"
-                      />
-                      <div className="absolute inset-0 bg-black opacity-50 rounded"></div>
-                      <span className="absolute bottom-4 left-0 right-0 text-white text-sm text-center py-1">
-                        {interestName}
-                      </span>
+                if (interestOption) {
+                  const [, interestName, interestImage] = interestOption;
+                  return (
+                    <div key={interest.interestId} className="w-1/5 p-1 relative">
+                      <div className="relative">
+                        <img
+                          src={`${process.env.PUBLIC_URL}/images/interest/${interestImage}`}
+                          className="w-full h-auto rounded"
+                        />
+                        <div className="absolute inset-0 bg-black opacity-50 rounded"></div>
+                        <span className="absolute bottom-4 left-0 right-0 text-white text-sm text-center py-1">
+                          {interestName}
+                        </span>
+                      </div>
                     </div>
-                  </div>
-                );
-              }
-              return null;
-            })}
-          </div>
-        </tr>
-      </table>
+                  );
+                }
+                return null;
+              })}
+            </div>
+          </tr>
+        </table>
+      </div>
     </>
   );
 };

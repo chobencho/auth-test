@@ -1,7 +1,5 @@
 import { useEffect, useState } from "react";
-// Style
-import { makeStyles, Theme } from "@material-ui/core/styles";
-import Box from "@material-ui/core/Box";
+
 // Function
 import { getUsers } from "lib/api/user";
 // Interface
@@ -11,28 +9,12 @@ import UsersItem from "components/utils/home/UsersItem";
 import SearchButton from "components/utils/home/SearchButton";
 import { useAuthData } from "components/utils/common/useAuthData";
 
-const useStyles = makeStyles((theme: Theme) => ({
-  flexbox: {
-    display: "flex",
-    width: "100%",
-    flexWrap: "wrap",
-  },
-  home: {
-    padding: "5px 10px",
-  },
-  userComponent: {
-    width: "100%",
-    display: "flex",
-    flexWrap: "wrap",
-  },
-}));
 
 const Home = () => {
   // State
   const [users, setUsers] = useState<UserData[]>([]);
   const [tags, setTags] = useState<string[]>([]);
   // Style
-  const classes = useStyles();
   // Id
   const { stringMyId, verifiedAge } = useAuthData();
 
@@ -47,7 +29,8 @@ const Home = () => {
 
   return (
     <>
-      <Box className={`${classes.flexbox} ${classes.home}`}>
+
+      <div className="w-96 m-auto flex flex-wrap pt-2">
         {/* 検索ボタン */}
         <SearchButton
           handleGetUsersData={handleGetUsersData}
@@ -56,13 +39,13 @@ const Home = () => {
           verifiedAge={verifiedAge}
         />
 
-        <Box className={`${classes.userComponent}`}>
+        <div className="w-full flex flex-wrap">
           {/* ユーザ情報表示 */}
           {users.map((user) => (
             <UsersItem handleGetUsersData={handleGetUsersData} user={user} />
           ))}
-        </Box>
-      </Box>
+        </div>
+      </div>
     </>
   );
 };

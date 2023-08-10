@@ -17,14 +17,37 @@ code {
 }
 
 .slide-transition {
-  transition: height 1s ease-in-out; /* アニメーション時間とイージングを調整することができます */
+  transition: height 1s ease-in-out;
+  /* アニメーション時間とイージングを調整することができます */
   overflow: hidden;
 }
 
 .open {
-  height: auto; /* アニメーションが開くときの高さ */
+  height: auto;
+  /* アニメーションが開くときの高さ */
 }
 
 .closed {
-  height: 0; /* アニメーションが閉じるときの高さ */
+  height: 0;
+  /* アニメーションが閉じるときの高さ */
+}
+
+.text-10 {
+  font-size: 10px;
+}
+
+.w-96 {
+  width: 96%;
+}
+
+.text-blue-base {
+  color: #547AFF;
+}
+
+.bg-blue-base {
+  background-color: #547AFF;
+}
+
+.border-blue-base {
+  border-color: #547AFF;
 }

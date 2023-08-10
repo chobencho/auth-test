@@ -53,32 +53,28 @@ const Board = () => {
     <>
       {board && (
         <>
-          {/* 掲示板表示 */}
-          <BoardContent board={board} />
+          <div className="pb-24">
+            {/* 掲示板表示 */}
+            <BoardContent board={board} handleGetBoardData={handleGetBoardData} boardId={board.id.toString()} myId={stringMyId || ""} />
 
-          {/* いいねボタン */}
-          <LikeButton
-            handleGetBoardData={handleGetBoardData}
-            boardId={board.id.toString()}
-            myId={stringMyId || ""}
-          />
+            {/* チャット開始ボタン || 掲示板編集ボタン */}
+            <CommonEditButton
+              userId={board.userId || ""}
+              myId={stringMyId || ""}
+              generalId={id || ""}
+              verifiedAge={verifiedAge}
+              commonRoomId={commonRoomId || ""}
+            />
 
-          {/* チャット開始ボタン || 掲示板編集ボタン */}
-          <CommonEditButton
-            userId={board.userId || ""}
-            myId={stringMyId || ""}
-            generalId={id || ""}
-            verifiedAge={verifiedAge}
-            commonRoomId={commonRoomId || ""}
-          />
+            {/* 戻るボタン */}
+            <GoBackButton />
 
-          {/* 戻るボタン */}
-          <GoBackButton />
+            {/* コメント欄 */}
+            {comments.map((comment: CommentData) => (
+              <CommentItem comment={comment} />
+            ))}
 
-          {/* コメント欄 */}
-          {comments.map((comment: CommentData) => (
-            <CommentItem comment={comment} />
-          ))}
+          </div>
 
           {/* コメントフォーム */}
           <CommonMessageForms
