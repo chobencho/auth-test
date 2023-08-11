@@ -4,9 +4,6 @@ class Api::V1::BoardsController < ApplicationController
         render json: @boards
     end
 
-
-
-
     def show
         @board = Board.joins(:user).select("boards.*, boards.id AS board_id, boards.user_id, users.name, boards.title, boards.body AS board_body, boards.image AS url, users.image AS user_image").find_by(id: params[:id])
         
@@ -23,7 +20,7 @@ class Api::V1::BoardsController < ApplicationController
     end
 
     def edit
-        @board = Board.find_by(id: params[:id])
+        @board = Board.joins(:user).select("boards.*, boards.id AS board_id, boards.user_id, users.name, boards.title, boards.body AS board_body, boards.image AS url, users.image AS user_image").find_by(id: params[:id])
         render json: @board
     end
 

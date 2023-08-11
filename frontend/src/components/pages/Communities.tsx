@@ -57,29 +57,37 @@ const Communities = () => {
 
   return (
     <>
-      <div className="flex justify-between w-2/3 m-auto">
-        <button
-          className={`border p-2 m-2 ${searchButtonActive ? "border-red-500" : ""}`}
-          onClick={handleSearchClick}
-        >
-          コミュニティを探す
-        </button>
-        <button
-          className={`border p-2 m-2 ${joinButtonActive ? "border-red-500" : ""}`}
-          onClick={handleJoinClick}
-        >
-          参加中のコミュニティ
-        </button>
+      <div className="w-96 m-auto py-5">
+        <div className="flex justify-center">
+          <div className={` ${searchButtonActive ? "border border-blue-base" : "border"}`}>
+            <button
+              className={`text-xs py-2 px-4 border-2 bg-gray-200 text-gray-600 ${searchButtonActive ? "bg-blue-base text-white border-white" : ""}`}
+              onClick={handleSearchClick}
+            >
+              コミュニティを探す
+            </button>
+          </div>
+          <div className={` ${joinButtonActive ? "border border-blue-base" : "border"}`}>
+            <button
+              className={`text-xs py-2 px-4 border-2 bg-gray-200 text-gray-600 ${joinButtonActive ? "bg-blue-base text-white border-2 border-white" : ""}`}
+              onClick={handleJoinClick}
+            >
+              参加中のコミュニティ
+            </button>
+          </div>
+        </div>
+
+        {searchButtonActive ? (
+          <CommunitiesBranchSearch
+            allCommunity={allCommunity}
+            popularCommunity={popularCommunity}
+            newCommunity={newCommunity}
+          />
+        ) : (
+          <CommunitiesBranchJoin myCommunity={myCommunity} />
+        )}
       </div>
-      {searchButtonActive ? (
-        <CommunitiesBranchSearch
-          allCommunity={allCommunity}
-          popularCommunity={popularCommunity}
-          newCommunity={newCommunity}
-        />
-      ) : (
-        <CommunitiesBranchJoin myCommunity={myCommunity} />
-      )}
+
     </>
   );
 };

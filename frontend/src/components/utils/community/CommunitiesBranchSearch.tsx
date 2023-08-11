@@ -44,18 +44,23 @@ const CommunitiesBranchSearch = ({
 
   return (
     <>
-      <h5>カテゴリから探す</h5>
-      <div className="border p-2 m-2 flex flex-wrap">
+      <h5 className="text-sm text-center pt-5 pb-3">カテゴリから探す</h5>
+      <div className=" flex flex-wrap px-3">
         {Category.CAT_OPTIONS.map((option) => {
           const stringValue = String(option[0]);
           return (
             <button
               key={option[0]}
               value={option[0]}
-              className="border p-2 m-2 w-1/4 text-center"
+              className=" w-1/3 text-center flex items-center justify-center py-2"
               onClick={() => handleDisplayCategoryCommunity(stringValue)}
             >
-              {option[1]}
+              <img
+                src={`${process.env.PUBLIC_URL}/images/hobby/${option[2]}`}
+                className="w-1/2 h-11 w-11 rounded-3xl mr-2"
+                alt=""
+              />
+              <span className="text-sm">{option[1]}</span>
             </button>
           );
         })}

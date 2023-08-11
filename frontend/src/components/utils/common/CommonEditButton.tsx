@@ -25,14 +25,14 @@ const CommonEditButton = ({ userId, myId, generalId, verifiedAge, commonRoomId }
     <>
       {userId == myId ? (
         <>
-          <div className="relative border bg-gray-600 text-blue-base p-3 my-3 mx-auto w-3/5 rounded-3xl">
+          <div className="generalButton relative bg-gray-600">
             <Link to={`/board/${generalId}/edit`}
               className="text-white text-center w-full block">編集</Link>
           </div>
         </>
       ) : (
         <div
-          className={`relative border border-blue-base text-blue-base p-3 my-3 mx-auto w-3/5 rounded-3xl ${commonRoomId ? "bg-blue-base" : "bg-white"}`}>
+          className={`generalButton relative border-blue-base text-blue-base ${commonRoomId ? "bg-blue-base" : "bg-white"}`}>
           {commonRoomId ? (<p className="text-white text-center">メッセージを送る</p>) : (<p className="text-blue-base text-center">メッセージを始める</p>)}
           {!verifiedAge && (
             <span
@@ -53,6 +53,7 @@ const CommonEditButton = ({ userId, myId, generalId, verifiedAge, commonRoomId }
           )}
         </div>
       )}
+
     </>
   )
 }
