@@ -34,7 +34,7 @@ const Verification = () => {
 
   // プレビュークリア機能
   const handleClearPreview = () => {
-    setPreview("")
+    setPreview("");
     clearPreview();
   };
 
@@ -121,10 +121,9 @@ const Verification = () => {
         </div>
       ) : null}
       {/* 戻るボタン */}
-      <GoBackButton />
+      <GoBackButton discriminationText={"キャンセル"} />
     </>
   );
 };
 
 export default Verification;
-

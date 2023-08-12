@@ -6,18 +6,34 @@ import ModalCommonExpansionImage from "components/utils/common/ModalCommonExpans
 import { clearModal } from "lib/api/helper";
 import { expansionImage } from "lib/api/helper";
 
+import moment from "moment"; // moment ライブラリをインポート
+import "moment/locale/ja"; // 日本語ロケールをインポート
+
+import { makeStyles, Theme } from "@material-ui/core/styles";
+
 export interface CommunityCommentProps {
   message: MessageItemsData;
   stringMyId: string | undefined;
 }
 
+const useStyles = makeStyles((theme: Theme) => ({
+  userImage: {
+    width: "30px",
+    height: "30px",
+    objectFit: "cover",
+    borderRadius: "20px",
+  },
+}));
+
 const CommonMessageItems = ({ message, stringMyId }: CommunityCommentProps) => {
+  const classes = useStyles();
+
   // State
   const [showModal, setShowModal] = useState<boolean>(false);
 
   // 画像拡大機能
   const handleExpansionImage = () => {
-    expansionImage(setShowModal)
+    expansionImage(setShowModal);
   };
 
   // モーダルクリア機能
@@ -28,28 +44,54 @@ const CommonMessageItems = ({ message, stringMyId }: CommunityCommentProps) => {
   return (
     <>
       {message.userId == stringMyId ? (
-        <div className="border m-4 text-right">
-          {message.image?.url ? (
-            <img
-              src={message.image.url}
-              alt="boardData image"
-              className="w-1/2 ml-auto"
-              onClick={() => handleExpansionImage()}
-            />
-          ) : null}
-          <p className="whitespace-pre-wrap">{message.body}</p>
+        <div className="px-2 py-3 flex w-4/5 justify-end ml-auto">
+          <p className="text-10 pr-1 text-right flex items-end justify-end">
+            {moment(message.createdAt).format("MM月DD日 HH:mm")}
+          </p>
+          <div>
+            {message.body ? (
+              <p className="whitespace-pre-wrap text-sm bg-green-400 border max-w-fit ml-auto rounded-b-2xl rounded-l-2xl py-1 px-3">
+                <span className="break-all">{message.body}</span>
+              </p>
+            ) : null}
+            {message.image?.url ? (
+              <img
+                src={message.image.url}
+                alt="boardData image"
+                className="rounded ml-auto w-56"
+                onClick={() => handleExpansionImage()}
+              />
+            ) : null}
+          </div>
         </div>
       ) : (
-        <div className="border m-2 text-left">
-          {message.image?.url ? (
+        <div className="px-2 py-3 flex w-4/5 justify-start mr-auto">
+          <div className="flex">
             <img
-              src={message.image.url}
+              src={`http://localhost:3001/uploads/user/image/${message.userId}/${message.userImage}`}
               alt="boardData image"
-              className="w-1/2 mr-auto"
-              onClick={() => handleExpansionImage()}
+              className={`${classes.userImage}`}
             />
-          ) : null}
-          <p className="whitespace-pre-wrap">{message.body}</p>
+            <div className="pl-2">
+              <p className="text-xs pb-1">{message.name}</p>
+              {message.body ? (
+                <p className="whitespace-pre-wrap text-sm bg-gray-600 text-white border max-w-fit mr-auto rounded-b-2xl rounded-r-2xl py-1 px-3">
+                  <span className="break-all">{message.body}</span>
+                </p>
+              ) : null}
+              {message.image?.url ? (
+                <img
+                  src={message.image.url}
+                  alt="boardData image"
+                  className="rounded ml-auto w-56"
+                  onClick={() => handleExpansionImage()}
+                />
+              ) : null}
+            </div>
+          </div>
+          <p className="text-10 pl-2 text-left flex items-end justify-start">
+            {moment(message.createdAt).format("MM月DD日 HH:mm")}
+          </p>
         </div>
       )}
 
@@ -60,7 +102,7 @@ const CommonMessageItems = ({ message, stringMyId }: CommunityCommentProps) => {
         />
       ) : null}
     </>
-  )
-}
+  );
+};
 
-export default CommonMessageItems
+export default CommonMessageItems;

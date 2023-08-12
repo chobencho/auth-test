@@ -14,7 +14,7 @@ const useStyles = makeStyles((theme: Theme) => ({
     display: "flex",
     justifyContent: "center",
     alignItems: "center",
-    zIndex: 99,
+    zIndex: 100,
   },
   modalContent: {
     maxWidth: "80%",

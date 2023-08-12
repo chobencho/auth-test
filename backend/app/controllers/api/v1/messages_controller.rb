@@ -1,29 +1,46 @@
 class Api::V1::MessagesController < ApplicationController
     def index
+        # パラメータからユーザーIDを取得し整数に変換
         user_id1 = params[:id].to_i
+        
+        # ユーザーIDに関連する部屋のIDを取得
         room_ids = RoomMember.where(user_id: user_id1).pluck(:room_id)
+        
+        # 部屋ごとに他のユーザーIDを取得し、各部屋のユーザーIDを配列として保持
         rooms = []
         room_ids.each do |room_id|
+            # 自分以外のユーザーIDを取得して配列に追加
             room = RoomMember.where(room_id: room_id).pluck(:user_id).reject { |user_id| user_id == user_id1 }
-            rooms << room
+            rooms << { room_id: room_id, user_ids: room } # 部屋IDとユーザーIDを組み合わせて追加
         end
-        flattened_rooms = rooms.flatten 
-
-        chats = []
-        flattened_rooms.each do |user_id|
-            user = User.where(id: user_id)
-            chats << user
+        
+        # 各ユーザーIDに対応する最新のメッセージのbodyを取得
+        chatUsers = []
+        rooms.each do |room|
+            room_id = room[:room_id]
+            user_ids = room[:user_ids]
+            
+            user_ids.each do |user_id|
+                user = User.find(user_id)
+                messages = Message.where(user_id: [user_id, user_id1], room_id: room_id).order(created_at: :desc).limit(1) # 最新のメッセージを取得
+                body = messages.first&.body # 最新のメッセージのbodyを取得
+                chatUsers << { user: user, room_id: room_id, latest_message_body: body }
+            end
         end
-        chatUsers = chats.flatten
-
-        json_data = chatUsers.map.with_index do |user, index|
-            user_data = user.as_json
-            user_data["room_id"] = room_ids[index]
+        
+        # 最終的なJSONデータの作成
+        json_data = chatUsers.map do |chat|
+            user_data = chat[:user].as_json
+            user_data["room_id"] = chat[:room_id] # 部屋IDを追加
+            user_data["latest_message_body"] = chat[:latest_message_body] # 最新のメッセージのbodyを追加
             user_data
         end
+        
+        # JSONデータをレスポンスとして送信
         render json: json_data
     end
-
+    
+    
 
     def create
         # チャットしたい相手と自分のユーザIDを取得

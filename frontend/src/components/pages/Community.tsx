@@ -54,7 +54,7 @@ const Community = () => {
             community_id={id || undefined}
             user_id={stringMyId || undefined}
           />
-          <div className="my-20">
+          <div className="py-12">
             {comments.map((message) => (
               <CommonMessageItems
                 message={message}
@@ -62,7 +62,7 @@ const Community = () => {
               />
             ))}
           </div>
-          <div className="fixed bottom-16 my-1 w-full">
+          <div className="fixed bottom-14 my-1 w-full">
             <CommonMessageForms
               handleGetData={handleGetCommunityCommentData}
               id={id ?? ""}
@@ -70,7 +70,6 @@ const Community = () => {
               discrimination={"community"}
             />
           </div>
-
         </>
       )}
 

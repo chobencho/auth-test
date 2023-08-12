@@ -1,15 +1,26 @@
-import { useNavigate } from "react-router-dom"
+import { useNavigate } from "react-router-dom";
 
-const GoBackButton = () => {
+export interface GoBackButtonProps {
+  discriminationText: string;
+}
+
+const GoBackButton = ({ discriminationText }: GoBackButtonProps) => {
   const navigate = useNavigate();
 
   // 画面をひとつ戻る関数
   const handleGoBack = () => {
     navigate(-1); // 画面を一つ戻る
-  }
+  };
   return (
-    <button onClick={handleGoBack} className="text-white bg-gray-600 p-2 m-2">戻る</button>
-  )
-}
+    <div className="w-1/2">
+      <button
+        onClick={handleGoBack}
+        className="bg-gray-300 text-gray text-sm py-1 w-4/5"
+      >
+        {discriminationText}
+      </button>
+    </div>
+  );
+};
 
-export default GoBackButton
+export default GoBackButton;

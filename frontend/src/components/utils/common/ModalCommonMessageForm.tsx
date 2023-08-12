@@ -4,6 +4,7 @@ import { makeStyles, Theme } from "@material-ui/core/styles";
 // Function
 import { createCommunityComment } from "lib/api/community_chats";
 import { createMessage } from "lib/api/chat";
+import HighlightOffIcon from "@mui/icons-material/HighlightOff";
 
 interface ModalCommonMessageFormProps {
   preview: string;
@@ -12,7 +13,7 @@ interface ModalCommonMessageFormProps {
   stringMyId: string;
   image: File | undefined;
   handleGetData: Function;
-  discrimination: string
+  discrimination: string;
 }
 
 const useStyles = makeStyles((theme: Theme) => ({
@@ -26,11 +27,13 @@ const useStyles = makeStyles((theme: Theme) => ({
     display: "flex",
     justifyContent: "center",
     alignItems: "center",
-    zIndex: 99,
+    zIndex: 100,
   },
   modalContent: {
     maxWidth: "80%",
     maxHeight: "80%",
+    backgroundColor: "#fff",
+    padding: "5px",
   },
   modalImg: {
     display: "block",
@@ -40,7 +43,6 @@ const useStyles = makeStyles((theme: Theme) => ({
   },
 }));
 
-
 const ModalCommonMessageForm = ({
   preview,
   onClose,
@@ -48,7 +50,7 @@ const ModalCommonMessageForm = ({
   stringMyId,
   image,
   handleGetData,
-  discrimination
+  discrimination,
 }: ModalCommonMessageFormProps) => {
   const classes = useStyles();
   // State
@@ -85,7 +87,7 @@ const ModalCommonMessageForm = ({
         handleGetData();
       });
     }
-    onClose()
+    onClose();
   };
 
   return (
@@ -95,40 +97,36 @@ const ModalCommonMessageForm = ({
         className="border flex justify-between"
       >
         <div className={`${classes.modal}`}>
-          <button
-            onClick={() => onClose()}
-            className="border text-2xl text-white bg-gray-600 px-3 py-1"
-          >
-            ×
-          </button>
           <div className={`${classes.modalContent}`}>
-            <img
-              src={preview}
-              alt="preview img"
-              className={`${classes.modalImg}`}
-            />
-
-            <textarea
-              placeholder="Hello World"
-              className="border w-4/5 p-2"
-              value={modalBody}
-              onChange={(e) => {
-                setModalBody(e.target.value);
-              }}
-            ></textarea>
-          </div>
-          <div>
-            <button
-              type="submit"
-              className="border bg-gray-600 text-white px-2"
-            >
-              送信
+            <button onClick={() => onClose()} className="">
+              <HighlightOffIcon />
             </button>
+            <p className="text-sm text-center my-3">ファイルの送信</p>
+            <img src={preview} alt="preview img" className="w-4/5 m-auto" />
+            <div className="text-center my-3">
+              <textarea
+                placeholder="Hello World"
+                className="border w-4/5 rounded p-1"
+                value={modalBody}
+                onChange={(e) => {
+                  setModalBody(e.target.value);
+                }}
+              ></textarea>
+            </div>
+
+            <div className="text-center w-full mb-5">
+              <button
+                type="submit"
+                className="bg-blue-base text-white text-sm px-5 py-1 w-3/5"
+              >
+                送信
+              </button>
+            </div>
           </div>
         </div>
       </form>
     </>
-  )
-}
+  );
+};
 
-export default ModalCommonMessageForm
+export default ModalCommonMessageForm;

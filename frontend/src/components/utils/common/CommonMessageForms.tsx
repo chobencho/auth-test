@@ -17,20 +17,18 @@ export interface CommonMessageFormProps {
   handleGetData: Function;
   id: string;
   stringMyId: string;
-  discrimination: string
+  discrimination: string;
 }
 
 const useStyles = makeStyles((theme) => ({
-  form: {
-
-  },
+  form: {},
 }));
 
 const CommonMessageForms = ({
   handleGetData,
   id,
   stringMyId,
-  discrimination
+  discrimination,
 }: CommonMessageFormProps) => {
   const classes = useStyles();
   const [body, setBody] = useState<string>("");
@@ -53,7 +51,7 @@ const CommonMessageForms = ({
 
   // プレビュー削除機能
   const handleClearPreview = () => {
-    setPreview("")
+    setPreview("");
     clearPreview();
   };
 
@@ -99,15 +97,11 @@ const CommonMessageForms = ({
 
   return (
     <>
-      <form
-        onSubmit={handleCreateCommonMessageForm}
-        className={`${classes.form}`}
-      >
+      <form onSubmit={handleCreateCommonMessageForm} className="bg-white p-2">
         <div className="">
           <div className="">
             <div className="flex">
-
-              {discrimination !== "board" &&
+              {discrimination !== "board" && (
                 <div>
                   <input
                     id="icon-button-file"
@@ -118,14 +112,11 @@ const CommonMessageForms = ({
                       handlePreviewImage(e);
                     }}
                   />
-                  <label
-                    className=""
-                    htmlFor="icon-button-file"
-                  >
+                  <label className="" htmlFor="icon-button-file">
                     <PhotoCameraBackIcon className="text-sm" />
                   </label>
                 </div>
-              }
+              )}
 
               <textarea
                 placeholder="Hello World"
@@ -137,7 +128,6 @@ const CommonMessageForms = ({
                 }}
               ></textarea>
 
-
               <button
                 type="submit"
                 disabled={!body || body.length < 0}
@@ -146,7 +136,6 @@ const CommonMessageForms = ({
                 送信
               </button>
             </div>
-
           </div>
           {/* {!verifiedAge && (
             <span
@@ -156,25 +145,22 @@ const CommonMessageForms = ({
               年齢確認が完了していません
             </span>
           )} */}
-
-        </div >
-      </form >
+        </div>
+      </form>
       {/* メッセージ入力モーダル */}
-      {
-        preview ? (
-          <ModalCommonMessageForm
-            preview={preview}
-            onClose={handleClearPreview}
-            generalId={id ?? ""}
-            stringMyId={stringMyId ?? ""}
-            image={image}
-            handleGetData={handleGetData}
-            discrimination={discrimination}
-          />
-        ) : null
-      }
+      {preview ? (
+        <ModalCommonMessageForm
+          preview={preview}
+          onClose={handleClearPreview}
+          generalId={id ?? ""}
+          stringMyId={stringMyId ?? ""}
+          image={image}
+          handleGetData={handleGetData}
+          discrimination={discrimination}
+        />
+      ) : null}
     </>
-  )
-}
+  );
+};
 
-export default CommonMessageForms
+export default CommonMessageForms;

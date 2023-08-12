@@ -72,12 +72,12 @@ export interface BoardData {
   image?: {
     url: string;
   };
-  userImage: string
+  userImage: string;
   body: string;
   boardBody: string;
   createdAt: Date;
   updatedAt: Date;
-  name: string
+  name: string;
 }
 
 export interface CommentData {
@@ -113,6 +113,9 @@ export interface ChatUserData {
     url: string;
   };
   roomId: string;
+  latestMessageBody: string;
+  createdAt: Date;
+  updatedAt: Date;
 }
 
 export interface MessageData {
@@ -157,7 +160,6 @@ export interface CommunityCommentData {
   updatedAt: Date;
 }
 
-
 export interface MessageItemsData {
   id: string;
   communityId: string;
@@ -167,6 +169,8 @@ export interface MessageItemsData {
   image?: {
     url: string;
   };
+  name: string;
+  userImage: string;
   createdAt: Date;
   updatedAt: Date;
 }

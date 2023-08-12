@@ -25,7 +25,7 @@ const useStyles = makeStyles((theme) => ({
     padding: "8px 10px 5px",
     background: "#fff",
     boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
-    zIndex: 100,
+    zIndex: 20,
     alignItems: "center", // 上下中央寄せ
     justifyContent: "center", // 左右中央寄せ
   },
@@ -41,7 +41,7 @@ const useStyles = makeStyles((theme) => ({
     boxShadow: "0 -2px 4px rgba(0, 0, 0, 0.2)",
     transform: "translateY(0)",
     transition: "transform 0.3s ease-in-out",
-    zIndex: 50,
+    zIndex: 10,
   },
   slideUpContentActive: {
     transform: "translateY(100%)",

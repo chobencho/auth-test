@@ -40,6 +40,10 @@ code {
   width: 96%;
 }
 
+.max-w-80 {
+  max-width: 100%;
+}
+
 .text-blue-base {
   color: #547aff;
 }

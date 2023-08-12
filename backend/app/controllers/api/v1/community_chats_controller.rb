@@ -1,6 +1,7 @@
 class Api::V1::CommunityChatsController < ApplicationController
   def show
-    @comments = CommunityComment.where(community_id: params[:id])
+    # @comments = CommunityComment.where(community_id: params[:id])
+    @comments = CommunityComment.joins(:user).select("community_comments.*, users.name AS name, users.image AS userImage").where(community_id: params[:id])
     render json: @comments
   end
 

@@ -13,7 +13,7 @@ const useStyles = makeStyles(() => ({
     position: "fixed",
     top: 0,
     width: "100%",
-    zIndex: 999,
+    zIndex: 30,
   },
   container: {
     marginTop: "3.5rem",

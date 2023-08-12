@@ -5,6 +5,8 @@ import { subscribeCommunity } from "lib/api/community";
 // Components
 import GoBackButton from "components/utils/common/GoBackButton";
 
+import HighlightOffIcon from "@mui/icons-material/HighlightOff";
+
 export interface ModalSubscribeProps {
   community_id: string | undefined;
   user_id: string | undefined;
@@ -22,13 +24,14 @@ const useStyles = makeStyles((theme: Theme) => ({
     display: "flex",
     justifyContent: "center",
     alignItems: "center",
-    zIndex: 99,
+    zIndex: 100,
   },
   modalContent: {
     width: "80%",
     maxHeight: "80%",
     background: "#fff",
     textAlign: "center",
+    padding: "40px 0",
   },
 }));
 
@@ -50,7 +53,8 @@ const ModalSubscribeCommunity = ({
   };
 
   const handleSubscribeCommunity = async (
-    e: React.FormEvent<HTMLFormElement>) => {
+    e: React.FormEvent<HTMLFormElement>
+  ) => {
     e.preventDefault();
     const data = createFormData();
 
@@ -61,18 +65,22 @@ const ModalSubscribeCommunity = ({
 
   return (
     <>
-      <form onSubmit={handleSubscribeCommunity} className={`${classes.modal}`}>
+      <div className={`${classes.modal}`}>
         <div className={`${classes.modalContent}`}>
-          <h1 className="text-2xl m-5">このコミュニティに参加しますか？</h1>
-          <button
-            type="submit"
-            className="border bg-gray-600 text-white px-2 m-5"
-          >
-            参加する
-          </button>
-          <GoBackButton />
+          <h1 className="text-sm mb-5">このコミュニティに参加しますか？</h1>
+          <div className="w-4/5 flex justify-between m-auto">
+            <form onSubmit={handleSubscribeCommunity} className="w-1/2">
+              <button
+                type="submit"
+                className="bg-blue-base text-white text-sm py-1 w-4/5"
+              >
+                参加する
+              </button>
+            </form>
+            <GoBackButton discriminationText={"参加しない"} />
+          </div>
         </div>
-      </form>
+      </div>
     </>
   );
 };

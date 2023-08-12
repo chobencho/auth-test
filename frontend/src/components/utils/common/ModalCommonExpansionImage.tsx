@@ -3,7 +3,7 @@ import { makeStyles, Theme } from "@material-ui/core/styles";
 
 interface ModalCommonExpansionImageProps {
   onClose: Function;
-  image: string
+  image: string;
 }
 
 const useStyles = makeStyles((theme: Theme) => ({
@@ -17,7 +17,7 @@ const useStyles = makeStyles((theme: Theme) => ({
     display: "flex",
     justifyContent: "center",
     alignItems: "center",
-    zIndex: 99,
+    zIndex: 100,
   },
   modalContent: {
     maxWidth: "80%",
@@ -31,7 +31,10 @@ const useStyles = makeStyles((theme: Theme) => ({
   },
 }));
 
-const ModalCommonExpansionImage = ({ onClose, image }: ModalCommonExpansionImageProps) => {
+const ModalCommonExpansionImage = ({
+  onClose,
+  image,
+}: ModalCommonExpansionImageProps) => {
   const classes = useStyles();
 
   // モーダルをクリックしても何もしない関数
@@ -41,14 +44,16 @@ const ModalCommonExpansionImage = ({ onClose, image }: ModalCommonExpansionImage
 
   return (
     <>
-      <div
-        className={classes.modal}
-        onClick={() => onClose()}
-      >
-        <img src={image} alt="modal image" className={`${classes.modalImg}`} onClick={handleBackdropClick} />
+      <div className={classes.modal} onClick={() => onClose()}>
+        <img
+          src={image}
+          alt="modal image"
+          className={`${classes.modalImg}`}
+          onClick={handleBackdropClick}
+        />
       </div>
     </>
-  )
-}
+  );
+};
 
-export default ModalCommonExpansionImage
+export default ModalCommonExpansionImage;
