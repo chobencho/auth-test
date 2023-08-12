@@ -5,6 +5,7 @@ import { makeStyles, Theme } from "@material-ui/core/styles";
 // Function
 import { sendMailApplyNewCommunity } from "lib/api/community";
 import { useAuthData } from "components/utils/common/useAuthData";
+import HighlightOffIcon from "@mui/icons-material/HighlightOff";
 
 export interface ModalApplyNewCommunityProps {
   onClose: Function;
@@ -24,9 +25,10 @@ const useStyles = makeStyles((theme: Theme) => ({
     zIndex: 99,
   },
   modalContent: {
-    maxWidth: "80%",
+    width: "80%",
     maxHeight: "80%",
     background: "#fff",
+    padding: "5px",
   },
   modalImg: {
     display: "block",
@@ -46,11 +48,12 @@ const ModalApplyNewCommunity = ({ onClose }: ModalApplyNewCommunityProps) => {
 
   // 新規コミュニティ申請
   const handleApplyNewCommunity = async (
-    e: React.FormEvent<HTMLFormElement>) => {
+    e: React.FormEvent<HTMLFormElement>
+  ) => {
     e.preventDefault();
 
     if (stringMyId !== undefined) {
-      await sendMailApplyNewCommunity(stringMyId, title, body).then(() => { });
+      await sendMailApplyNewCommunity(stringMyId, title, body).then(() => {});
     }
   };
 
@@ -58,39 +61,59 @@ const ModalApplyNewCommunity = ({ onClose }: ModalApplyNewCommunityProps) => {
     <>
       <form onSubmit={handleApplyNewCommunity} className={`${classes.modal}`}>
         <div className={`${classes.modalContent}`}>
-          <b>タイトル</b>
-          <input
-            type="text"
-            placeholder="title"
-            className="border p-2 m-2"
-            value={title}
-            onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-              setTitle(e.target.value);
-            }}
-          />
-          <b>内容</b>
-          <textarea
-            placeholder="body"
-            // className→whitespace-pre-wrapで改行している
-            className="border p-2 m-2 w-full whitespace-pre-wrap h-40"
-            value={body}
-            onChange={(e) => {
-              setBody(e.target.value);
-            }}
-          ></textarea>
+          <button onClick={() => onClose()} className="">
+            <HighlightOffIcon />
+          </button>
+          <p className="text-center text-sm pt-1 pb-3">
+            新規コミュニティを申請する
+          </p>
 
-          <button
-            type="submit"
-            className="border text-white bg-gray-600 p-2 m-2"
-          >
-            送信する
-          </button>
-          <button
-            onClick={() => onClose()}
-            className="border text-2xl text-white bg-gray-600 px-3 py-1"
-          >
-            ×
-          </button>
+          <div className="input-part px-3">
+            <div className="flex items-center">
+              <b className="input-title">コミュニティ名</b>
+              <p className="required">必須</p>
+            </div>
+
+            <input
+              type="text"
+              placeholder="おすすめの参考書について語ろう！"
+              className="input-text"
+              value={title}
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                setTitle(e.target.value);
+              }}
+            />
+          </div>
+
+          <div className="input-part px-3">
+            <div className="flex items-center">
+              <b className="input-title">概要</b>
+              <p className="required">必須</p>
+            </div>
+            <textarea
+              placeholder="body"
+              className="input-text whitespace-pre-wrap h-32"
+              value={body}
+              onChange={(e) => {
+                setBody(e.target.value);
+              }}
+            ></textarea>
+          </div>
+
+          <div className="px-3 text-center">
+            <button
+              type="submit"
+              className="text-white bg-blue-base w-full text-xs py-2 px-5"
+            >
+              新規コミュニティ申請
+            </button>
+            <div className="py-3">
+              <p className="text-10 text-gray-800">※注意※</p>
+              <p className="text-10 text-gray-800">
+                他人の誹謗中傷や公序良俗に反するコミュニティであると判断される場合は、申請を否認する可能性があります。
+              </p>
+            </div>
+          </div>
         </div>
       </form>
     </>

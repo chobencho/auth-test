@@ -19,9 +19,9 @@ const CommunityCreate = () => {
   };
   return (
     <>
-      <div className={"relative bg-gray-600 text-white p-2 m-auto w-1/2"}>
+      <div className={"generalButton relative border-blue-base bg-blue-base"}>
         <button
-          className="text-white p-2 m-2 w-full"
+          className="text-white w-full"
           onClick={() => handleModalApplyNewCommunity()}
         >
           新規コミュニティ申請

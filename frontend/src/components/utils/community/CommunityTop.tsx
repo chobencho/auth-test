@@ -5,7 +5,7 @@ import { CommunityData } from "interfaces/index";
 // Function
 import { withdrawCommunity } from "lib/api/community";
 // Style
-import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
+import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import TocIcon from "@mui/icons-material/Toc";
 import { makeStyles, Theme } from "@material-ui/core/styles";
 
@@ -22,24 +22,19 @@ const useStyles = makeStyles((theme) => ({
     left: 0,
     display: "flex",
     width: "100%",
+    padding: "8px 10px 5px",
     background: "#fff",
     boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
     zIndex: 100,
-  },
-  title: {
-    fontSize: "1.4em",
-    margin: "auto 0",
-  },
-  menuButton: {
-    fontSize: "1.4em",
-    margin: "auto 10px auto auto",
+    alignItems: "center", // 上下中央寄せ
+    justifyContent: "center", // 左右中央寄せ
   },
   slideUpContent: {
     position: "fixed",
-    top: -200,
+    top: -130,
     left: 0,
     width: "100%",
-    height: "300px",
+    height: "230px",
     borderBottom: "1px solid #eee",
     backgroundColor: "#fff",
     padding: 20,
@@ -74,30 +69,37 @@ const CommunityTop = ({ community, community_id, user_id }: CommunityProps) => {
     <>
       <div className={`${classes.mainContent}`}>
         <span onClick={() => navigate("/communities")}>
-          <ArrowBackIosNewIcon className="text-xl my-3 mx-5" />
+          <ChevronLeftIcon />
         </span>
-        <>
-          <p className={`${classes.title}`}>{community.title}</p>
-          <img src="" alt="" />
-        </>
-        <TocIcon
-          className={`${classes.menuButton}`}
-          onClick={handleToggleSlideUpContent}
-        />
+        <div className="flex items-center">
+          <img
+            src={`${process.env.PUBLIC_URL}/images/no-image.jpg`}
+            alt=""
+            className="w-12 h-8 object-cover rounded"
+          />
+          <p className="txt-limit-1 text-sm mr-1">{community.title}</p>
+        </div>
+        <div>
+          <TocIcon onClick={handleToggleSlideUpContent} />
+        </div>
       </div>
       <div
-        className={`${classes.slideUpContent} ${showSlideUpContent ? classes.slideUpContentActive : ""}`}>
-        <h4 className="mt-5">概要</h4>
-        <p>{community.body}</p>
-        <h4 className="mt-5">カテゴリ</h4>
-        <p>{community.communityCode}</p>
-        <h4 className="mt-5">退会</h4>
-        <button
-          className="border text-white bg-gray-600 p-1 text-sm"
-          onClick={() => handleWithdrawCommunity()}
-        >
-          このコミュニティを退会する
-        </button>
+        className={`${classes.slideUpContent} ${
+          showSlideUpContent ? classes.slideUpContentActive : ""
+        }`}
+      >
+        <h4 className="text-sm py-1">コミュニティ概要</h4>
+        <p className="text-sm">{community.body}</p>
+        <h4 className="text-sm py-1 mt-2">カテゴリ</h4>
+        <p className="text-sm">{community.communityCode}</p>
+        <div className="w-full text-center">
+          <button
+            className="bg-red-600 text-white px-5 py-1 mx-auto my-5 text-sm"
+            onClick={() => handleWithdrawCommunity()}
+          >
+            このコミュニティを退会する
+          </button>
+        </div>
       </div>
     </>
   );

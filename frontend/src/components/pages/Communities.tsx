@@ -36,40 +36,57 @@ const Communities = () => {
   // コミュニティ情報一括取得
   const handleGetCommunityData = async () => {
     // Promise.allを使ってすべての非同期処理が完了するのを待つ
-    const [allCommunityRes, popularCommunityRes, newCommunityRes, myCommunityRes] = await Promise.all([
+    const [
+      allCommunityRes,
+      popularCommunityRes,
+      newCommunityRes,
+      myCommunityRes,
+    ] = await Promise.all([
       getAllCommunityData(),
       getPopularCommunityData(),
       getNewCommunityData(),
       getMyCommunityData(stringMyId),
-    ])
+    ]);
 
     setAllCommunity(allCommunityRes.data);
     setPopularCommunity(popularCommunityRes.data);
     setNewCommunity(newCommunityRes.data);
     setMyCommunity(myCommunityRes.data);
-  }
+  };
 
   useEffect(() => {
     handleGetCommunityData();
   }, []);
 
-
-
   return (
     <>
       <div className="w-96 m-auto py-5">
-        <div className="flex justify-center">
-          <div className={` ${searchButtonActive ? "border border-blue-base" : "border"}`}>
+        <div className="flex justify-center mb-3">
+          <div
+            className={` ${
+              searchButtonActive ? "border border-blue-base" : "border"
+            }`}
+          >
             <button
-              className={`text-xs py-2 px-4 border-2 bg-gray-200 text-gray-600 ${searchButtonActive ? "bg-blue-base text-white border-white" : ""}`}
+              className={`text-xs py-2 px-4 border-2 bg-gray-200 text-gray-600 ${
+                searchButtonActive ? "bg-blue-base text-white border-white" : ""
+              }`}
               onClick={handleSearchClick}
             >
               コミュニティを探す
             </button>
           </div>
-          <div className={` ${joinButtonActive ? "border border-blue-base" : "border"}`}>
+          <div
+            className={` ${
+              joinButtonActive ? "border border-blue-base" : "border"
+            }`}
+          >
             <button
-              className={`text-xs py-2 px-4 border-2 bg-gray-200 text-gray-600 ${joinButtonActive ? "bg-blue-base text-white border-2 border-white" : ""}`}
+              className={`text-xs py-2 px-4 border-2 bg-gray-200 text-gray-600 ${
+                joinButtonActive
+                  ? "bg-blue-base text-white border-2 border-white"
+                  : ""
+              }`}
               onClick={handleJoinClick}
             >
               参加中のコミュニティ
@@ -87,7 +104,6 @@ const Communities = () => {
           <CommunitiesBranchJoin myCommunity={myCommunity} />
         )}
       </div>
-
     </>
   );
 };

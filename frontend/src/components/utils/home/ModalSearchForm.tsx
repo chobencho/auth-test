@@ -113,7 +113,10 @@ const ModalSearchForm = ({
               {/* 追加されたタグを表示 */}
               <div className=" p-2 flex flex-wrap my-2">
                 {tags.map((tag, index) => (
-                  <p key={index} className="bg-blue-600 text-white rounded-2xl py-1 px-2 mr-1 mb-1">
+                  <p
+                    key={index}
+                    className="bg-blue-600 text-white rounded-2xl py-1 px-2 mr-1 mb-1"
+                  >
                     {tag}
                     <button
                       className="text-xl text-white ml-1"

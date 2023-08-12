@@ -41,19 +41,18 @@ code {
 }
 
 .text-blue-base {
-  color: #547AFF;
+  color: #547aff;
 }
 
 .bg-blue-base {
-  background-color: #547AFF;
+  background-color: #547aff;
 }
 
 .border-blue-base {
-  border-color: #547AFF;
+  border-color: #547aff;
 }
 
 .generalButton {
-  border: 1px solid;
   padding: 15px;
   margin: 20px auto;
   width: 60%;
@@ -105,4 +104,19 @@ code {
   height: 200px;
   object-fit: cover;
   border-radius: 5px;
+}
+
+/* テキストが任意の行数を超えたら...表示されるCSS */
+.txt-limit-1 {
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 1; /* 任意の行数を指定 */
+}
+
+.txt-limit-2 {
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2; /* 任意の行数を指定 */
 }

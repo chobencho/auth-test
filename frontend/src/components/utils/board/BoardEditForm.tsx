@@ -15,10 +15,7 @@ interface BoardEditFormProps {
   handleGetBoardData: Function;
 }
 
-const useStyles = makeStyles((theme: Theme) => ({
-
-
-}));
+const useStyles = makeStyles((theme: Theme) => ({}));
 
 const BoardEditForm = ({
   id,
@@ -46,7 +43,7 @@ const BoardEditForm = ({
 
   // プレビュー削除機能
   const handleClearPreview = () => {
-    setPreview("")
+    setPreview("");
     clearPreview();
   };
 
@@ -103,10 +100,7 @@ const BoardEditForm = ({
             }}
           />
           <div className="relative">
-            <label
-              className="image-label"
-              htmlFor="icon-button-file"
-            >
+            <label className="image-label" htmlFor="icon-button-file">
               <div className="flex flex-col items-center justify-center pt-5 pb-6">
                 <svg
                   aria-hidden="true"
@@ -139,7 +133,11 @@ const BoardEditForm = ({
                   onClick={() => handleClearPreview()}
                   className="absolute text-white top-1 left-1"
                 />
-                <img src={preview} alt="preview img" className="preview-image" />
+                <img
+                  src={preview}
+                  alt="preview img"
+                  className="preview-image"
+                />
               </div>
             ) : null}
           </div>
@@ -161,7 +159,10 @@ const BoardEditForm = ({
         </div>
 
         <div className="w-full text-center">
-          <button type="submit" className="generalButton bg-blue-base text-white">
+          <button
+            type="submit"
+            className="generalButton bg-blue-base text-white"
+          >
             変更を保存する
           </button>
         </div>
