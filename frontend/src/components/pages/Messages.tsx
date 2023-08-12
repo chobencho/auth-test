@@ -9,7 +9,20 @@ import { ChatUserData } from "interfaces/index";
 import moment from "moment"; // moment ライブラリをインポート
 import "moment/locale/ja"; // 日本語ロケールをインポート
 
+import { makeStyles, Theme } from "@material-ui/core/styles";
+
+
+const useStyles = makeStyles((theme: Theme) => ({
+  userImage: {
+    width: "48px",
+    height: "48px",
+    objectFit: "cover",
+    borderRadius: "30px"
+  },
+}));
+
 const Messages = () => {
+  const classes = useStyles();
   // State
   const [chatUsers, setChatUsers] = useState<ChatUserData[]>([]);
   //Id
@@ -26,23 +39,30 @@ const Messages = () => {
 
   return (
     <>
-      <p className="text-center text-sm pt-4 pb-2">チャット一覧</p>
+      <p className="text-center text-sm pt-4 pb-2 border-b">チャット一覧</p>
       {chatUsers?.map((chatUser) => (
         <Link
           to={`/message/${chatUser.roomId}?buddyId=${chatUser.id}`}
-          className="border m-2 inline-block"
+          className="border-b inline-block flex py-1 pl-1 pr-2"
         >
-          <p>名前:{chatUser.name}</p>
-          {chatUser.image?.url ? (
-            <img
-              src={chatUser.image.url}
-              alt="userData image"
-              className="w-1/2"
-            />
-          ) : null}
-          <p>最新やり取り:{chatUser.latestMessageBody}</p>
-          <p className="">
-            {moment(chatUser.createdAt).format("MM月DD日 HH:mm")}
+          <div className="mr-1 flex items-center">
+            {chatUser.image?.url ? (
+              <img
+                src={chatUser.image.url}
+                alt="userData image"
+                className={`${classes.userImage}`}
+              />
+            ) : null}
+          </div>
+
+          <div className="w-2/3">
+            <p className="text-sm px-1">{chatUser.name}</p>
+            <p className="text-xs txt-limit-2 px-1">{chatUser.latestMessageBody}</p>
+          </div>
+          <p className="text-xs text-gray-600 relative top-0 right-0">
+            {chatUser.latestCreatedAt && (
+              moment(chatUser.latestCreatedAt).format("MM/DD HH:mm")
+            )}
           </p>
         </Link>
       ))}

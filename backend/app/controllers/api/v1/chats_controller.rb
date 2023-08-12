@@ -1,6 +1,7 @@
 class Api::V1::ChatsController < ApplicationController
   def show
-    @messages = Message.where(room_id: params[:id])
+    @messages = Message.joins(:user).select("messages.*, users.name AS name, users.image AS userImage").where(room_id: params[:id])
+
     render json: @messages
   end
 

@@ -24,18 +24,21 @@ class Api::V1::MessagesController < ApplicationController
                 user = User.find(user_id)
                 messages = Message.where(user_id: [user_id, user_id1], room_id: room_id).order(created_at: :desc).limit(1) # 最新のメッセージを取得
                 body = messages.first&.body # 最新のメッセージのbodyを取得
-                chatUsers << { user: user, room_id: room_id, latest_message_body: body }
+                created_at = messages.first&.created_at # 最新のメッセージのbodyを取得
+                chatUsers << { user: user, room_id: room_id, latest_message_body: body, latest_created_at: created_at }
             end
         end
-        
+
         # 最終的なJSONデータの作成
         json_data = chatUsers.map do |chat|
             user_data = chat[:user].as_json
             user_data["room_id"] = chat[:room_id] # 部屋IDを追加
             user_data["latest_message_body"] = chat[:latest_message_body] # 最新のメッセージのbodyを追加
+            user_data["latest_created_at"] = chat[:latest_created_at] # 最新のメッセージの更新日時を追加
             user_data
         end
         
+        json_data = json_data.reverse
         # JSONデータをレスポンスとして送信
         render json: json_data
     end

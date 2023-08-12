@@ -114,6 +114,7 @@ export interface ChatUserData {
   };
   roomId: string;
   latestMessageBody: string;
+  latestCreatedAt: Date;
   createdAt: Date;
   updatedAt: Date;
 }

@@ -2,13 +2,14 @@ import { useEffect, useState } from "react"
 
 // Function
 import { getMessages } from "lib/api/chat"
+import { getChatPartner } from "lib/api/chat"
 // Interface
 import { MessageItemsData } from "interfaces/index"
+import { ChatUserData } from "interfaces/index"
 // Components
 import CommonMessageItems from "components/utils/common/CommonMessageItems";
 import CommonMessageForms from "components/utils/common/CommonMessageForms"
 import ChatPartner from "components/utils/chat/ChatPartner"
-import CommonDeleteButton from "components/utils/common/CommonDeleteButton";
 import { useAuthData } from "components/utils/common/useAuthData";
 
 const Message = () => {
@@ -16,40 +17,54 @@ const Message = () => {
     const [messages, setMessages] = useState<MessageItemsData[]>([]);
     // Id
     const { stringMyId, verifiedAge, id, buddyId } = useAuthData();
+    const [buddy, setBuddy] = useState<ChatUserData | null>(null)
 
     // ルームIDからメッセージ情報を取得・更新する関数
     const handleGetMessages = async () => {
         getMessages(id, buddyId).then((res) => setMessages(res.data))
     }
 
+    // ルームIDからメッセージ情報を取得・更新
+    const handleGetChatPartner = async () => {
+        getChatPartner(buddyId).then((res) => setBuddy(res.data))
+    };
+
     useEffect(() => {
         handleGetMessages()
+        handleGetChatPartner();
     }, [])
 
     return (
         <>
             {/* チャット相手の情報 */}
-            <ChatPartner buddyId={buddyId} />
-            {/* チャットメッセージ */}
-            {messages.map((message) => (
-                <div className={"relative border p-2 m-auto w-full"}>
-                    <CommonMessageItems
-                        message={message}
-                        stringMyId={stringMyId ?? ""}
-                    />
-                    {!verifiedAge && (
-                        <span
-                            className="absolute top-0 left-0 w-full h-full flex justify-center items-center cursor-pointer"
-                            style={{ backgroundColor: "#fff", border: "1px solid #000" }}
-                        >
-                            年齢確認後に表示されます
-                        </span>
-                    )}
-                </div>
-            ))}
+            {buddy !== null ? (
+                <>
+                    <ChatPartner buddy={buddy} generalId={id ?? ""} />
+                    <div className="pt-10">
+                        {messages.map((message) => (
+                            <div>
+                                <CommonMessageItems
+                                    // buddy={buddy}
+                                    message={message}
+                                    stringMyId={stringMyId ?? ""}
+                                />
+                                {!verifiedAge && (
+                                    <span
+                                        className="absolute top-0 left-0 w-full h-full flex justify-center items-center cursor-pointer"
+                                        style={{ backgroundColor: "#fff", border: "1px solid #000" }}
+                                    >
+                                        年齢確認後に表示されます
+                                    </span>
+                                )}
+                            </div>
+                        ))}
+                    </div>
+                </>
+            ) : (null)}
+
 
             {/* チャットフォーム */}
-            <div className="fixed bottom-16 my-1 w-full">
+            <div className="fixed bottom-14 my-1 w-full">
                 <CommonMessageForms
                     handleGetData={handleGetMessages}
                     id={id ?? ""}
@@ -65,12 +80,6 @@ const Message = () => {
                     </span>
                 )}
             </div>
-
-            {/* チャット削除ボタン */}
-            <CommonDeleteButton
-                generalId={id}
-                discrimination={"chat"}
-            />
         </>
     )
 }

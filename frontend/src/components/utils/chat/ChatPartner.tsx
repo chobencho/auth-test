@@ -1,47 +1,83 @@
-import { useEffect, useState } from "react"
+import { useEffect, useState, useCallback } from "react"
 import { useNavigate } from "react-router-dom"
 // Style
-import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
+import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
+import TocIcon from "@mui/icons-material/Toc";
+import ModalDeleteForm from "components/utils/chat/ModalDeleteForm";
 // Function
-import { getChatPartner } from "lib/api/chat"
+
 // Interface
-import { ChatUserData } from "interfaces/index"
+
+
+import { makeStyles, Theme } from "@material-ui/core/styles";
+import { ChatUserData } from "interfaces";
 
 interface ChatPartnerProps {
-  buddyId: string
+  buddy: ChatUserData;
+  generalId: string;
 }
 
-const ChatPartner = ({ buddyId }: ChatPartnerProps) => {
+const useStyles = makeStyles((theme) => ({
+  mainContent: {
+    position: "fixed",
+    top: 55,
+    left: 0,
+    display: "flex",
+    width: "100%",
+    padding: "8px 10px 5px",
+    background: "#fff",
+    boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
+    zIndex: 20,
+    alignItems: "center",
+    justifyContent: " space-between",
+  },
+}));
+
+const ChatPartner = ({ buddy, generalId }: ChatPartnerProps) => {
+  const classes = useStyles();
   const navigate = useNavigate()
   // State
-  const [buddy, setBuddy] = useState<ChatUserData | null>(null)
+  const [showModal, setShowModal] = useState<boolean>(false)
 
-  // ルームIDからメッセージ情報を取得・更新
-  const handleGetChatPartner = async () => {
-    getChatPartner(buddyId).then((res) => setBuddy(res.data))
+  // モーダル非表示
+  const handleClearModal = () => {
+    setShowModal(false); // モーダルを非表示にする
   };
 
-  useEffect(() => {
-    handleGetChatPartner();
+  // モーダル表示
+  const showModalWindow = useCallback(() => {
+    setShowModal(true); // 画像が選択されたときにモーダルを表示
   }, []);
 
   return (
     <>
-      <div className="border flex">
-        <span onClick={() => (navigate("/messages"))}><ArrowBackIosNewIcon className="text-xl my-3 mx-5" /></span>
+      <div className={`${classes.mainContent}`}>
         {buddy &&
-          <>
-            <p>{buddy.name}</p>
+          <div className="flex">
+            <span onClick={() => navigate("/messages")} className="flex items-center">
+              <ChevronLeftIcon />
+            </span>
             {buddy.image?.url ?
               <img
                 src={buddy.image.url}
                 alt="userData image"
-                className="w-1/5 rounded-full "
+                className="w-8 h-8 object-cover rounded-3xl ml-1 mr-2"
               /> : null
             }
-          </>
+            <p className="flex items-center">{buddy.name}</p>
+          </div>
         }
+        <div>
+          <TocIcon onClick={showModalWindow} />
+        </div>
       </div>
+
+      {showModal ? (
+        <ModalDeleteForm
+          onClose={handleClearModal}
+          generalId={generalId}
+        />
+      ) : null}
     </>
   )
 }

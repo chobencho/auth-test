@@ -83,11 +83,7 @@ const CommunityTop = ({ community, community_id, user_id }: CommunityProps) => {
           <TocIcon onClick={handleToggleSlideUpContent} />
         </div>
       </div>
-      <div
-        className={`${classes.slideUpContent} ${
-          showSlideUpContent ? classes.slideUpContentActive : ""
-        }`}
-      >
+      <div className={`${classes.slideUpContent} ${showSlideUpContent ? classes.slideUpContentActive : ""}`}>
         <h4 className="text-sm py-1">コミュニティ概要</h4>
         <p className="text-sm">{community.body}</p>
         <h4 className="text-sm py-1 mt-2">カテゴリ</h4>
