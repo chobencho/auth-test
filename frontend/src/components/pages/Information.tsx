@@ -1,13 +1,27 @@
 import { useEffect, useState } from "react"
-import { Link } from 'react-router-dom'
 // Function
 import { getInfos } from "lib/api/info"
 // Interface
 import { InfoData } from "interfaces/index"
+import ModalInformation from "components/utils/information/ModalInformation"
+
+import { clearModal } from "lib/api/helper";
 
 const Information = () => {
   // State
   const [infos, setInfos] = useState<InfoData[]>([]);
+  const [showModal, setShowModal] = useState(false);
+  const [selectedInfo, setSelectedInfo] = useState<InfoData | null>(null);
+
+  const handleShowInfoModal = (info: InfoData) => {
+    setSelectedInfo(info);
+    setShowModal(true);
+  };
+
+  const handleCloseModal = () => {
+    clearModal(setShowModal);
+    setSelectedInfo(null);
+  };
 
   // お知らせ情報を取得
   const handleGetInfos = async () => {
@@ -20,13 +34,21 @@ const Information = () => {
 
   return (
     <>
-      {infos?.map((info) => (
-        <Link to={`/info/${info.id}`} className="border inline-block m-2">
-          <p>お知らせID:{info.id}</p>
-          <p>タイトル:{info.title}</p>
-          <p>内容:{info.body}</p>
-        </Link>
-      ))}
+      <p className="text-sm text-center pt-1 pb-2">お知らせ一覧</p>
+      <div className="border">
+        {infos?.map((info) => (
+          <button className="border inline-block p-2" onClick={() => handleShowInfoModal(info)}>
+            <div className="flex items-center">
+              <p className="text-sm pr-2">{info.title}</p>
+              <p className="required">重要</p>
+            </div>
+            <p className="txt-limit-1 text-xs pt-1">{info.body}</p>
+          </button>
+        ))}
+      </div>
+      {showModal ? (
+        <ModalInformation info={selectedInfo} onClose={handleCloseModal} />
+      ) : null}
     </>
   )
 }

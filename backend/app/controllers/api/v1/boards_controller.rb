@@ -53,7 +53,7 @@ class Api::V1::BoardsController < ApplicationController
     end
 
     def favboard
-        @boards = Board.joins(:board_likes).select("boards.*, board_likes.user_id AS user_id, board_likes.board_id AS board_id, boards.body AS board_body").where(board_likes: {user_id: params[:id]})
+        @boards = Board.joins(:board_likes, :user).select("boards.*, users.id AS user_id, board_likes.board_id AS board_id, boards.body AS board_body, users.image AS user_image, users.name AS name").where(board_likes: {user_id: params[:id]})
         render json: @boards
     end
 

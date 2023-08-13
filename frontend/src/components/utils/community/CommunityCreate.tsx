@@ -19,7 +19,7 @@ const CommunityCreate = () => {
   };
   return (
     <>
-      <div className={"generalButton relative border-blue-base bg-blue-base"}>
+      <div className={"generalButton w-3/5 relative border-blue-base bg-blue-base"}>
         <button
           className="text-white w-full"
           onClick={() => handleModalApplyNewCommunity()}

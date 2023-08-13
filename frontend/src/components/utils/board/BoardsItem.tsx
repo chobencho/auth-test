@@ -32,7 +32,7 @@ const BoardsItem = ({ boards }: BoardItemProps) => {
         <Link to={`/board/${board.boardId}`} className="inline-block border-b py-2 px-3 w-full">
           <div className="flex">
             <div className="w-3/5">
-              <p className="text-base">{board.title}</p>
+              <p className="text-base h-12">{board.title}</p>
               <div className="flex my-1">
                 <img src={`http://localhost:3001/uploads/user/image/${board.userId}/${board.userImage}`} alt="boardData image" className={`${classes.userImage}`} />
 

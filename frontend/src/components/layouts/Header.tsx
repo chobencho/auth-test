@@ -69,17 +69,7 @@ const Header = () => {
   const AuthButtons = () => {
     if (!loading) {
       if (isSignedIn) {
-        return (
-          <>
-            <Button
-              color="inherit"
-              className={classes.linkBtn}
-              onClick={handleSignOut}
-            >
-              Sign out
-            </Button>
-          </>
-        );
+        return (null);
       } else {
         return (
           <>

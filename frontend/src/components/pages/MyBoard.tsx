@@ -25,7 +25,6 @@ const MyBoard = () => {
 
   return (
     <>
-      <CreateNewBoardButton verifiedAge={verifiedAge} />
       <BoardsItem
         boards={boards}
         handleGetBoardData={handleGetBoardData}

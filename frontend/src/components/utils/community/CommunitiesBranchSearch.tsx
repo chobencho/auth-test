@@ -89,7 +89,6 @@ const CommunitiesBranchSearch = ({
 
       <CommunityCreate />
 
-      {/* メッセージ入力モーダル */}
       {showModal ? (
         <ModalCategoryCommunity
           onClose={handleCloseModal}

@@ -40,6 +40,14 @@ code {
   width: 96%;
 }
 
+.w-90 {
+  width: 90%;
+}
+
+.h-90 {
+  height: 600px;
+}
+
 .max-w-80 {
   max-width: 100%;
 }
@@ -59,8 +67,8 @@ code {
 .generalButton {
   padding: 15px;
   margin: 20px auto;
-  width: 60%;
   border-radius: 30px;
+  text-align: center;
 }
 
 .input-text {
@@ -76,8 +84,8 @@ code {
   background-color: red;
   color: #fff;
   border-radius: 5px;
-  font-size: 12px;
-  padding: 3px 5px;
+  font-size: 10px;
+  padding: 2px 5px;
 }
 
 .input-title {
@@ -115,12 +123,14 @@ code {
   overflow: hidden;
   display: -webkit-box;
   -webkit-box-orient: vertical;
-  -webkit-line-clamp: 1; /* 任意の行数を指定 */
+  -webkit-line-clamp: 1;
+  /* 任意の行数を指定 */
 }
 
 .txt-limit-2 {
   overflow: hidden;
   display: -webkit-box;
   -webkit-box-orient: vertical;
-  -webkit-line-clamp: 2; /* 任意の行数を指定 */
+  -webkit-line-clamp: 2;
+  /* 任意の行数を指定 */
 }

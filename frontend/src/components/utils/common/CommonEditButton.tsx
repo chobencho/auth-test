@@ -32,7 +32,7 @@ const CommonEditButton = ({
     <>
       {userId == myId ? (
         <>
-          <div className="generalButton relative bg-gray-600">
+          <div className="generalButton w-3/5 relative bg-gray-600">
             <Link
               to={`/board/${generalId}/edit`}
               className="text-white text-center w-full block"
@@ -43,9 +43,8 @@ const CommonEditButton = ({
         </>
       ) : (
         <div
-          className={`generalButton relative border-blue-base text-blue-base ${
-            commonRoomId ? "bg-blue-base" : "bg-white border"
-          }`}
+          className={`generalButton w-3/5 relative border-blue-base text-blue-base ${commonRoomId ? "bg-blue-base" : "bg-white border"
+            }`}
         >
           {commonRoomId ? (
             <p className="text-white text-center">メッセージを送る</p>

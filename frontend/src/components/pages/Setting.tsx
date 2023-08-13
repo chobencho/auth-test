@@ -1,29 +1,91 @@
-import { Link } from "react-router-dom";
-// Style
-import FormatAlignJustifyIcon from '@mui/icons-material/FormatAlignJustify';
-import LockIcon from '@mui/icons-material/Lock';
-import BrandingWatermarkIcon from '@mui/icons-material/BrandingWatermark';
-import SecurityIcon from '@mui/icons-material/Security';
-import PersonRemoveIcon from '@mui/icons-material/PersonRemove';
+
+import React, { useContext, useState } from "react";
+import { useNavigate, Link } from "react-router-dom";
+import Cookies from "js-cookie";
+import { signOut } from "lib/api/auth";
+import { AuthContext } from "App";
+import { clearModal } from "lib/api/helper";
+import ModalTerms from "components/utils/terms/ModalTerms"
+import ModalPrivacyPolicy from "components/utils/policy/ModalPrivacyPolicy"
+import ModalDeleteAccount from "components/utils/user/ModalDeleteAccount";
 
 const Setting = () => {
+  const { loading, isSignedIn, setIsSignedIn } = useContext(AuthContext);
+  const navigate = useNavigate();
+  const [showTermsModal, setShowTermsModal] = useState(false);
+  const [showPolicyModal, setShowPolicyModal] = useState(false);
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
+
+  const handleShowTermsModal = () => {
+    setShowTermsModal(true);
+  };
+
+  const handleShowPplicyModal = () => {
+    setShowPolicyModal(true);
+  };
+
+  const handleShowDeleteModal = () => {
+    setShowDeleteModal(true);
+  };
+
+
+  const handleCloseModal = () => {
+    clearModal(setShowTermsModal);
+    clearModal(setShowPolicyModal);
+    clearModal(setShowDeleteModal);
+  };
+
+  const handleSignOut = async (e: React.MouseEvent<HTMLButtonElement>) => {
+    try {
+      const res = await signOut();
+      console.log(res);
+
+      if (res.data.success === true) {
+        // サインアウト時には各Cookieを削除
+        Cookies.remove("_access_token");
+        Cookies.remove("_client");
+        Cookies.remove("_uid");
+
+        setIsSignedIn(false);
+        navigate("/signin");
+
+        console.log("Succeeded in sign out");
+      } else {
+        console.log("Failed in sign out");
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   return (
     <>
-      <Link
-        to="https://www.google.com"
-        target="_blank"
-        rel="noopener noreferrer"
-        className="border m-2">
-        <FormatAlignJustifyIcon />
-        <span>
-          お問い合わせ
-        </span>
-      </Link>
-      <br />
-      <Link to={`/changePassword`} className="border m-2"><LockIcon /><span>パスワード変更</span></Link><br />
-      <Link to={`/terms`} className="border m-2"><BrandingWatermarkIcon /><span>利用規約</span></Link><br />
-      <Link to={`/privacyPolicy`} className="border m-2"><SecurityIcon /><span>プライバシーポリシー</span></Link><br />
-      <Link to={`/deleteAccount`} className="border m-2"><PersonRemoveIcon /><span>アカウント削除</span></Link><br />
+      <div className="border mt-5">
+        <Link
+          to="https://www.google.com"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="inline-block w-full border text-sm px-3 py-2">
+          <span>
+            お問い合わせ
+          </span>
+        </Link>
+        <br />
+        <Link to={`/changePassword`} className="inline-block w-full border text-sm px-3 py-2"><span>パスワード変更</span></Link><br />
+        <button onClick={handleShowTermsModal} className="inline-block w-full border text-sm px-3 py-2 text-left"><span>利用規約</span></button><br />
+        <button onClick={handleShowPplicyModal} className="inline-block w-full border text-sm px-3 py-2 text-left"><span>プライバシーポリシー</span></button><br />
+        <button onClick={handleSignOut} className="inline-block w-full border text-sm px-3 py-2 text-left"><span>ログアウト</span></button><br />
+        <button onClick={handleShowDeleteModal} className="inline-block w-full border text-sm px-3 py-2 text-left"><span>アカウント削除</span></button><br />
+      </div>
+      {showTermsModal ? (
+        <ModalTerms onClose={handleCloseModal} />
+      ) : null}
+      {showPolicyModal ? (
+        <ModalPrivacyPolicy onClose={handleCloseModal} />
+      ) : null}
+      {showDeleteModal ? (
+        <ModalDeleteAccount onClose={handleCloseModal} />
+      ) : null}
     </>
   )
 }

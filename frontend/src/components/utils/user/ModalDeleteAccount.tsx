@@ -62,19 +62,25 @@ const ModalDeleteAccount = ({ onClose }: ModalDeleteAccountProps) => {
     <>
       <div className={`${classes.modal}`}>
         <div className={`${classes.modalContent}`}>
-          <p>本当にアカウント削除しますか？</p>
-          <button
-            onClick={() => handleDeleteAccount()}
-            className="border text-2xl text-white bg-gray-600 px-3 py-1"
-          >
-            削除する
-          </button>
-          <button
-            onClick={() => onClose()}
-            className="border text-2xl text-white bg-gray-600 px-3 py-1"
-          >
-            ×
-          </button>
+          <div className="my-5 text-center">
+            <p className="text-xs my-5">アカウントを削除すると元に戻すことはできません。本当にアカウント削除しますか？</p>
+            <div className="flex">
+              <button
+                onClick={() => handleDeleteAccount()}
+                className="bg-red-600 text-white text-xs w-1/2 m-2 px-3 py-2"
+              >
+                アカウント削除
+              </button>
+              <button
+                onClick={() => onClose()}
+                className="bg-gray-600 text-white text-xs w-1/2 m-2 px-3 py-2"
+              >
+                キャンセル
+              </button>
+            </div>
+
+          </div>
+
         </div>
       </div>
     </>
