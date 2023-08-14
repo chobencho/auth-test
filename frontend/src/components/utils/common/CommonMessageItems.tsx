@@ -44,13 +44,13 @@ const CommonMessageItems = ({ message, stringMyId }: CommunityCommentProps) => {
   return (
     <>
       {message.userId == stringMyId ? (
-        <div className="px-2 py-3 flex w-4/5 justify-end ml-auto">
+        <div className="px-2 py-3 flex w-5/6 justify-end ml-auto">
           <p className="text-10 pr-1 text-right flex items-end justify-end">
             {moment(message.createdAt).format("MM月DD日 HH:mm")}
           </p>
-          <div>
+          <div className="w-fit">
             {message.body ? (
-              <p className="whitespace-pre-wrap text-sm bg-green-400 border max-w-fit ml-auto rounded-b-2xl rounded-l-2xl py-1 px-3">
+              <p className="whitespace-pre-wrap text-sm bg-green-400 border w-fit ml-auto rounded-b-2xl rounded-l-2xl py-1 px-3">
                 <span className="break-all">{message.body}</span>
               </p>
             ) : null}

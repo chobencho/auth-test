@@ -32,8 +32,10 @@ export interface UserData {
   genderId: number;
   gradeCode: string;
   gradeId: number;
-  prefectureCode: string;
   prefectureId: number;
+  prefectureCode: string;
+  birthplaceId: number;
+  birthplaceCode: string
   interestId: number;
   allowPasswordChange: boolean;
   createdAt: Date;

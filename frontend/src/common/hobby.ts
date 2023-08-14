@@ -6,7 +6,7 @@ export default class Hobby {
         [4, "劇場", "hobby_theater.jpg"],
         [5, "芸術", "hobby_art.jpg"],
         [6, "音楽", "hobby_music.jpg"],
-        [7, "クリエイティブ", "hobby_creator.jpg"],
+        [7, "創作", "hobby_creator.jpg"],
         [8, "ゲーム", "hobby_gaming.jpg"],
         [9, "アニメ", "hobby_anime.jpg"],
         [10, "小説", "hobby_book.jpg"],

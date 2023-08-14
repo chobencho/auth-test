@@ -12,6 +12,8 @@ import { UserData } from "interfaces/index";
 import GoBackButton from "components/utils/common/GoBackButton";
 import { useAuthData } from "components/utils/common/useAuthData";
 
+import HighlightOffIcon from "@mui/icons-material/HighlightOff";
+
 const Verification = () => {
   // State
   const [userData, setUserData] = useState<UserData | null>(null);
@@ -63,8 +65,42 @@ const Verification = () => {
 
   return (
     <>
-      <form onSubmit={handleSendCertificateImage}>
-        <div>
+      <form onSubmit={handleSendCertificateImage} className="w-96 m-auto">
+        <p className="text-center p-5">年齢・学生証認証</p>
+        <p className="text-center text-sm">
+          大学、研究機関及び高等教育機関発行の<br />
+          学生証を使って１８歳以上である確認をします。
+        </p>
+        <img src={`${process.env.PUBLIC_URL}/images/card.jpg`} alt="" />
+        <p className="text-xs text-center">認証がお済みでない方は、一部の機能をご利用いただけません。</p>
+        <p className="text-xs text-center py-5">
+          ※学生証提出の際の注意点※<br />
+          提出された画像ファイルが以下の項目に全て<br />
+          該当する場合のみ、年齢確認証として許可されます。
+        </p>
+        <table className="text-xs mx-5 mb-5">
+          <tr>
+            <td className="flex items-start">1.</td>
+            <td className="pb-2">
+              学生証の全体が映っており、生年月日、氏名、所属機関
+              (専攻、コース)が鮮明に読み取れる。(顔写真。学籍番号
+              はマスキングしていただいて構いません。)
+            </td>
+          </tr>
+          <tr>
+            <td className="flex items-start">2.</td>
+            <td className="pb-2">画像データを送信した会員様ご本人の学生証である。</td>
+          </tr>
+          <tr>
+            <td className="flex items-start">3.</td>
+            <td className="pb-2">現在、大学、研究機関及び高等教育機関の学生である。</td>
+          </tr>
+          <tr>
+            <td className="flex items-start">4.</td>
+            <td className="pb-2">現在の年齢が18歳以上である。</td>
+          </tr>
+        </table>
+        <div className="input-part">
           <input
             id="icon-button-file"
             type="file"
@@ -74,54 +110,57 @@ const Verification = () => {
               handlePreviewImage(e);
             }}
           />
-          <label
-            className="flex flex-col items-center justify-center w-full h-64 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-bray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600"
-            htmlFor="icon-button-file"
-          >
-            <div className="flex flex-col items-center justify-center pt-5 pb-6">
-              <svg
-                aria-hidden="true"
-                className="w-10 h-10 mb-3 text-gray-400"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="2"
-                  d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"
-                ></path>
-              </svg>
-              <p className="mb-2 text-sm text-gray-500 dark:text-gray-400">
-                <span className="font-semibold">
-                  写真のアップロードはここをクリック
-                </span>
-              </p>
-              <p className="text-xs text-gray-500 dark:text-gray-400">
-                SVG, PNG, JPG or GIF (MAX. 800x400px)
-              </p>
-            </div>
-          </label>
+          <div className="relative">
+            <label className="image-label" htmlFor="icon-button-file">
+              <div className="flex flex-col items-center justify-center pt-5 pb-6">
+                <svg
+                  aria-hidden="true"
+                  className="w-6 h-6 mb-1 text-gray-400"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"
+                  ></path>
+                </svg>
+                <p className="mb-1 text-sm text-gray-400">
+                  <span className="font-semibold">
+                    写真のアップロードはここをクリック
+                  </span>
+                </p>
+                <p className="text-xs text-gray-400">
+                  SVG, PNG, JPG or GIF (MAX. 800x400px)
+                </p>
+              </div>
+            </label>
+            {preview ? (
+              <div className="absolute top-0 left-0">
+                <HighlightOffIcon
+                  onClick={() => handleClearPreview()}
+                  className="absolute text-white top-1 left-1"
+                />
+                <img
+                  src={preview}
+                  alt="preview img"
+                  className="preview-image"
+                />
+              </div>
+            ) : null}
+          </div>
         </div>
-        <button type="submit" className="border text-white bg-gray-600 p-2 m-2">
-          送信する
-        </button>
-      </form>
-      {preview ? (
-        <div>
-          <button
-            onClick={() => handleClearPreview()}
-            className="border text-2xl text-white bg-gray-600 px-3 py-1"
-          >
-            ×
+
+        <div className="text-center">
+          <button type="submit" className="generalButton w-3/5 bg-blue-base text-white">
+            送信する
           </button>
-          <img src={preview} alt="preview img" className="border" />
         </div>
-      ) : null}
-      {/* 戻るボタン */}
-      <GoBackButton discriminationText={"キャンセル"} />
+
+      </form>
     </>
   );
 };

@@ -1,5 +1,6 @@
 import React, { useState, useCallback } from "react";
 import { useParams } from "react-router-dom";
+import Select from "react-select";
 // Style
 import { makeStyles, Theme } from "@material-ui/core/styles";
 import Gender from "common/gender";
@@ -16,6 +17,7 @@ import { UserTagData } from "interfaces/index";
 import { clearPreview } from "lib/api/helper";
 import { uploadImage } from "lib/api/helper";
 import { previewImage } from "lib/api/helper";
+import HighlightOffIcon from "@mui/icons-material/HighlightOff";
 
 interface UserEditFormProps {
   handleGetUserData: Function;
@@ -44,10 +46,6 @@ const UserEditForm = ({
   const [age, setAge] = useState<string>(userData.age || "");
   const [tags, setTags] = useState<string[]>([...userResearchTagData.map((tag) => tag.tagName)]);
   const [tag, setTag] = useState<string>("");
-  const [gender, setGender] = useState<string>(userData.genderId ? userData.genderId.toString() : "");
-  const [grade, setGrade] = useState<string>(userData.gradeId ? userData.gradeId.toString() : "");
-  const [subject, setSubject] = useState<string>(userData.subjectId ? userData.subjectId.toString() : "");
-  const [prefecture, setPrefecture] = useState<string>(userData.prefectureId ? userData.prefectureId.toString() : "");
   const [image, setImage] = useState<File | undefined>();
   const [preview, setPreview] = useState<string>("");
   const [showInterestOptions, setShowInterestOptions] = useState(false);
@@ -57,7 +55,96 @@ const UserEditForm = ({
   // Id
   const { id } = useParams<{ id: string }>();
 
-  console.log(userResearchTagData)
+
+  const initialGender = userData.genderId
+    ? { value: userData.genderId.toString(), label: userData.genderCode.toString() } // 適切なラベルをセットしてください
+    : null;
+
+  const [gender, setGender] = useState(initialGender);
+
+  const handleGenderChange = (selectedOption: any) => {
+    setGender(selectedOption);
+  };
+
+  const genderOptions = Gender.GEN_OPTIONS.map(([value, label]) => ({
+    value: value.toString(),
+    label: label.toString(), // labelをstring型に変換
+  }));
+
+
+
+
+  const initialGrade = userData.gradeId
+    ? { value: userData.gradeId.toString(), label: userData.gradeCode.toString() } // 適切なラベルをセットしてください
+    : null;
+
+  const [grade, setGrade] = useState(initialGrade);
+
+  const handleGradeChange = (selectedOption: any) => {
+    setGrade(selectedOption);
+  };
+
+  const gradeOptions = Grade.GRD_OPTIONS.map(([value, label]) => ({
+    value: value.toString(),
+    label: label.toString(), // labelをstring型に変換
+  }));
+
+
+
+
+
+  const initialSubject = userData.subjectId
+    ? { value: userData.subjectId.toString(), label: userData.subjectCode.toString() } // 適切なラベルをセットしてください
+    : null;
+
+  const [subject, setSubject] = useState(initialSubject);
+
+  const handleSubjectChange = (selectedOption: any) => {
+    setSubject(selectedOption);
+  };
+
+  const subjectOptions = Subject.SUB_OPTIONS.map(([value, label]) => ({
+    value: value.toString(),
+    label: label.toString(), // labelをstring型に変換
+  }));
+
+
+
+
+  const initialPrefecture = userData.prefectureId
+    ? { value: userData.prefectureId.toString(), label: userData.prefectureCode.toString() } // 適切なラベルをセットしてください
+    : null;
+
+  const [prefecture, setPrefecture] = useState(initialPrefecture);
+
+  const handlePrefectureChange = (selectedOption: any) => {
+    setPrefecture(selectedOption);
+  };
+
+  const prefectureOptions = Prefectures.PREF_OPTIONS.map(([value, label]) => ({
+    value: value.toString(),
+    label: label.toString(), // labelをstring型に変換
+  }));
+
+
+
+  const initialBirthplace = userData.birthplaceId
+    ? { value: userData.birthplaceId.toString(), label: userData.birthplaceCode.toString() } // 適切なラベルをセットしてください
+    : null;
+
+  const [birthplace, setBirthplace] = useState(initialBirthplace);
+
+  const handleBirthplaceChange = (selectedOption: any) => {
+    setBirthplace(selectedOption);
+  };
+
+  const birthplaceOptions = Prefectures.PREF_OPTIONS.map(([value, label]) => ({
+    value: value.toString(),
+    label: label.toString(), // labelをstring型に変換
+  }));
+
+
+
 
   // 趣味チェック機能
   type HobbyOption = [string, string, string];
@@ -126,10 +213,11 @@ const UserEditForm = ({
     if (image) formData.append("image", image);
     formData.append("body", body);
     formData.append("age", age);
-    formData.append("gender_id", gender);
-    formData.append("grade_id", grade);
-    formData.append("prefecture_id", prefecture);
-    formData.append("subject_id", subject);
+    formData.append("gender_id", gender ? gender.value : "");
+    formData.append("grade_id", grade ? grade.value : "");
+    formData.append("prefecture_id", prefecture ? prefecture.value : "");
+    formData.append("birthplace_id", birthplace ? birthplace.value : "");
+    formData.append("subject_id", subject ? subject.value : "");
 
     // タグをデータ登録用に配列に格納する
     // なにもタグがない場合は、データを送信しない
@@ -203,58 +291,26 @@ const UserEditForm = ({
 
   return (
     <>
-      <form onSubmit={handleEditUserData}>
-        <div className="border m-2 p-2">
-          <b>名前</b>
+      <form onSubmit={handleEditUserData} className="w-96 m-auto">
+        <p className="text-center pt-5 pb-3">ユーザー情報編集</p>
+        <div className="">
+          <div className="flex items-center">
+            <b className="input-title">名前</b>
+            <p className="required">必須</p>
+          </div>
           <input
             type="text"
             placeholder="name"
-            className="border p-2 m-2"
+            className="input-text"
             value={name}
             onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
               setName(e.target.value);
             }}
           />
         </div>
-        <div className="border m-2 p-2">
-          <b>研究タグ</b>
-          <div className="flex">
-            <input
-              type="text"
-              value={tag}
-              className="border p-2 m-2"
-              onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                setTag(e.target.value);
-              }}
-            />
-            <button
-              className="border text-white bg-gray-600 p-2 m-2"
-              onClick={handleAddTag}
-            >
-              追加
-            </button>
-          </div>
-        </div>
 
-        {/* 追加されたタグを表示 */}
-        <div className="border m-2 p-2 flex flex-wrap">
-          <b>追加されたタグ：</b>
-
-          {tags.map((tag, index) => (
-            <p key={index} className="border p-1 m-1 bg-blue-100 w-1/8">
-              {tag}
-              <button
-                className="my-1 mx-2 px-2 text-xl bg-gray-600 text-white"
-                onClick={() => handleRemoveTag(tag)}
-              >
-                ×
-              </button>
-            </p>
-          ))}
-        </div>
-
-        <div className="border m-2 p-2">
-          <b>プロフィール画像</b>
+        <div className="input-part">
+          <b className="input-title">プロフィール画像</b>
           <input
             id="icon-button-file"
             type="file"
@@ -264,43 +320,58 @@ const UserEditForm = ({
               handlePreviewImage(e);
             }}
           />
-          <label
-            className="flex flex-col items-center justify-center w-full h-64 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-bray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600"
-            htmlFor="icon-button-file"
-          >
-            <div className="flex flex-col items-center justify-center pt-5 pb-6">
-              <svg
-                aria-hidden="true"
-                className="w-10 h-10 mb-3 text-gray-400"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="2"
-                  d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"
-                ></path>
-              </svg>
-              <p className="mb-2 text-sm text-gray-500 dark:text-gray-400">
-                <span className="font-semibold">
-                  写真のアップロードはここをクリック
-                </span>
-              </p>
-              <p className="text-xs text-gray-500 dark:text-gray-400">
-                SVG, PNG, JPG or GIF (MAX. 800x400px)
-              </p>
-            </div>
-          </label>
+          <div className="relative">
+            <label className="image-label" htmlFor="icon-button-file">
+              <div className="flex flex-col items-center justify-center pt-5 pb-6">
+                <svg
+                  aria-hidden="true"
+                  className="w-6 h-6 mb-1 text-gray-400"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"
+                  ></path>
+                </svg>
+                <p className="mb-1 text-sm text-gray-400">
+                  <span className="font-semibold">
+                    写真のアップロードはここをクリック
+                  </span>
+                </p>
+                <p className="text-xs text-gray-400">
+                  SVG, PNG, JPG or GIF (MAX. 800x400px)
+                </p>
+              </div>
+            </label>
+            {preview ? (
+              <div className="absolute top-0 left-0">
+                <HighlightOffIcon
+                  onClick={() => handleClearPreview()}
+                  className="absolute text-white top-1 left-1"
+                />
+                <img
+                  src={preview}
+                  alt="preview img"
+                  className="preview-image"
+                />
+              </div>
+            ) : null}
+          </div>
         </div>
 
-        <div className="border m-2 p-2">
-          <b>自己紹介文</b>
+        <div className="input-part">
+          <div className="flex items-center">
+            <b className="input-title">自己紹介</b>
+            <p className="required">必須</p>
+          </div>
           <textarea
             placeholder="introduce"
-            className="border p-2 m-2 w-full whitespace-pre-wrap h-40"
+            className="input-text whitespace-pre-wrap h-40"
             value={body}
             onChange={(e) => {
               setBody(e.target.value);
@@ -308,12 +379,15 @@ const UserEditForm = ({
           ></textarea>
         </div>
 
-        <div className="border m-2 p-2">
-          <b>年齢</b>
+        <div className="">
+          <div className="flex items-center">
+            <b className="input-title">年齢</b>
+            <p className="required">必須</p>
+          </div>
           <input
             type="number"
             placeholder="age"
-            className="border p-2 m-2"
+            className="input-text"
             value={age}
             onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
               setAge(e.target.value);
@@ -321,71 +395,122 @@ const UserEditForm = ({
           />
         </div>
 
-        <div className="border m-2 p-2">
-          <b>性別</b>
-          <select
-            className="border m-2 p-2"
+
+        <div className="my-1">
+          <div className="flex items-center">
+            <b className="input-title">性別</b>
+            <p className="required">必須</p>
+          </div>
+          <Select
+            className=""
             value={gender}
-            onChange={(e) => setGender(e.target.value)}
-          >
-            {Gender.GEN_OPTIONS.map((option) => {
-              return <option value={option[0]}>{option[1]}</option>;
-            })}
-          </select>
+            onChange={handleGenderChange}
+            options={genderOptions}
+          />
         </div>
 
-        <div className="border m-2 p-2">
-          <b>学年</b>
-          <select
-            className="border m-2 p-2"
+        <div className="my-1">
+          <div className="flex items-center">
+            <b className="input-title">学年</b>
+            <p className="required">必須</p>
+          </div>
+          <Select
+            className=""
             value={grade}
-            onChange={(e) => setGrade(e.target.value)}
-          >
-            {Grade.GRD_OPTIONS.map((option) => {
-              return <option value={option[0]}>{option[1]}</option>;
-            })}
-          </select>
+            onChange={handleGradeChange}
+            options={gradeOptions}
+          />
         </div>
 
-        <div className="border m-2 p-2">
-          <b>居住地</b>
-          <select
-            className="border m-2 p-2"
-            value={prefecture}
-            onChange={(e) => setPrefecture(e.target.value)}
-          >
-            {Prefectures.PREF_OPTIONS.map((option) => {
-              return <option value={option[0]}>{option[1]}</option>;
-            })}
-          </select>
-        </div>
-
-        <div className="border m-2 p-2">
-          <b>専攻</b>
-          <select
-            className="border m-2 p-2"
+        <div className="my-1">
+          <div className="flex items-center">
+            <b className="input-title">専攻</b>
+            <p className="required">必須</p>
+          </div>
+          <Select
+            className=""
             value={subject}
-            onChange={(e) => setSubject(e.target.value)}
-          >
-            {Subject.SUB_OPTIONS.map((option) => {
-              return <option value={option[0]}>{option[1]}</option>;
-            })}
-          </select>
+            onChange={handleSubjectChange}
+            options={subjectOptions}
+          />
+        </div>
+
+        <div className="my-1">
+          <div className="flex items-center">
+            <b className="input-title">居住地</b>
+            <p className="required">必須</p>
+          </div>
+          <Select
+            className=""
+            value={prefecture}
+            onChange={handlePrefectureChange}
+            options={prefectureOptions}
+          />
+        </div>
+
+        <div className="my-1">
+          <div className="flex items-center">
+            <b className="input-title">出身地</b>
+            <p className="required">必須</p>
+          </div>
+          <Select
+            className=""
+            value={birthplace}
+            onChange={handleBirthplaceChange}
+            options={birthplaceOptions}
+          />
+        </div>
+
+        <div className="mt-2">
+          <b className="input-title">研究タグ</b>
+          <div className="flex">
+            <input
+              type="text"
+              value={tag}
+              className="input-text"
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                setTag(e.target.value);
+              }}
+            />
+            <button
+              className="border border-blue-base rounded text-blue-base text-sm w-1/6 m-1.5"
+              onClick={handleAddTag}
+            >
+              追加
+            </button>
+          </div>
+        </div>
+
+        {/* 追加されたタグを表示 */}
+        <div className="py-2 flex flex-wrap">
+          {tags.map((tag, index) => (
+            <p key={index} className="bg-blue-600 text-white rounded-3xl py-1 px-2 mr-1 mb-1 text-sm">
+              {tag}
+              <button
+                className="text-lg text-white ml-1"
+                onClick={() => handleRemoveTag(tag)}
+              >
+                <HighlightOffIcon />
+              </button>
+            </p>
+          ))}
         </div>
 
         {/* 興味オプションの表示を切り替えるボタン */}
-        <button
-          className="border bg-gray-600 text-white rounded py-1 px-2"
-          onClick={handleToggleInterestOptions}
-        >
-          {showInterestOptions ? "興味分野一覧を隠す" : "興味分野一覧を見る"}
-        </button>
+        <div className="mt-3">
+          <b className="input-title">興味分野</b><br />
+          <button
+            className="bg-gray-200 text-gray py-2 px-5 text-sm mt-2 w-1/2"
+            onClick={handleToggleInterestOptions}
+          >
+            {showInterestOptions ? "興味分野一覧を隠す" : "興味分野一覧を見る"}
+          </button>
+        </div>
 
         {/* 興味オプションを表示する部分 */}
         {showInterestOptions && (
           <div>
-            <b>興味</b>
-            <div className="w-full flex flex-wrap border m-2">
+            <div className="w-full flex flex-wrap py-2">
               {Interest.INT_OPTIONS.map((option: (string | number)[]) => {
                 if (option.length !== 3) return null; // オプションが3つの要素を持たない場合はnullを返す
 
@@ -393,14 +518,15 @@ const UserEditForm = ({
                 const isChecked = selectedInterests.includes(value);
 
                 return (
-                  <div key={value} className="w-1/2 border p-2">
+                  <div key={value} className="w-1/2 p-1">
                     <label className="flex">
                       <input
                         type="checkbox"
                         checked={isChecked}
                         onChange={() => handleInterestSelection(value)}
+                        className="mr-1"
                       />
-                      <option value={value} className="text-center text-sm">
+                      <option value={value} className="text-center text-xs">
                         {label}
                       </option>
                     </label>
@@ -412,18 +538,21 @@ const UserEditForm = ({
         )}
 
         {/* 興味オプションの表示を切り替えるボタン */}
-        <button
-          className="border bg-gray-600 text-white rounded py-1 px-2"
-          onClick={handleToggleHobbyOptions}
-        >
-          {showHobbyOptions ? "趣味一覧を隠す" : "趣味一覧を見る"}
-        </button>
+        <div className="mt-3">
+          <b className="input-title">趣味</b><br />
+          <button
+            className="bg-gray-200 text-gray py-2 px-5 text-sm mt-2 w-1/2"
+            onClick={handleToggleHobbyOptions}
+          >
+            {showHobbyOptions ? "趣味一覧を隠す" : "趣味一覧を見る"}
+          </button>
+        </div>
+
 
         {/* 興味オプションを表示する部分 */}
         {showHobbyOptions && (
           <div>
-            <b>趣味</b>
-            <div className="w-full flex flex-wrap border m-2">
+            <div className="w-full flex flex-wrap py-3">
               {Hobby.HOB_OPTIONS.map((option: (string | number)[]) => {
                 if (option.length !== 3) return null; // オプションが3つの要素を持たない場合はnullを返す
 
@@ -431,8 +560,8 @@ const UserEditForm = ({
                 const isChecked = selectedHobbies.includes(value);
 
                 return (
-                  <div key={value} className="w-1/5 border p-2">
-                    <label>
+                  <div key={value} className="w-1/5 pb-2 relative px-1">
+                    <label className="image-dark">
                       <input
                         type="checkbox"
                         className={`${classes.checkBox}`}
@@ -441,23 +570,25 @@ const UserEditForm = ({
                       />
                       <img
                         src={`${process.env.PUBLIC_URL}/images/hobby/${image}`}
-                        className={` ${isChecked ? classes.checkBoxChecked : ""
-                          }`}
+                        className={`rounded ${isChecked ? classes.checkBoxChecked : ""}`}
                         alt=""
                       />
-                      <option value={value} className="text-center text-sm">
-                        {label}
-                      </option>
                     </label>
+                    <option value={value} className="text-center text-10 absolute bottom-7 left-0 right-0 text-white">
+                      {label}
+                    </option>
                   </div>
                 );
               })}
             </div>
           </div>
         )}
-        <button type="submit" className="border text-white bg-gray-600 p-2 m-2">
-          変更する
-        </button>
+        <div className="text-center">
+          <button type="submit" className="generalButton text-white bg-blue-base w-3/5">
+            変更を保存する
+          </button>
+        </div>
+
       </form>
 
       {preview ? (

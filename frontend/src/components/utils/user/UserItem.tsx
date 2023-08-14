@@ -31,6 +31,11 @@ const useStyles = makeStyles((theme: Theme) => ({
     fontSize: "14px",
     whiteSpace: "pre-wrap"
   },
+  userImage: {
+    width: "100%",
+    height: "220px",
+    objectFit: "cover",
+  },
 }));
 
 const UserItem = ({
@@ -51,9 +56,11 @@ const UserItem = ({
         <img
           src={userData.image.url}
           alt="userData image"
-          className="w-full"
+          className={`${classes.userImage}`}
         />
-      ) : null}
+      ) : (
+        <img src={`${process.env.PUBLIC_URL}/images/no-image.jpg`} alt="boardData image" className={`${classes.userImage}`} />
+      )}
       <div className="w-96 m-auto">
         <p className="text-center m-1 text-lg font-semibold">
           {userData.name}
@@ -86,7 +93,7 @@ const UserItem = ({
           </tr>
           <tr className={`${classes.tr}`}>
             <td className={`${classes.trLeft}`}>出身地</td>
-            <td className={`${classes.trRight}`}>{userData.prefectureCode}</td>
+            <td className={`${classes.trRight}`}>{userData.birthplaceCode}</td>
           </tr>
           <tr className={`${classes.tr}`}>
             <td className={`${classes.trLeft}`}>研究タグ</td>
@@ -115,9 +122,8 @@ const UserItem = ({
                       <div className="relative">
                         <img
                           src={`${process.env.PUBLIC_URL}/images/hobby/${hobbyImage}`}
-                          className="w-full h-auto rounded"
+                          className="w-full h-auto rounded image-dark"
                         />
-                        <div className="absolute inset-0 bg-black opacity-50 rounded"></div>
                         <span className="absolute bottom-4 left-0 right-0 text-white text-sm text-center py-1">
                           {hobbyName}
                         </span>
@@ -144,9 +150,8 @@ const UserItem = ({
                       <div className="relative">
                         <img
                           src={`${process.env.PUBLIC_URL}/images/interest/${interestImage}`}
-                          className="w-full h-auto rounded"
+                          className="w-full h-auto rounded image-dark"
                         />
-                        <div className="absolute inset-0 bg-black opacity-50 rounded"></div>
                         <span className="absolute bottom-4 left-0 right-0 text-white text-sm text-center py-1">
                           {interestName}
                         </span>

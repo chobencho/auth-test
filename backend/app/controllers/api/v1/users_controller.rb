@@ -3,7 +3,7 @@ class Api::V1::UsersController < ApplicationController
     # keywordsが空の場合、全ユーザ情報を取得
     # keywordsが空でない場合、検索条件に合うユーザ情報を取得
     if params[:keywords].nil?
-      @users = User.joins(:prefecture, :subject, :gender, :grade).select("users.*,subjects.subject_code AS subject_code, prefectures.prefecture_code AS prefecture_code").where.not(id: params[:id])
+      @users = User.joins(:prefecture, :subject, :gender, :grade).joins("INNER JOIN prefectures AS birthplace_prefectures ON users.birthplace_id = birthplace_prefectures.id").select("users.*, subjects.subject_code AS subject_code, prefectures.prefecture_code AS prefecture_code, birthplace_prefectures.prefecture_code AS birthplace_code").where.not(id: params[:id])
     else
       # 二重配列をフラットな配列に変換
       keywords = params[:keywords].flatten
@@ -16,12 +16,12 @@ class Api::V1::UsersController < ApplicationController
   end
 
   def show
-    @user = User.joins(:prefecture, :subject, :gender, :grade).select("*, users.id AS id").find_by(id: params[:id])
+    @user = User.joins(:prefecture, :subject, :gender, :grade).joins("INNER JOIN prefectures AS birthplace_prefectures ON users.birthplace_id = birthplace_prefectures.id").select("*, users.id AS id, prefectures.prefecture_code AS prefecture_code, birthplace_prefectures.prefecture_code AS birthplace_code").find_by(id: params[:id])
     render json: @user  
   end
 
   def edit
-    @user = User.joins(:prefecture, :subject, :gender, :grade).select("*, users.id AS id").find_by(id: params[:id])
+    @user = User.joins(:prefecture, :subject, :gender, :grade).joins("INNER JOIN prefectures AS birthplace_prefectures ON users.birthplace_id = birthplace_prefectures.id").select("*, users.id AS id, prefectures.prefecture_code AS prefecture_code, birthplace_prefectures.prefecture_code AS birthplace_code").find_by(id: params[:id])
     render json: @user  
   end
   
@@ -99,6 +99,7 @@ class Api::V1::UsersController < ApplicationController
       :gender_id,
       :grade_id,
       :prefecture_id,
+      :birthplace_id,
       :subject_id,
       :interest_id_1,
       :interest_id_2,

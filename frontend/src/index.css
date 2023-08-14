@@ -134,3 +134,7 @@ code {
   -webkit-line-clamp: 2;
   /* 任意の行数を指定 */
 }
+
+.image-dark {
+  filter: brightness(0.7);
+}
