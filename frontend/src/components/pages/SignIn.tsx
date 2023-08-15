@@ -1,84 +1,93 @@
-import React, { useState, useContext } from "react"
-import { useNavigate, Link } from "react-router-dom"
-import Cookies from "js-cookie"
-import { AuthContext } from "App"
+import React, { useState, useContext } from "react";
+import { useNavigate, Link } from "react-router-dom";
+import Cookies from "js-cookie";
+import { AuthContext } from "App";
+import { useAuthData } from "components/utils/common/useAuthData";
 // Style
-import { makeStyles, Theme } from "@material-ui/core/styles"
-import { Typography } from "@material-ui/core"
-import TextField from "@material-ui/core/TextField"
-import Card from "@material-ui/core/Card"
-import CardContent from "@material-ui/core/CardContent"
-import CardHeader from "@material-ui/core/CardHeader"
-import Button from "@material-ui/core/Button"
-import Box from "@material-ui/core/Box"
+import { makeStyles, Theme } from "@material-ui/core/styles";
+import { Typography } from "@material-ui/core";
+import TextField from "@material-ui/core/TextField";
+import Card from "@material-ui/core/Card";
+import CardContent from "@material-ui/core/CardContent";
+import CardHeader from "@material-ui/core/CardHeader";
+import Button from "@material-ui/core/Button";
+import Box from "@material-ui/core/Box";
 // Function
-import { signIn } from "lib/api/auth"
+import { signIn } from "lib/api/auth";
 // Interface
-import { SignInParams } from "interfaces/index"
+import { SignInParams } from "interfaces/index";
+import { updateLastLogin } from "lib/api/auth";
 // Components
-import AlertMessage from "components/utils/common/AlertMessage"
+import AlertMessage from "components/utils/common/AlertMessage";
 
 const useStyles = makeStyles((theme: Theme) => ({
   container: {
-    marginTop: theme.spacing(6)
+    marginTop: theme.spacing(6),
   },
   submitBtn: {
     marginTop: theme.spacing(2),
     flexGrow: 1,
-    textTransform: "none"
+    textTransform: "none",
   },
   header: {
-    textAlign: "center"
+    textAlign: "center",
   },
   card: {
     padding: theme.spacing(2),
-    maxWidth: 400
+    maxWidth: 400,
   },
   box: {
-    marginTop: "2rem"
+    marginTop: "2rem",
   },
   link: {
-    textDecoration: "none"
-  }
-}))
+    textDecoration: "none",
+  },
+}));
 
 const SignIn = () => {
-  const classes = useStyles()
-  const navigate = useNavigate()
-  const { setIsSignedIn, setCurrentUser } = useContext(AuthContext)
+  const classes = useStyles();
+  const navigate = useNavigate();
+  const { setIsSignedIn, setCurrentUser } = useContext(AuthContext);
   // State
-  const [email, setEmail] = useState<string>("")
-  const [password, setPassword] = useState<string>("")
-  const [alertMessageOpen, setAlertMessageOpen] = useState<boolean>(false)
+  const [email, setEmail] = useState<string>("");
+  const [password, setPassword] = useState<string>("");
+  const [alertMessageOpen, setAlertMessageOpen] = useState<boolean>(false);
+  const { stringMyId } = useAuthData();
 
   const handleSubmit = async (e: React.MouseEvent<HTMLButtonElement>) => {
-    e.preventDefault()
+    e.preventDefault();
 
     const params: SignInParams = {
       email: email,
-      password: password
-    }
+      password: password,
+    };
 
     try {
-      const res = await signIn(params)
-      console.log(res)
+      const res = await signIn(params);
+      console.log(res);
       if (res.status === 200) {
         // ログインに成功した場合はCookieに各値を格納
-        Cookies.set("_access_token", res.headers["access-token"])
-        Cookies.set("_client", res.headers["client"])
-        Cookies.set("_uid", res.headers["uid"])
-        setIsSignedIn(true)
-        setCurrentUser(res.data.data)
-        navigate("/")
-        console.log("Signed in successfully!")
+        Cookies.set("_access_token", res.headers["access-token"]);
+        Cookies.set("_client", res.headers["client"]);
+        Cookies.set("_uid", res.headers["uid"]);
+
+        handleUpdateLastLogin(stringMyId);
+        setIsSignedIn(true);
+        setCurrentUser(res.data.data);
+        navigate("/");
+        console.log("Signed in successfully!");
       } else {
-        setAlertMessageOpen(true)
+        setAlertMessageOpen(true);
       }
     } catch (err) {
-      console.log(err)
-      setAlertMessageOpen(true)
+      console.log(err);
+      setAlertMessageOpen(true);
     }
-  }
+  };
+
+  const handleUpdateLastLogin = async (myId: string | undefined) => {
+    updateLastLogin(myId);
+  };
 
   return (
     <>
@@ -93,7 +102,7 @@ const SignIn = () => {
               label="Email"
               value={email}
               margin="dense"
-              onChange={event => setEmail(event.target.value)}
+              onChange={(event) => setEmail(event.target.value)}
             />
             <TextField
               variant="outlined"
@@ -105,7 +114,7 @@ const SignIn = () => {
               value={password}
               margin="dense"
               autoComplete="current-password"
-              onChange={event => setPassword(event.target.value)}
+              onChange={(event) => setPassword(event.target.value)}
             />
             <Button
               type="submit"
@@ -137,7 +146,7 @@ const SignIn = () => {
         message="Invalid email or password"
       />
     </>
-  )
-}
+  );
+};
 
-export default SignIn
+export default SignIn;

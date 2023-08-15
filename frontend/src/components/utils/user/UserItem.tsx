@@ -8,7 +8,14 @@ import { UserHobbyData } from "interfaces/index";
 import { UserInterestData } from "interfaces/index";
 import { UserTagData } from "interfaces/index";
 
+import LikeUserButton from "components/utils/user/LikeUserButton";
+
+import moment from "moment"; // moment ライブラリをインポート
+import "moment/locale/ja"; // 日本語ロケールをインポート
+
 export interface UserItemProps {
+  myId: string | undefined;
+  userId: string | undefined;
   userData: UserData;
   hobbyData: UserHobbyData[];
   interestData: UserInterestData[];
@@ -20,16 +27,16 @@ const useStyles = makeStyles((theme: Theme) => ({
     display: "block",
     borderBottom: "1px solid #eee",
     margin: "10px 0 0",
-    paddingBottom: "5px"
+    paddingBottom: "5px",
   },
   trLeft: {
     fontSize: "14px",
     fontWeight: 600,
-    width: "80px"
+    width: "80px",
   },
   trRight: {
     fontSize: "14px",
-    whiteSpace: "pre-wrap"
+    whiteSpace: "pre-wrap",
   },
   userImage: {
     width: "100%",
@@ -39,6 +46,8 @@ const useStyles = makeStyles((theme: Theme) => ({
 }));
 
 const UserItem = ({
+  myId,
+  userId,
   userData,
   hobbyData,
   interestData,
@@ -47,10 +56,29 @@ const UserItem = ({
   //Style
   const classes = useStyles();
 
+  const lastLoginTime = moment(userData.lastLogin);
+  const currentTime = moment();
+  const timeDifference = currentTime.diff(lastLoginTime, "minutes");
+
   return (
     <>
       <p className="absolute top-16 right-3">
-        <span className="text-green-400">●</span>ログイン中
+        {timeDifference <= 10 ? (
+          <>
+            <span className={`text-green-300 `}>●</span>
+            ログイン中
+          </>
+        ) : timeDifference <= 1440 ? (
+          <>
+            <span className={`text-yellow-300 `}>●</span>
+            24時間以内
+          </>
+        ) : (
+          <>
+            <span className={`text-gray-300 `}>●</span>
+            3日以上
+          </>
+        )}
       </p>
       {userData.image?.url ? (
         <img
@@ -59,12 +87,18 @@ const UserItem = ({
           className={`${classes.userImage}`}
         />
       ) : (
-        <img src={`${process.env.PUBLIC_URL}/images/no-image.jpg`} alt="boardData image" className={`${classes.userImage}`} />
+        <img
+          src={`${process.env.PUBLIC_URL}/images/no-image.jpg`}
+          alt="boardData image"
+          className={`${classes.userImage}`}
+        />
       )}
       <div className="w-96 m-auto">
-        <p className="text-center m-1 text-lg font-semibold">
-          {userData.name}
-        </p>
+        <div className="relative">
+          <LikeUserButton myId={myId} userId={userId} />
+        </div>
+
+        <p className="text-center m-1 text-lg font-semibold">{userData.name}</p>
 
         <table className="w-full">
           <tr className={`${classes.tr}`}>
@@ -146,7 +180,10 @@ const UserItem = ({
                 if (interestOption) {
                   const [, interestName, interestImage] = interestOption;
                   return (
-                    <div key={interest.interestId} className="w-1/5 p-1 relative">
+                    <div
+                      key={interest.interestId}
+                      className="w-1/5 p-1 relative"
+                    >
                       <div className="relative">
                         <img
                           src={`${process.env.PUBLIC_URL}/images/interest/${interestImage}`}

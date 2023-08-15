@@ -4,7 +4,7 @@ import { getUserData } from "lib/api/user";
 import { getHobbyData } from "lib/api/user";
 import { getInterestData } from "lib/api/user";
 import { getResearchTagData } from "lib/api/user";
-import { getCommonRoomId } from "lib/api/common"
+import { getCommonRoomId } from "lib/api/common";
 // Interface
 import { UserData } from "interfaces/index";
 import { UserHobbyData } from "interfaces/index";
@@ -21,7 +21,7 @@ const User = () => {
   const [hobbyData, setHobbyData] = useState<UserHobbyData[]>([]);
   const [interestData, setInterestData] = useState<UserInterestData[]>([]);
   const [researchTagData, setResearchTagData] = useState<UserTagData[]>([]);
-  const [commonRoomId, setCommonRoomId] = useState<string | null>(null)
+  const [commonRoomId, setCommonRoomId] = useState<string | null>(null);
   // Id
   const { stringMyId, verifiedAge, id } = useAuthData();
 
@@ -39,15 +39,13 @@ const User = () => {
   };
   // ユーザ研究タグ情報取得
   const handleGetResearchTagData = async () => {
-    getResearchTagData(id).then((res) =>
-      setResearchTagData(res.data)
-    );
+    getResearchTagData(id).then((res) => setResearchTagData(res.data));
   };
 
   // 自分と相手のチャットルームがすでに存在するか確認する関数
   const handleGetCommonRoomId = () => {
-    getCommonRoomId(id, stringMyId).then((res) => setCommonRoomId(res.data))
-  }
+    getCommonRoomId(id, stringMyId).then((res) => setCommonRoomId(res.data));
+  };
 
   useEffect(() => {
     handleGetUserData();
@@ -57,12 +55,13 @@ const User = () => {
     handleGetCommonRoomId();
   }, []);
 
-
   return (
     <>
       <div className="pb-16">
         {userData && (
           <UserItem
+            myId={stringMyId}
+            userId={id}
             userData={userData}
             hobbyData={hobbyData}
             interestData={interestData}

@@ -9,6 +9,9 @@ import CardMedia from "@material-ui/core/CardMedia";
 // Interface
 import { UserData } from "interfaces/index";
 
+import moment from "moment"; // moment ライブラリをインポート
+import "moment/locale/ja"; // 日本語ロケールをインポート
+
 interface UsersProps {
   handleGetUsersData: Function;
   user: UserData;
@@ -59,10 +62,6 @@ const useStyles = makeStyles((theme: Theme) => ({
   login: {
     fontSize: "10px",
   },
-  circle: {
-    color: "lightgreen",
-    fontSize: "14px",
-  },
   age: {
     fontSize: "12px",
   },
@@ -71,6 +70,10 @@ const useStyles = makeStyles((theme: Theme) => ({
 const UsersItem = ({ user }: UsersProps) => {
   //Style
   const classes = useStyles();
+
+  const lastLoginTime = moment(user.lastLogin);
+  const currentTime = moment();
+  const timeDifference = currentTime.diff(lastLoginTime, "minutes");
 
   return (
     <>
@@ -92,14 +95,31 @@ const UsersItem = ({ user }: UsersProps) => {
               <Typography variant="body1" className={`${classes.name}`}>
                 {user.name}
               </Typography>
-              <Typography variant="body1" className={`${classes.login}`}>
-                <span className={`${classes.circle}`}>●</span>ログイン中
-              </Typography>
+
+              <p className="text-10">
+                {timeDifference <= 10 ? (
+                  <>
+                    <span className={`text-green-300`}>●</span>
+                    ログイン中
+                  </>
+                ) : timeDifference <= 1440 ? (
+                  <>
+                    <span className={`text-yellow-300`}>●</span>
+                    24時間以内
+                  </>
+                ) : (
+                  <>
+                    <span className={`text-gray-300`}>●</span>
+                    3日以上
+                  </>
+                )}
+              </p>
             </Box>
             <Box className="flex justify-between">
               <Typography variant="body1" className={`${classes.age}`}>
                 {user.age}歳 {user.prefectureCode}
               </Typography>
+
               <Typography variant="body1" className={`${classes.age}`}>
                 {user.subjectCode}専攻
               </Typography>

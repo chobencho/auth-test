@@ -34,11 +34,8 @@ const SearchButton = ({
 
   return (
     <>
-      <div className="w-full h-full flex items-center justify-between">
-        <p className="text-xl">さがす</p>
-        <div className="relative text-black">
-          <SearchIcon fontSize="large" onClick={showModalWindow} />
-        </div>
+      <div className="text-black">
+        <SearchIcon fontSize="large" onClick={showModalWindow} />
       </div>
       {/* 検索モーダル */}
       {showModal ? (

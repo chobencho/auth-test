@@ -5,7 +5,16 @@ import { UserData } from "interfaces/index";
 
 // ユーザ一覧を取得
 export const getUsers = (id: string | undefined, keywords: string[]) => {
-  return client.get<UserData[]>("/users", { params: { id, keywords } });
+  return client.get<UserData[]>("/users", {
+    params: { id, keywords },
+  });
+};
+
+// 並び替えユーザ一覧を取得
+export const getSortUsers = (id: string | undefined, sortValue: string) => {
+  return client.get<UserData[]>(`/users/${id}/sort`, {
+    params: { sortValue },
+  });
 };
 
 // ユーザ情報取得

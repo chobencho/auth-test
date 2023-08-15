@@ -1,23 +1,39 @@
 class Api::V1::UsersController < ApplicationController
   def index
-    # keywordsが空の場合、全ユーザ情報を取得
-    # keywordsが空でない場合、検索条件に合うユーザ情報を取得
-    if params[:keywords].nil?
-      @users = User.joins(:prefecture, :subject, :gender, :grade).joins("INNER JOIN prefectures AS birthplace_prefectures ON users.birthplace_id = birthplace_prefectures.id").select("users.*, subjects.subject_code AS subject_code, prefectures.prefecture_code AS prefecture_code, birthplace_prefectures.prefecture_code AS birthplace_code").where.not(id: params[:id])
-    else
-      # 二重配列をフラットな配列に変換
-      keywords = params[:keywords].flatten
-      # 複数のキーワードに対して部分一致の条件を作成し、それをORで結合する
-      conditions = keywords.map { |keyword| "tag_name LIKE '%#{keyword}%'" }.join(" OR ")
-      user_ids = UserResearchtagTagging.where(conditions).pluck(:user_id).uniq
-      @users = User.joins(:prefecture, :subject, :gender, :grade).select("users.*,subjects.subject_code AS subject_code, prefectures.prefecture_code AS prefecture_code").where(id: user_ids).where.not(id: params[:id])
-    end
+
+    # 二重配列をフラットな配列に変換
+    keywords = params[:keywords].flatten
+    # 複数のキーワードに対して部分一致の条件を作成し、それをORで結合する
+    conditions = keywords.map { |keyword| "tag_name LIKE '%#{keyword}%'" }.join(" OR ")
+    user_ids = UserResearchtagTagging.where(conditions).pluck(:user_id).uniq
+    @users = User.joins(:prefecture, :subject, :gender, :grade).joins("INNER JOIN prefectures AS birthplace_prefectures ON users.birthplace_id = birthplace_prefectures.id").select("users.*, subjects.subject_code AS subject_code, prefectures.prefecture_code AS prefecture_code, birthplace_prefectures.prefecture_code AS birthplace_code").where(id: user_ids).where.not(id: params[:id]).order(last_login: :desc)
+
     render json: @users
+  end
+
+  def updateLastLogin 
+    @user = User.find_by(id: params[:id])
+    @user.update(last_login: Time.current)
+
+    render json: { message: "ログイン日時が更新されました" }
   end
 
   def show
     @user = User.joins(:prefecture, :subject, :gender, :grade).joins("INNER JOIN prefectures AS birthplace_prefectures ON users.birthplace_id = birthplace_prefectures.id").select("*, users.id AS id, prefectures.prefecture_code AS prefecture_code, birthplace_prefectures.prefecture_code AS birthplace_code").find_by(id: params[:id])
     render json: @user  
+  end
+
+  def sort
+    sortValue = params[:sort_value]
+
+    if sortValue == "sortLogin"
+      @users = User.joins(:prefecture, :subject, :gender, :grade).joins("INNER JOIN prefectures AS birthplace_prefectures ON users.birthplace_id = birthplace_prefectures.id").select("users.*, subjects.subject_code AS subject_code, prefectures.prefecture_code AS prefecture_code, birthplace_prefectures.prefecture_code AS birthplace_code").where.not(id: params[:id]).order(last_login: :desc)
+    elsif sortValue == "sortLike"
+      @users = User.joins(:prefecture, :subject, :gender, :grade).joins("INNER JOIN prefectures AS birthplace_prefectures ON users.birthplace_id = birthplace_prefectures.id").select("users.*, subjects.subject_code AS subject_code, prefectures.prefecture_code AS prefecture_code, birthplace_prefectures.prefecture_code AS birthplace_code, COUNT(user_likes.id) AS like_count").left_joins(:user_likes).where.not(id: params[:id]).group("users.id").order(like_count: :desc)
+    elsif sortValue == "sortCreated"
+      @users = User.joins(:prefecture, :subject, :gender, :grade).joins("INNER JOIN prefectures AS birthplace_prefectures ON users.birthplace_id = birthplace_prefectures.id").select("users.*, subjects.subject_code AS subject_code, prefectures.prefecture_code AS prefecture_code, birthplace_prefectures.prefecture_code AS birthplace_code").where.not(id: params[:id]).order(created_at: :desc)
+    end
+    render json: @users
   end
 
   def edit
@@ -109,6 +125,5 @@ class Api::V1::UsersController < ApplicationController
 
   
 end
-
 
 

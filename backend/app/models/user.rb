@@ -19,6 +19,6 @@ class User < ActiveRecord::Base
   has_many :board_comments
   has_many :community_comments
   has_many :messages
-  
+  has_many :user_likes, foreign_key: :user_id
 end
 

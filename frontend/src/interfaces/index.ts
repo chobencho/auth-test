@@ -35,9 +35,10 @@ export interface UserData {
   prefectureId: number;
   prefectureCode: string;
   birthplaceId: number;
-  birthplaceCode: string
+  birthplaceCode: string;
   interestId: number;
   allowPasswordChange: boolean;
+  lastLogin: Date;
   createdAt: Date;
   updatedAt: Date;
 }

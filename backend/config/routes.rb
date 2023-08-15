@@ -13,12 +13,21 @@ Rails.application.routes.draw do
       resources :users, only: [:index, :update] do
         member do
           get :show
+          get :sort
           get :edit
           get :hobby
           get :interest
           get :researchTag
+          post :updateLastLogin
         end
       end
+
+      resources :user_likes, only: [:create, :destroy] do
+        member do
+          get :show
+        end
+      end
+
 
       resources :boards, only: [:index, :create, :update, :destroy] do
         member do

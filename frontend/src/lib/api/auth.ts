@@ -52,6 +52,10 @@ export const getCurrentUser = () => {
   });
 };
 
+export const updateLastLogin = (myId: string | undefined) => {
+  return client.post(`/users/${myId}/updateLastLogin`);
+};
+
 // パスワード再設定関連の型
 export type SendResetMailType = {
   email: string;

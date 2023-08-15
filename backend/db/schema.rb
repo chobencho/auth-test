@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_08_14_074002) do
+ActiveRecord::Schema[7.0].define(version: 2023_08_15_023253) do
   create_table "board_comments", force: :cascade do |t|
     t.integer "board_id", null: false
     t.string "body", null: false
@@ -166,6 +166,13 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_14_074002) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "user_likes", force: :cascade do |t|
+    t.integer "my_id", null: false
+    t.integer "user_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "user_researchtag_taggings", force: :cascade do |t|
     t.integer "user_id", null: false
     t.integer "tag_id", null: false
@@ -207,6 +214,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_14_074002) do
     t.datetime "updated_at", null: false
     t.integer "check_age", default: 0, null: false
     t.integer "birthplace_id", default: 1, null: false
+    t.datetime "last_login"
     t.index ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
