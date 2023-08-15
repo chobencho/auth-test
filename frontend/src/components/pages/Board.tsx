@@ -2,10 +2,10 @@ import { useEffect, useState } from "react";
 // Function
 import { getBoardData } from "lib/api/board";
 import { getBoardComment } from "lib/api/boardComment";
-import { getCommonRoomId } from "lib/api/common"
+import { getCommonRoomId } from "lib/api/common";
 // Interface
 import { BoardData } from "interfaces/index";
-import { CommentData } from "interfaces/index"
+import { CommentData } from "interfaces/index";
 // Components
 import CommonEditButton from "components/utils/common/CommonEditButton";
 import LikeButton from "components/utils/board/LikeButton";
@@ -18,8 +18,8 @@ import { useAuthData } from "components/utils/common/useAuthData";
 const Board = () => {
   // State
   const [board, setBoard] = useState<BoardData | null>(null);
-  const [comments, setComments] = useState<CommentData[]>([])
-  const [commonRoomId, setCommonRoomId] = useState<string | null>(null)
+  const [comments, setComments] = useState<CommentData[]>([]);
+  const [commonRoomId, setCommonRoomId] = useState<string | null>(null);
   // Id
   const { stringMyId, id, verifiedAge } = useAuthData();
 
@@ -37,9 +37,10 @@ const Board = () => {
 
   // 自分と相手のチャットルームがすでに存在するか確認する関数
   const handleGetCommonRoomId = (userId: string) => {
-    getCommonRoomId(userId, stringMyId).then((res) => setCommonRoomId(res.data));
+    getCommonRoomId(userId, stringMyId).then((res) =>
+      setCommonRoomId(res.data)
+    );
   };
-
 
   useEffect(() => {
     handleGetBoardData();
@@ -86,12 +87,10 @@ const Board = () => {
               />
             </div>
 
-
             {/* コメント欄 */}
             {comments.map((comment: CommentData) => (
-              <CommentItem comment={comment} />
+              <CommentItem comment={comment} key={comment.commentId} />
             ))}
-
           </div>
         </>
       )}

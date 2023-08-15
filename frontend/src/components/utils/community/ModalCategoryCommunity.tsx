@@ -59,7 +59,10 @@ const ModalCategoryCommunity = ({
           <div className="overflow-scroll w-full h-80">
             {selectedCategoryData.map((categoryCommunity) => (
               <>
-                <CommunitiesItem community={categoryCommunity} />
+                <CommunitiesItem
+                  community={categoryCommunity}
+                  key={categoryCommunity.id}
+                />
               </>
             ))}
           </div>

@@ -1,9 +1,9 @@
-import { useEffect, useState } from "react"
+import { useEffect, useState } from "react";
 // Function
-import { getInfos } from "lib/api/info"
+import { getInfos } from "lib/api/info";
 // Interface
-import { InfoData } from "interfaces/index"
-import ModalInformation from "components/utils/information/ModalInformation"
+import { InfoData } from "interfaces/index";
+import ModalInformation from "components/utils/information/ModalInformation";
 
 import { clearModal } from "lib/api/helper";
 
@@ -25,7 +25,7 @@ const Information = () => {
 
   // お知らせ情報を取得
   const handleGetInfos = async () => {
-    getInfos().then((res) => setInfos(res.data))
+    getInfos().then((res) => setInfos(res.data));
   };
 
   useEffect(() => {
@@ -37,7 +37,11 @@ const Information = () => {
       <p className="text-sm text-center pt-1 pb-2">お知らせ一覧</p>
       <div className="border">
         {infos?.map((info) => (
-          <button className="border inline-block p-2" onClick={() => handleShowInfoModal(info)}>
+          <button
+            key={info.id}
+            className="border inline-block p-2"
+            onClick={() => handleShowInfoModal(info)}
+          >
             <div className="flex items-center">
               <p className="text-sm pr-2">{info.title}</p>
               <p className="required">重要</p>
@@ -50,7 +54,7 @@ const Information = () => {
         <ModalInformation info={selectedInfo} onClose={handleCloseModal} />
       ) : null}
     </>
-  )
-}
+  );
+};
 
-export default Information
+export default Information;

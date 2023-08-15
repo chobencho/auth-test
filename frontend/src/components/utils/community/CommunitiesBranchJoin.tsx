@@ -9,10 +9,10 @@ const CommunitiesBranchJoin = ({ myCommunity }: CommunityProps) => {
   return (
     <>
       {myCommunity.map((community) => (
-        <CommunitiesItem community={community} />
+        <CommunitiesItem community={community} key={community.id} />
       ))}
     </>
-  )
-}
+  );
+};
 
-export default CommunitiesBranchJoin
+export default CommunitiesBranchJoin;

@@ -77,7 +77,11 @@ const UsersItem = ({ user }: UsersProps) => {
 
   return (
     <>
-      <Link to={`/user/${user.id}`} className={`${classes.cardContainer}`}>
+      <Link
+        to={`/user/${user.id}`}
+        key={user.id}
+        className={`${classes.cardContainer}`}
+      >
         <Card className={classes.card}>
           {user.image?.url ? (
             <Box className={classes.squareImageContainer}>

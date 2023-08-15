@@ -13,6 +13,10 @@ export interface SignInParams {
   password: string;
 }
 
+export interface ResetPasswordParams {
+  email: string;
+}
+
 // ユーザー
 export interface UserData {
   id: number;
@@ -91,6 +95,7 @@ export interface CommentData {
   };
   boardId: string;
   userId: string;
+  commentId: string;
   body: string;
   createdAt: Date;
   updatedAt: Date;

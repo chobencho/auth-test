@@ -1,7 +1,11 @@
 import client from "lib/api/client";
 import Cookies from "js-cookie";
 
-import { SignUpParams, SignInParams } from "interfaces/index";
+import {
+  SignUpParams,
+  SignInParams,
+  ResetPasswordParams,
+} from "interfaces/index";
 
 // サインアップ（新規アカウント作成）
 export const signUp = (params: SignUpParams) => {
@@ -11,6 +15,10 @@ export const signUp = (params: SignUpParams) => {
 // サインイン（ログイン）
 export const signIn = (params: SignInParams) => {
   return client.post("auth/sign_in", params);
+};
+
+export const resetPassword = (params: ResetPasswordParams) => {
+  return client.post("auth/password", params);
 };
 
 // サインアウト（ログアウト）
@@ -53,15 +61,5 @@ export const getCurrentUser = () => {
 };
 
 export const updateLastLogin = (myId: string | undefined) => {
-  return client.post(`/users/${myId}/updateLastLogin`);
-};
-
-// パスワード再設定関連の型
-export type SendResetMailType = {
-  email: string;
-};
-export type PasswordResetType = {
-  resetPasswordToken: string;
-  password: string;
-  passwordConfirmation: string;
+  return client.post(`/users/updateLastLogin`, { myId });
 };

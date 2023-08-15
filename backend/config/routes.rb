@@ -8,9 +8,13 @@ Rails.application.routes.draw do
 
       namespace :auth do
         resources :sessions, only: %i[index]
+        resources :passwords, only: [:create]
       end
 
       resources :users, only: [:index, :update] do
+        collection do 
+          post :updateLastLogin
+        end
         member do
           get :show
           get :sort
@@ -18,7 +22,6 @@ Rails.application.routes.draw do
           get :hobby
           get :interest
           get :researchTag
-          post :updateLastLogin
         end
       end
 

@@ -14,7 +14,6 @@ import { UserInterestData } from "interfaces/index";
 import UserEditForm from "components/utils/user/UserEditForm";
 import UserEditItem from "components/utils/user/UserEditItem";
 
-
 const UserEdit = () => {
   // State
   const [userData, setUserData] = useState<UserData | null>(null);
@@ -27,12 +26,13 @@ const UserEdit = () => {
   // ユーザ情報取得
   const handleGetUserData = async () => {
     // Promise.allを使ってすべての非同期処理が完了するのを待つ
-    const [userDataRes, hobbyDataRes, interestDataRes, researchTagDataRes] = await Promise.all([
-      getEditUserData(id),
-      getHobbyData(id),
-      getInterestData(id),
-      getResearchTagData(id),
-    ]);
+    const [userDataRes, hobbyDataRes, interestDataRes, researchTagDataRes] =
+      await Promise.all([
+        getEditUserData(id),
+        getHobbyData(id),
+        getInterestData(id),
+        getResearchTagData(id),
+      ]);
 
     setUserData(userDataRes.data);
     setHobbyData(hobbyDataRes.data);
@@ -76,4 +76,3 @@ const UserEdit = () => {
 };
 
 export default UserEdit;
-

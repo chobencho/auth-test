@@ -10,6 +10,7 @@ import CommonLayout from "components/layouts/CommonLayout";
 import Home from "components/pages/Home";
 import SignUp from "components/pages/SignUp";
 import SignIn from "components/pages/SignIn";
+import ResetPassword from "components/pages/PasswordResetForm";
 import Board from "components/pages/Board";
 import Boards from "components/pages/Boards";
 import BoardCreate from "components/pages/BoardCreate";
@@ -35,6 +36,8 @@ import Terms from "components/pages/Terms";
 import PrivacyPolicy from "components/pages/PrivacyPolicy";
 import Verification from "components/pages/Verification";
 import UserEdit from "components/pages/UserEdit";
+
+import { updateLastLogin } from "lib/api/auth";
 
 export const AuthContext = createContext(
   {} as {
@@ -80,12 +83,23 @@ const App = () => {
     }
   };
 
+  const handleUpdateLastLogin = () => {
+    if (currentUser !== undefined) {
+      const stringMyId = currentUser.id.toString();
+      updateLastLogin(stringMyId);
+    }
+  };
+
   useEffect(() => {
     handleGetCurrentUser();
   }, [setCurrentUser]);
 
   useEffect(() => {
     handleCheckAge();
+  }, [currentUser]);
+
+  useEffect(() => {
+    handleUpdateLastLogin();
   }, [currentUser]);
 
   const Private = ({ children }: { children: React.ReactElement }) => {
@@ -110,13 +124,14 @@ const App = () => {
           setIsSignedIn,
           currentUser,
           setCurrentUser,
-          verifiedAge
+          verifiedAge,
         }}
       >
         <CommonLayout>
           <Routes>
             <Route path="/signup" element={<SignUp />} />
             <Route path="/signin" element={<SignIn />} />
+            <Route path="/resetpassword" element={<ResetPassword />} />
             <Route
               path="/"
               element={

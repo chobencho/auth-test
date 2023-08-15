@@ -134,7 +134,10 @@ const UserItem = ({
             <td className={`${classes.trRight}`}>
               <div className="flex flex-wrap">
                 {researchTagData.map((tag) => (
-                  <p className="bg-blue-base rounded-3xl text-white py-1 px-3 mr-1 mb-1">
+                  <p
+                    key={tag.id}
+                    className="bg-blue-base rounded-3xl text-white py-1 px-3 mr-1 mb-1"
+                  >
                     {tag.tagName}
                   </p>
                 ))}

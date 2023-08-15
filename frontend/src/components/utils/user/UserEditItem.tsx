@@ -20,16 +20,16 @@ const useStyles = makeStyles((theme: Theme) => ({
     display: "block",
     borderBottom: "1px solid #eee",
     margin: "10px 0 0",
-    paddingBottom: "5px"
+    paddingBottom: "5px",
   },
   trLeft: {
     fontSize: "14px",
     fontWeight: 600,
-    width: "80px"
+    width: "80px",
   },
   trRight: {
     fontSize: "14px",
-    whiteSpace: "pre-wrap"
+    whiteSpace: "pre-wrap",
   },
   userImage: {
     width: "100%",
@@ -55,14 +55,15 @@ const UserEditItem = ({
           className={`${classes.userImage}`}
         />
       ) : (
-        <img src={`${process.env.PUBLIC_URL}/images/no-image.jpg`} alt="boardData image" className={`${classes.userImage}`} />
+        <img
+          src={`${process.env.PUBLIC_URL}/images/no-image.jpg`}
+          alt="boardData image"
+          className={`${classes.userImage}`}
+        />
       )}
 
       <div className="w-96 m-auto">
-        <p className="text-center m-1 text-lg font-semibold">
-          {userData.name}
-        </p>
-
+        <p className="text-center m-1 text-lg font-semibold">{userData.name}</p>
 
         <table className="w-full">
           <tr className={`${classes.tr}`}>
@@ -98,7 +99,10 @@ const UserEditItem = ({
             <td className={`${classes.trRight}`}>
               <div className="flex flex-wrap">
                 {userResearchTagData.map((tag) => (
-                  <p className="bg-blue-base rounded-3xl text-white py-1 px-3 mr-1 mb-1">
+                  <p
+                    key={tag.id}
+                    className="bg-blue-base rounded-3xl text-white py-1 px-3 mr-1 mb-1"
+                  >
                     {tag.tagName}
                   </p>
                 ))}
@@ -144,7 +148,10 @@ const UserEditItem = ({
                 if (interestOption) {
                   const [, interestName, interestImage] = interestOption;
                   return (
-                    <div key={interest.interestId} className="w-1/5 p-1 relative">
+                    <div
+                      key={interest.interestId}
+                      className="w-1/5 p-1 relative"
+                    >
                       <div className="relative">
                         <img
                           src={`${process.env.PUBLIC_URL}/images/interest/${interestImage}`}
@@ -162,7 +169,6 @@ const UserEditItem = ({
             </div>
           </tr>
         </table>
-
       </div>
     </>
   );

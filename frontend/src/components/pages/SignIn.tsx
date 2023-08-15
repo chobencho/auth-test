@@ -70,8 +70,6 @@ const SignIn = () => {
         Cookies.set("_access_token", res.headers["access-token"]);
         Cookies.set("_client", res.headers["client"]);
         Cookies.set("_uid", res.headers["uid"]);
-
-        handleUpdateLastLogin(stringMyId);
         setIsSignedIn(true);
         setCurrentUser(res.data.data);
         navigate("/");
@@ -83,10 +81,6 @@ const SignIn = () => {
       console.log(err);
       setAlertMessageOpen(true);
     }
-  };
-
-  const handleUpdateLastLogin = async (myId: string | undefined) => {
-    updateLastLogin(myId);
   };
 
   return (
@@ -133,6 +127,12 @@ const SignIn = () => {
                 Don't have an account? &nbsp;
                 <Link to="/signup" className={classes.link}>
                   Sign Up now!
+                </Link>
+              </Typography>
+              <Typography variant="body2">
+                Forgot your password? &nbsp;
+                <Link to="/resetpassword" className={classes.link}>
+                  Reset Password!
                 </Link>
               </Typography>
             </Box>

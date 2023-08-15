@@ -52,7 +52,11 @@ const Home = () => {
         <div className="w-full flex flex-wrap">
           {/* ユーザ情報表示 */}
           {users.map((user) => (
-            <UsersItem handleGetUsersData={handleGetUsersData} user={user} />
+            <UsersItem
+              key={user.id}
+              handleGetUsersData={handleGetUsersData}
+              user={user}
+            />
           ))}
         </div>
       </div>

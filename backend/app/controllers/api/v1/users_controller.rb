@@ -12,7 +12,7 @@ class Api::V1::UsersController < ApplicationController
   end
 
   def updateLastLogin 
-    @user = User.find_by(id: params[:id])
+    @user = User.find_by(id: params[:my_id])
     @user.update(last_login: Time.current)
 
     render json: { message: "ログイン日時が更新されました" }

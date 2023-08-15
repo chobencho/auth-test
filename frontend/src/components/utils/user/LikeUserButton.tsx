@@ -32,7 +32,6 @@ const LikeUserButton = ({ myId, userId }: LikeUserProps) => {
   // いいねの状態を取得する関数
   const handleGetLike = async () => {
     getLike(myId, userId).then((res) => setLike(res.data));
-    console.log("test");
   };
 
   useEffect(() => {

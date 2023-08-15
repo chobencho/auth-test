@@ -76,14 +76,14 @@ const CommunitiesBranchSearch = ({
 
       <div className="">
         {popularCommunity.map((popCom) => (
-          <CommunitiesItem community={popCom} />
+          <CommunitiesItem community={popCom} key={popCom.id} />
         ))}
       </div>
 
       <h5 className="text-sm text-center pt-5 pb-3">新着コミュニティ</h5>
       <div className="">
         {newCommunity.map((newCom) => (
-          <CommunitiesItem community={newCom} />
+          <CommunitiesItem community={newCom} key={newCom.id} />
         ))}
       </div>
 
