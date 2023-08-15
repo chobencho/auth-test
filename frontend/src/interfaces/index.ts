@@ -42,6 +42,7 @@ export interface UserData {
   birthplaceCode: string;
   interestId: number;
   allowPasswordChange: boolean;
+  likeCount: string;
   lastLogin: Date;
   createdAt: Date;
   updatedAt: Date;

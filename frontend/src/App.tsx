@@ -31,7 +31,6 @@ import Information from "components/pages/Information";
 import { getCurrentUser } from "lib/api/auth";
 import { checkAge } from "lib/api/common";
 import { UserData } from "interfaces/index";
-import ChangePassword from "components/pages/ChangePassword";
 import Terms from "components/pages/Terms";
 import PrivacyPolicy from "components/pages/PrivacyPolicy";
 import Verification from "components/pages/Verification";
@@ -274,14 +273,6 @@ const App = () => {
               element={
                 <Private>
                   <Info />
-                </Private>
-              }
-            />
-            <Route
-              path="/changePassword"
-              element={
-                <Private>
-                  <ChangePassword />
                 </Private>
               }
             />

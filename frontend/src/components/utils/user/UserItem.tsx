@@ -16,6 +16,7 @@ import "moment/locale/ja"; // 日本語ロケールをインポート
 export interface UserItemProps {
   myId: string | undefined;
   userId: string | undefined;
+  handleGetUserData: Function;
   userData: UserData;
   hobbyData: UserHobbyData[];
   interestData: UserInterestData[];
@@ -48,6 +49,7 @@ const useStyles = makeStyles((theme: Theme) => ({
 const UserItem = ({
   myId,
   userId,
+  handleGetUserData,
   userData,
   hobbyData,
   interestData,
@@ -95,7 +97,7 @@ const UserItem = ({
       )}
       <div className="w-96 m-auto">
         <div className="relative">
-          <LikeUserButton myId={myId} userId={userId} />
+          <LikeUserButton myId={myId} userId={userId} userData={userData} handleGetUserData={handleGetUserData} />
         </div>
 
         <p className="text-center m-1 text-lg font-semibold">{userData.name}</p>

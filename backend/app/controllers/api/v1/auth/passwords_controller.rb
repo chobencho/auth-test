@@ -12,7 +12,6 @@ class Api::V1::Auth::PasswordsController < ApplicationController
     end
   end
 
-
   def update
     user = User.reset_password_by_token(
       reset_password_token: params[:reset_password_token],
@@ -27,7 +26,25 @@ class Api::V1::Auth::PasswordsController < ApplicationController
     end
   end
 
+  def changePassword
+    if current_user&.valid_password?(params[:current_password])
+      if current_user.update(password_params)
+        bypass_sign_in(current_user) # Deviseのログイン情報更新
+
+        render json: { message: 'Password updated successfully.' }
+      else
+        render json: { errors: current_user.errors.full_messages }, status: :unprocessable_entity
+      end
+    else
+      render json: { errors: ['Current password is incorrect.'] }, status: :unprocessable_entity
+    end
+  end
+
   private
+
+  def password_params
+    params.require(:user).permit(:password, :password_confirmation)
+  end
 
   def respond_with(resource, _opts = {})
     send_reset_mail_success && return unless resource.present?

@@ -29,8 +29,11 @@ class Api::V1::MessagesController < ApplicationController
             end
         end
 
+        # `created_at`で降順にソート
+        sorted_chatUsers = chatUsers.sort_by { |chat| chat[:latest_created_at] }.reverse
+        
         # 最終的なJSONデータの作成
-        json_data = chatUsers.map do |chat|
+        json_data = sorted_chatUsers.map do |chat|
             user_data = chat[:user].as_json
             user_data["room_id"] = chat[:room_id] # 部屋IDを追加
             user_data["latest_message_body"] = chat[:latest_message_body] # 最新のメッセージのbodyを追加
@@ -38,6 +41,8 @@ class Api::V1::MessagesController < ApplicationController
             user_data
         end
         
+        json_data = json_data.sort_by { |chat| chat[:latest_created_at] }.reverse
+
         json_data = json_data.reverse
         # JSONデータをレスポンスとして送信
         render json: json_data

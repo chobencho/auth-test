@@ -62,6 +62,7 @@ const User = () => {
           <UserItem
             myId={stringMyId}
             userId={id}
+            handleGetUserData={handleGetUserData}
             userData={userData}
             hobbyData={hobbyData}
             interestData={interestData}

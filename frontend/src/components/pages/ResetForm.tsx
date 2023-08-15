@@ -38,7 +38,7 @@ const ResetForm: FC<Props> = ({ resetPasswordToken }) => {
             // required: validation.required,
             // pattern: validation.pattern.password,
           })}
-          //   errors={errors}
+        //   errors={errors}
         />
         <label htmlFor="passwordConfirmation">パスワード確認</label>
         <input
@@ -48,7 +48,7 @@ const ResetForm: FC<Props> = ({ resetPasswordToken }) => {
             // required: validation.required,
             // validate: (value) => validation.validate.confirm(password, value),
           })}
-          //   errors={errors}
+        //   errors={errors}
         />
         <input
           type="hidden"

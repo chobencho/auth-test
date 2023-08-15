@@ -8,8 +8,8 @@ Rails.application.routes.draw do
 
       namespace :auth do
         resources :sessions, only: %i[index]
-        resources :passwords, only: [:create]
       end
+      
 
       resources :users, only: [:index, :update] do
         collection do 

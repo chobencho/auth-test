@@ -71,7 +71,7 @@ const Setting = () => {
           </span>
         </Link>
         <br />
-        <Link to={`/changePassword`} className="inline-block w-full border text-sm px-3 py-2"><span>パスワード変更</span></Link><br />
+        <Link to={`/resetpassword`} className="inline-block w-full border text-sm px-3 py-2"><span>パスワード変更</span></Link><br />
         <button onClick={handleShowTermsModal} className="inline-block w-full border text-sm px-3 py-2 text-left"><span>利用規約</span></button><br />
         <button onClick={handleShowPplicyModal} className="inline-block w-full border text-sm px-3 py-2 text-left"><span>プライバシーポリシー</span></button><br />
         <button onClick={handleSignOut} className="inline-block w-full border text-sm px-3 py-2 text-left"><span>ログアウト</span></button><br />

@@ -1,5 +1,6 @@
 import client from "lib/api/client";
 import Cookies from "js-cookie";
+import { AxiosPromise } from "axios";
 
 import {
   SignUpParams,
@@ -17,9 +18,10 @@ export const signIn = (params: SignInParams) => {
   return client.post("auth/sign_in", params);
 };
 
-export const resetPassword = (params: ResetPasswordParams) => {
-  return client.post("auth/password", params);
-};
+// export const resetPassword = (params: ResetPasswordParams) => {
+//   return client.post("auth/password", params);
+// };
+
 
 // サインアウト（ログアウト）
 export const signOut = () => {
