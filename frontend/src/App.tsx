@@ -6,35 +6,34 @@ import {
   Navigate,
 } from "react-router-dom";
 
-import CommonLayout from "components/layouts/CommonLayout";
-import Home from "components/pages/Home";
-import SignUp from "components/pages/SignUp";
-import SignIn from "components/pages/SignIn";
-import ResetPassword from "components/pages/PasswordResetForm";
-import Board from "components/pages/Board";
-import Boards from "components/pages/Boards";
-import BoardCreate from "components/pages/BoardCreate";
-import BoardEdit from "components/pages/BoardEdit";
-import Communities from "components/pages/Communities";
-import Community from "components/pages/Community";
-import Messages from "components/pages/Messages";
-import Message from "components/pages/Message";
-import User from "components/pages/User";
-import MyPage from "components/pages/MyPage";
-import MyFav from "components/pages/MyFav";
-import MyBoard from "components/pages/MyBoard";
-import Setting from "components/pages/Setting";
-import DeleteAccount from "components/pages/DeleteAccount";
-import Info from "components/pages/Info";
-import Information from "components/pages/Information";
+import CommonLayout from "views/pages/layouts/CommonLayout";
+import Home from "views/pages/home/Home";
+import SignUp from "views/pages/auth/SignUp";
+import SignIn from "views/pages/auth/SignIn";
+import ResetPassword from "views/pages/auth/PasswordResetForm";
+import Board from "views/pages/board/Board";
+import Boards from "views/pages/board/Boards";
+import BoardCreate from "views/pages/board/BoardCreate";
+import BoardEdit from "views/pages/board/BoardEdit";
+import Communities from "views/pages/community/Communities";
+import Community from "views/pages/community/Community";
+import Messages from "views/pages/chat/Messages";
+import Message from "views/pages/chat/Message";
+import User from "views/pages/user/User";
+import MyPage from "views/pages/mypage/MyPage";
+import MyFav from "views/pages/mypage/MyFav";
+import MyBoard from "views/pages/mypage/MyBoard";
+import Setting from "views/pages/mypage/Setting";
+import DeleteAccount from "views/pages/mypage/DeleteAccount";
+import Info from "views/pages/mypage/Info";
+import Information from "views/pages/mypage/Information";
 
 import { getCurrentUser } from "lib/api/auth";
 import { checkAge } from "lib/api/common";
 import { UserData } from "interfaces/index";
-import Terms from "components/pages/Terms";
-import PrivacyPolicy from "components/pages/PrivacyPolicy";
-import Verification from "components/pages/Verification";
-import UserEdit from "components/pages/UserEdit";
+
+import Verification from "views/pages/mypage/Verification";
+import UserEdit from "views/pages/user/UserEdit";
 
 import { updateLastLogin } from "lib/api/auth";
 
@@ -273,22 +272,6 @@ const App = () => {
               element={
                 <Private>
                   <Info />
-                </Private>
-              }
-            />
-            <Route
-              path="/terms"
-              element={
-                <Private>
-                  <Terms />
-                </Private>
-              }
-            />
-            <Route
-              path="/privacyPolicy"
-              element={
-                <Private>
-                  <PrivacyPolicy />
                 </Private>
               }
             />

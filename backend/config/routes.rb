@@ -9,90 +9,98 @@ Rails.application.routes.draw do
       namespace :auth do
         resources :sessions, only: %i[index]
       end
-      
-
-      resources :users, only: [:index, :update] do
-        collection do 
-          post :updateLastLogin
+    
+      namespace :board do
+        resources :boards, only: [:index, :create, :update, :destroy] do
+          member do
+            get :show
+            get :edit
+            get :myboard
+            get :favboard
+          end
         end
-        member do
-          get :show
-          get :sort
-          get :edit
-          get :hobby
-          get :interest
-          get :researchTag
+  
+        resources :board_comments, only: [:create] do
+          member do
+            get :show
+          end
         end
-      end
-
-      resources :user_likes, only: [:create, :destroy] do
-        member do
-          get :show
-        end
-      end
-
-
-      resources :boards, only: [:index, :create, :update, :destroy] do
-        member do
-          get :show
-          get :edit
-          get :myboard
-          get :favboard
+  
+        resources :board_likes, only: [:create, :destroy] do
+          member do
+            get :show
+          end
         end
       end
 
-      resources :board_comments, only: [:create] do
-        member do
-          get :show
+      namespace :chat do
+        resources :messages, only: [:index, :create]
+
+        resources :chats, only: [:create, :destroy] do
+          member do
+            get :show
+            get :exist
+            get :chatBuddy
+          end
         end
       end
 
-      resources :board_likes, only: [:create, :destroy] do
-        member do
-          get :show
+      namespace :community do
+        resources :communities, only: [:index, :create, :destroy] do
+          collection do
+            get :popular
+            get :latest
+            post :sendMail
+          end
+          member do
+            get :show
+          end
+        end
+  
+        resources :community_chats, only: [:create] do
+          member do
+            get :show
+            get :communityData
+            get :subscribed
+          end
         end
       end
 
-      resources :infos, only: [:index] do
-        member do
-          get :show
+      namespace :setting do
+        resources :infos, only: [:index] do
+          member do
+            get :show
+          end
         end
       end
 
-      resources :verifications, only: [:create]
-
-      resources :check_ages, only: [] do
-        member do
-          get :show
+      namespace :user do
+        resources :users, only: [:index, :update] do
+          collection do 
+            post :updateLastLogin
+          end
+          member do
+            get :show
+            get :sort
+            get :edit
+            get :hobby
+            get :interest
+            get :researchTag
+          end
         end
-      end
-      
-      resources :messages, only: [:index, :create]
-
-      resources :chats, only: [:create, :destroy] do
-        member do
-          get :show
-          get :exist
-          get :chatBuddy
+  
+        resources :user_likes, only: [:create, :destroy] do
+          member do
+            get :show
+          end
         end
-      end
 
-      resources :communities, only: [:index, :create, :destroy] do
-        collection do
-          get :popular
-          get :latest
-          post :sendMail
-        end
-        member do
-          get :show
-        end
-      end
+        resources :verifications, only: [:create]
 
-      resources :community_chats, only: [:create] do
-        member do
-          get :show
-          get :communityData
-          get :subscribed
+        resources :check_ages, only: [] do
+          member do
+            get :show
+          end
         end
       end
     end

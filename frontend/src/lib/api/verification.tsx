@@ -7,5 +7,7 @@ export const sendCertificateImage = (
   email: string | null,
   data: FormData
 ): AxiosPromise => {
-  return clientImage.post(`/verifications`, data, { params: { id, email } });
+  return clientImage.post(`/user/verifications`, data, {
+    params: { id, email },
+  });
 };

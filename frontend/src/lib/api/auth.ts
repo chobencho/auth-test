@@ -22,7 +22,6 @@ export const signIn = (params: SignInParams) => {
 //   return client.post("auth/password", params);
 // };
 
-
 // サインアウト（ログアウト）
 export const signOut = () => {
   return client.delete("auth/sign_out", {
@@ -63,5 +62,5 @@ export const getCurrentUser = () => {
 };
 
 export const updateLastLogin = (myId: string | undefined) => {
-  return client.post(`/users/updateLastLogin`, { myId });
+  return client.post(`/user/users/updateLastLogin`, { myId });
 };
