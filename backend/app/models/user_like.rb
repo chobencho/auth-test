@@ -1,2 +1,0 @@
-class UserLike < ApplicationRecord
-end
