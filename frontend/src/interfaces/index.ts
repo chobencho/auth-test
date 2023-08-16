@@ -83,6 +83,7 @@ export interface BoardData {
   userImage: string;
   body: string;
   boardBody: string;
+  likeCount: string;
   createdAt: Date;
   updatedAt: Date;
   name: string;
