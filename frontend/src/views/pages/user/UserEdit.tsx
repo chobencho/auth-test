@@ -57,9 +57,11 @@ const UserEdit = () => {
             userData={userData}
             userResearchTagData={researchTagData}
           />
+
           <div className="border-t w-96 mx-auto mt-5 py-2">
             <p className="m-1">プレビュー</p>
           </div>
+
           {/* ユーザプレビュー */}
           <UserEditItem
             userData={userData}
